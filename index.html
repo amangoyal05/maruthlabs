@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Maruth Labs</title>
+    <meta name="description" content="Maruth Labs builds powerful, efficient language models without unnecessary complexity.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="./static/icon.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pb3bE6WfO4HJXXtr6k39AdN/HN3wY8cO68l4LWejzQonhQYry8M6gKMEhueNRpX2D/5HUL1k3V3W3D4fYv5F0A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            color: #333;
+            background: #fff;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover { color: #4C93E8; }
+
+        header {
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 0.15625vw 1.3675213675213675vh rgba(0,0,0,0.05);
+            padding: 0 15.625vw;
+        }
+        .nav-container {
+            max-width: 93.75vw;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo a {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 12vh;
+            margin: 2vh;
+            width: auto;
+        }
+        .logo img.logo-right {
+            margin-left: -1vw;
+        }
+        nav {
+            display: flex;
+            gap: 2.3vw;
+            font-weight: 600;
+        }
+        nav a {
+            font-size: 1em;
+            cursor: pointer;
+        }
+        
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #333;
+        }
+        
+        /* About */
+        .container-about {
+            text-align: justify;
+            width: 80%;
+            font-size: 0.9em;
+            margin: -3.5vh auto 0 auto;
+            padding: 0 1.5vw;
+        }
+        #benchmarks {
+            width: 80%;
+            margin: 0 auto;
+            padding: 0 1.5vw;
+        }
+        section { padding: 10.25vh 1.5626vw; }
+        h1, h2, h3 { text-align: center; }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 2em;
+            margin-bottom: 3.42vh;
+            font-weight: 700;
+        }
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 2.5685vh;
+        }
+        p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 6.5vh;
+        }
+        .btn {
+            padding: 2vh 3vw;
+            background: black;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.32vw;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn:hover { background: #3b7acb; }
+        .welcome {
+            text-align: center;
+            background: #f9f9f9;
+            padding: 14vh 20% 5vh;
+            margin-top: 2vh;
+        }
+        .welcome-text { font-size: 1.2em; }
+        .chart-wrapper {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 2.3548vw;
+            align-items: flex-start;
+            margin: 3.2573vh auto;
+            width: 100%;
+        }
+        .chart-column {
+            flex: 0 0 70%;
+            min-width: 23.5vw;
+        }
+        .info-column {
+            text-align: justify;
+            flex: 0 0 30%;
+            min-width: 19.6vw;
+            padding: 1vh 2vw 0.5vh 2vw;
+            font-size: 0.75em;
+            border-radius: 0.47vw;
+            background: #f7f7f7;
+        }
+        .madhuram-details {
+            width: 70%;
+            margin: 10vh auto;
+            padding: 1.5vw;
+            background: #fff;
+            text-align: justify;
+        }
+        .text-column,
+        .chart-column-last {
+            flex: 1;
+            min-width: 300px;
+        }
+        .plot-caption {
+            text-align: center;
+            font-style: italic;
+            margin: 2vh 0;
+            font-size: 0.7em;
+            color: #555;
+        }
+        footer {
+            background: #f7f7f7;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+        .social-links a {
+            margin: 2.5641vh 0.78125vw;
+            font-size: 1.5em;
+            color: black;
+        }
+        i:hover { color: #4C93E8; }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 0 5vw;
+            }
+            
+            .nav-container {
+                position: relative;
+            }
+            
+            .menu-toggle {
+                display: block;
+                z-index: 200;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 5vh;
+                transition: right 0.3s ease;
+                z-index: 100;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                padding: 10vh 0;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav a {
+                font-size: 1.2em;
+                padding: 2vh 0;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: none;
+                z-index: 90;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+            
+            .chart-wrapper, .info-wrapper, .madhuram-details > .container {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .chart-column, .info-column, .text-column, .chart-column-last {
+                width: 90% !important;
+                flex: unset;
+            }
+            
+            .chart-wrapper, .info-wrapper { 
+                gap: 20px; 
+            }
+            
+            .logo img.logo-right {
+                margin-left: -2vw;
+            }
+            
+            .logo img {
+                height: 8vh;
+                width: auto;
+            }
+            
+            .welcome {
+                padding: 10vh 5% 5vh;
+            }
+            
+            .container h1 {
+                font-size: 8vw;
+            }
+            
+            .container .welcome-text {
+                font-size: 5vw;
+            }
+            
+            .madhuram-details {
+                width: 90%;
+            }
+
+            /* NEW CSS FOR MOBILE CHART OPTIMIZATIONS */
+            #madhuramVsGPTRadar {
+                margin-bottom: 0 !important;
+                padding-bottom: 0 !important;
+                height: 70vh !important; /* Make chart slightly smaller on mobile */
+            }
+            
+            /* Reduce spacing between chart and info column */
+            .chart-wrapper {
+                gap: 0.5rem !important;
+                margin: 1vh auto !important;
+            }
+            
+            /* Make info column appear closer to chart */
+            .info-column {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+            }
+            
+            /* Fix the caption spacing issue more directly */
+            .plot-caption {
+                margin-top: 1vh !important;
+                margin: 5vh 0 0 0 !important;
+            }
+
+            /* Additional fixes for existing issues in mobile view */
+            .info-column {
+                margin: 0 auto !important;    
+            }
+            
+            #about {
+                margin: 0 3% -10vh 3%;
+            }
+            
+            #about p {
+                font-size: 5vw;
+                text-align: justify;
+            }
+            
+            #benchmarks p {
+                font-size: 5vw;
+                text-align: justify;
+            }
+        }
+    </style>
+</head>
+<body id="home">
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="#home">
+                    <img src="./static/lo.png" alt="Maruth Labs Logo">
+                    <img src="./static/name.png" alt="Name" class="logo-right">
+                </a>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#benchmarks">Benchmarks</a>
+            </nav>
+            <div class="overlay" id="overlay"></div>
+        </div>
+    </header>
+
+    <section class="welcome" id="home">
+        <div class="container">
+            <h1>Welcome to Maruth Labs</h1>
+            <p class="welcome-text">
+                We build efficient language models that deliver high performance without unnecessary complexity.
+                Discover our breakthrough model <strong>Madhuram</strong> and explore how our innovative design sets a new benchmark in AI efficiency.
+            </p>
+            <button class="btn" onclick="location.href='#benchmarks'">Learn More</button>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container container-about">
+            <h2>About Maruth Labs</h2>
+            <p>
+                Maruth Labs is an AI research company based in Delhi, India, committed to revolutionizing language model technology.
+                Our approach focuses on creating ultra-efficient models that perform at the cutting edge without the need for massive computational resources.<br><br>
+                Our flagship model, <strong>Madhuram</strong>, demonstrates that intelligent design can replace sheer scale.
+                By leveraging innovative engineering and rigorous research, we deliver models that are powerful and highly adaptable for deployment on mobile and wearable devices.<br><br>
+                At Maruth Labs, our mission, our identity, and the cornerstone of our product roadmap is ensuring our focus remains unwavering. Our team and business model are aligned to achieve efficiency.
+                We tackle performance and resource management simultaneously, solving these challenges through innovative engineering and research breakthroughs. Our aim is to enhance capabilities while ensuring that efficiency and accessibility are prioritized.
+                This way, we can innovate freely.<br><br>
+                We believe the future of AI lies in efficiency, accessibility, and responsible resource management.
+                Join us as we shape the future of language models and explore the endless possibilities of smarter, leaner AI.
+            </p>
+        </div>
+    </section>
+
+    <section id="benchmarks">
+        <div class="container">
+            <h2>Benchmarks</h2>
+            <p style="text-align: justify;">
+                Introducing <strong>Madhuram</strong>—our breakthrough compact language model designed to deliver high performance with minimal resources.
+                With just 74 million parameters and trained on 150 billion tokens, Madhuram proves that intelligent design can outperform massive-scale models.
+                <br><br>
+                Note: Madhuram-β (Beta) has been trained on only 150 billion tokens, while the other models in the comparison have been exposed to much larger datasets.
+                <br><br>
+                Optimized for mobile and wearable devices, Madhuram sets a new benchmark in AI efficiency without compromising on quality or speed.
+            </p>
+            <div class="chart-wrapper">
+                <div class="chart-column">
+                    <canvas id="madhuramVsGPTRadar" style="height:80vh;"></canvas>
+                </div>
+                <div class="info-column">
+                    <h3>Analysis</h3>
+                    The chart displays key performance metrics for our models in comparison with GPT3-small across various benchmarks.
+                    <ul>
+                        <li><strong>Madhuram-β (Zero-shot):</strong> Delivers robust results even without additional context.</li>
+                        <li><strong>GPT3-Small (Zero-shot):</strong> Serves as a reliable baseline for comparison.</li>
+                        <li><strong>GPT3-Small (Few-shot):</strong> Shows improved accuracy with extra examples.</li>
+                    </ul>
+                    <p>Overall, the data reinforces that efficient model design can yield competitive performance without enormous scale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="plot-caption">
+        * Madhuram-β was evaluated in standard mode using the same configuration as its production version for reproducibility.<br>
+        * Comparative data from OpenAI GPT3 was sourced from OpenAI's <a href="https://arxiv.org/pdf/2005.14165">research paper</a>.
+    </div>
+
+    <section id="madhuram" class="madhuram-details">
+        <div class="container">
+            <div class="info-wrapper">
+                <div class="text-column">
+                    <p>
+                        Our benchmark results demonstrate that Madhuram holds its own against larger models while using a fraction of the resources.
+                        The data highlights strong zero-shot performance, proving the efficacy of our compact design.
+                        <br><br>
+                        Whether deployed on mobile devices or in resource-constrained environments, Madhuram delivers reliable and consistent results,
+                        paving the way for more accessible and efficient AI applications.
+                    </p>
+                </div>
+                <div class="chart-column-last" style="position: relative; height:50vh;">
+                    <canvas id="efficiencyBar"></canvas>
+                </div>
+                <div class="plot-caption">
+                    * Comparative data from was sourced from Meta's <a href="https://github.com/facebookresearch/MobileLLM/">MobileLLM Github Repository</a>.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            &copy; 2025 Maruth Labs. All rights reserved.
+            <div class="social-links">
+                Follow us on:
+                <a href="https://x.com/maruthlabs" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://linkedin.com/in/jobspheretech" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://instagram.com/maruthlabs" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            Contact us at: <a href="mailto:contact@maruthlabs.com">contact@maruthlabs.com</a>.
+        </div>
+    </footer>
+
+    <script>
+        // Toggle menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        const overlay = document.getElementById('overlay');
+        const navLinks = document.querySelectorAll('nav a');
+        
+        menuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Change icon based on menu state
+            const icon = this.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close menu when clicking outside
+        overlay.addEventListener('click', function() {
+            mainNav.classList.remove('active');
+            overlay.classList.remove('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.remove('fa-times');
+            icon.classList.add('fa-bars');
+        });
+        
+        // Close menu when clicking on a nav link
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mainNav.classList.remove('active');
+                overlay.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        const tasks = ["ARC (Average)", "Hellaswag", "OBQA", "WinoGrande", "PIQA", "BoolQ", "WSC", "RTE", "SuperGLUE", "Average"];
+        const madhuramData = [36.84, 33.95, 31.4, 51.78, 63.76, 53.12, 63.46, 53.07, 54.86, 49.14];
+        const gpt3smallZeroShot = [35.1, 33.7, 35.6, 52, 64.6, 49.7, 59.6, 47.7, 40.6, 46.51];
+        const gpt3smallFewShot = [34.1, 33.5, 37.0, 51.3, 64.3, 43.1, 58.7, 52.3, 50.2, 47.17];
+
+        const radarData = {
+            labels: tasks,
+            datasets: [
+                {
+                    label: 'Madhuram-β (Zero-shot)',
+                    data: madhuramData,
+                    backgroundColor: 'rgba(76, 147, 232, 0.2)',
+                    borderColor: '#4C93E8',
+                    pointBackgroundColor: '#4C93E8'
+                },
+                {
+                    label: 'GPT‑3 (Small, Zero-shot)',
+                    data: gpt3smallZeroShot,
+                    backgroundColor: 'rgba(75, 192, 192, 0.05)',
+                    borderColor: '#4BC0C0',
+                    pointBackgroundColor: '#4BC0C0'
+                },
+                {
+                    label: 'GPT‑3 (Small, Few-shot)',
+                    data: gpt3smallFewShot,
+                    backgroundColor: 'rgba(76, 175, 80, 0.05)',
+                    borderColor: '#4CAF50',
+                    pointBackgroundColor: '#4CAF50'
+                }
+            ]
+        };
+
+        // Updated radar options with mobile optimizations
+        const radarOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        // Adjust padding between legend and chart for mobile
+                        padding: window.innerWidth < 768 ? 2 : 10,
+                        boxWidth: window.innerWidth < 768 ? 10 : 20
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Performance Comparison: Madhuram-β vs GPT‑3 (Zero-shot & Few-shot)',
+                    padding: {
+                        top: 10,
+                        bottom: window.innerWidth < 768 ? 0 : 15 // Much less padding for mobile
+                    },
+                    font: {
+                        size: window.innerWidth < 768 ? 12 : 14
+                    }
+                }
+            },
+            scales: {
+                r: {
+                    min: 20,
+                    max: 75,
+                    ticks: {
+                        suggestedMax: 75,
+                        backdropPadding: window.innerWidth < 768 ? 0 : 3,
+                        font: {
+                            size: window.innerWidth < 768 ? 9 : 11
+                        }
+                    },
+                    pointLabels: {
+                        font: {
+                            size: window.innerWidth < 768 ? 8 : 11
+                        }
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    top: window.innerWidth < 768 ? 0 : 5,
+                    bottom: window.innerWidth < 768 ? 0 : 10
+                }
+            }
+        };
+
+        const radarCtx = document.getElementById('madhuramVsGPTRadar').getContext('2d');
+        let radarChart = new Chart(radarCtx, {
+            type: 'radar',
+            data: radarData,
+            options: radarOptions
+        });
+
+        // Handle window resize for chart responsiveness
+        window.addEventListener('resize', function() {
+            // Update options based on current window width
+            radarOptions.plugins.legend.labels.padding = window.innerWidth < 768 ? 2 : 10;
+            radarOptions.plugins.legend.labels.boxWidth = window.innerWidth < 768 ? 10 : 20;
+            radarOptions.plugins.title.padding.bottom = window.innerWidth < 768 ? 0 : 15;
+            radarOptions.plugins.title.font.size = window.innerWidth < 768 ? 12 : 14;
+            radarOptions.scales.r.ticks.backdropPadding = window.innerWidth < 768 ? 0 : 3;
+            radarOptions.scales.r.ticks.font.size = window.innerWidth < 768 ? 9 : 11;
+            radarOptions.scales.r.pointLabels.font.size = window.innerWidth < 768 ? 8 : 11;
+            radarOptions.layout.padding.top = window.innerWidth < 768 ? 0 : 5;
+            radarOptions.layout.padding.bottom = window.innerWidth < 768 ? 0 : 10;
+            
+            // Update chart with new options
+            radarChart.options = radarOptions;
+            radarChart.update();
+        });
+
+        const modelCategories = ['ARC', 'Hellaswag', 'OBQA', 'PIQA', 'Winogrande', 'BoolQ', 'WSC', 'Super_Glue', 'RTE', 'Average'];
+
+        const barData = {
+            labels: modelCategories,
+            datasets: [
+                {
+                    label: 'Madhuram-β',
+                    data: [36.84, 33.95, 31.4, 51.78, 63.76, 53.12, 63.46, 53.07, 54.86, 49.14],
+                    backgroundColor: '#4C93E8',
+                    borderRadius: 8,
+                    borderSkipped: false
+                },
+                {
+                    label: 'MobileLLM-125M',
+                    data: [37.25,39.5, 41.1, 65.7, 52.1, 60.4, 36.54,54.9, 54.15,49.07],
+                    backgroundColor: '#4BC0C0',
+                    borderRadius: 8,
+                    borderSkipped: false
+                },
+                {
+                    label: 'SmolLM2-135M',
+                    data: [42.4, 41.2, 34,   68.4, 51.3, 60.31,37.5, 53.37,49.82,48.7],
+                    backgroundColor: '#9966FF',
+                    borderRadius: 8,
+                    borderSkipped: false
+                },
+                {
+                    label: 'GPT3-Small',
+                    data: [35.1, 33.7, 35.6, 64.6, 52,   49.7, 59.6, 40.6, 47.7, 46.51],
+                    backgroundColor: '#FF9F40',
+                    borderRadius: 8,
+                    borderSkipped: false
+                }
+            ]
+        };
+
+        // Mobile optimized bar chart options
+        const barOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: {
+                duration: 1000,
+                easing: 'easeOutQuart'
+            },
+            plugins: {
+                legend: { 
+                    position: 'top',
+                    labels: {
+                        padding: window.innerWidth < 768 ? 5 : 10,
+                        boxWidth: window.innerWidth < 768 ? 10 : 20,
+                        font: {
+                            size: window.innerWidth < 768 ? 9 : 12
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Model Performance Comparison Across Different Benchmarks',
+                    padding: {
+                        top: 10,
+                        bottom: window.innerWidth < 768 ? 0 : 10
+                    },
+                    font: {
+                        size: window.innerWidth < 768 ? 12 : 14
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: { 
+                        display: true, 
+                        text: 'Benchmarks',
+                        font: {
+                            size: window.innerWidth < 768 ? 9 : 12
+                        }
+                    },
+                    categoryPercentage: 0.6,
+                    barPercentage: 0.8,
+                    grid: { display: false },
+                    ticks: {
+                        font: {
+                            size: window.innerWidth < 768 ? 8 : 10
+                        }
+                    }
+                },
+                y: {
+                    title: { 
+                        display: true, 
+                        text: 'Accuracy (%)',
+                        font: {
+                            size: window.innerWidth < 768 ? 9 : 12
+                        }
+                    },
+                    min: 20,
+                    ticks: {
+                        font: {
+                            size: window.innerWidth < 768 ? 8 : 10
+                        }
+                    }
+                }
+            }
+        };
+
+        const barCtx = document.getElementById('efficiencyBar').getContext('2d');
+        let barChart = new Chart(barCtx, {
+            type: 'bar',
+            data: barData,
+            options: barOptions
+        });
+
+        // Handle resize for bar chart as well
+        window.addEventListener('resize', function() {
+            // Update bar chart options for current screen size
+            barOptions.plugins.legend.labels.padding = window.innerWidth < 768 ? 5 : 10;
+            barOptions.plugins.legend.labels.boxWidth = window.innerWidth < 768 ? 10 : 20;
+            barOptions.plugins.legend.labels.font.size = window.innerWidth < 768 ? 9 : 12;
+            barOptions.plugins.title.padding.bottom = window.innerWidth < 768 ? 0 : 10;
+            barOptions.plugins.title.font.size = window.innerWidth < 768 ? 12 : 14;
+            barOptions.scales.x.title.font.size = window.innerWidth < 768 ? 9 : 12;
+            barOptions.scales.x.ticks.font.size = window.innerWidth < 768 ? 8 : 10;
+            barOptions.scales.y.title.font.size = window.innerWidth < 768 ? 9 : 12;
+            barOptions.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 10;
+            
+            // Update chart
+            barChart.options = barOptions;
+            barChart.update();
+        });
+    </script>
+</body>
+</html>
