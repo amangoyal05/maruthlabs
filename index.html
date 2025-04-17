@@ -23,10 +23,8 @@
         }
         a {
             color: inherit;
-/*             text-decoration: none; */
             transition: color 0.3s ease;
         }
-        a:hover { color: #4C93E8; }
 
         header {
             width: 100%;
@@ -41,7 +39,6 @@
             align-items: center;
             justify-content: space-between;
         }
-        .nav-container a {text-decoration: none;}
         .logo a {
             display: flex;
             align-items: center;
@@ -51,9 +48,6 @@
             margin: 2vh;
             width: auto;
         }
-        .logo img.logo-right {
-            margin-left: -1vw;
-        }
         nav {
             display: flex;
             gap: 2.3vw;
@@ -62,9 +56,8 @@
         nav a {
             font-size: 1em;
             cursor: pointer;
+            padding-left: 10vw;
         }
-        
-        /* Hamburger Menu */
         .menu-toggle {
             display: none;
             font-size: 1.5em;
@@ -74,7 +67,6 @@
             color: #333;
         }
         
-        /* About */
         .container-about {
             text-align: justify;
             width: 80%;
@@ -87,8 +79,7 @@
             margin: 0 auto;
             padding: 0 1.5vw;
         }
-        section { padding: 10.25vh 1.5626vw; }
-        h1, h2, h3 { text-align: center; }
+        
         h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
@@ -117,14 +108,12 @@
             cursor: pointer;
             transition: background 0.3s ease;
         }
-        .btn:hover { background: #3b7acb; }
         .welcome {
             text-align: center;
             background: #f9f9f9;
             padding: 14vh 20% 5vh;
             margin-top: 2vh;
         }
-        .welcome-text { font-size: 1.2em; }
         .chart-wrapper {
             display: flex;
             flex-wrap: nowrap;
@@ -153,8 +142,7 @@
             background: #fff;
             text-align: justify;
         }
-        .text-column,
-        .chart-column-last {
+        .text-column, .chart-column-last {
             flex: 1;
             min-width: 300px;
         }
@@ -177,17 +165,16 @@
             font-size: 1.5em;
             color: black;
         }
+        a:hover {color: #4C93E8;}
+        .nav-container a {text-decoration: none;}
+        .logo img.logo-right {margin-left: -1vw;}
+        section {padding: 10.25vh 1.5626vw;}
+        h1, h2, h3 {text-align: center;}
+        .btn:hover {background: #3b7acb;}
+        .welcome-text {font-size: 1.2em;}
         i:hover { color: #4C93E8; }
         
-        @media (max-width: 640px) {
-            header {
-                padding: 0 5vw;
-            }
-            
-            .nav-container {
-                position: relative;
-            }
-            
+        @media (max-width: 640px) {        
             .menu-toggle {
                 display: block;
                 z-index: 200;
@@ -209,11 +196,7 @@
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
                 padding: 10vh 0;
             }
-            
-            nav.active {
-                right: 0;
-            }
-            
+                        
             nav a {
                 font-size: 1.2em;
                 padding: 2vh 0;
@@ -232,10 +215,6 @@
                 z-index: 90;
             }
             
-            .overlay.active {
-                display: block;
-            }
-            
             .chart-wrapper, .info-wrapper, .madhuram-details > .container {
                 flex-direction: column;
                 width: 100%;
@@ -246,67 +225,43 @@
                 flex: unset;
             }
             
-            .chart-wrapper, .info-wrapper { 
-                gap: 20px; 
-            }
-            
-            .logo img.logo-right {
-                margin-left: -2vw;
-            }
-            
             .logo img {
                 height: 8vh;
                 width: auto;
             }
             
-            .welcome {
-                padding: 10vh 5% 5vh;
-            }
+            .welcome {padding: 10vh 5% 5vh;}
+            .overlay.active {display: block;}
+            .chart-wrapper, .info-wrapper {gap: 20px;}
+            .logo img.logo-right {margin-left: -2vw;}
+            .container h1 {font-size: 8vw;}
+            .container .welcome-text {font-size: 5vw;}
+            .madhuram-details {width: 90%;}
+            .info-column {margin: 0 auto !important;}
+            nav.active {right: 0;}
+            #about {margin: 0 3% -10vh 3%;}
+            header {padding: 0 5vw;}
+            .nav-container {position: relative;}
             
-            .container h1 {
-                font-size: 8vw;
-            }
-            
-            .container .welcome-text {
-                font-size: 5vw;
-            }
-            
-            .madhuram-details {
-                width: 90%;
-            }
-
-            /* NEW CSS FOR MOBILE CHART OPTIMIZATIONS */
             #madhuramVsGPTRadar {
                 margin-bottom: 0 !important;
                 padding-bottom: 0 !important;
-                height: 70vh !important; /* Make chart slightly smaller on mobile */
+                height: 70vh !important;
             }
             
-            /* Reduce spacing between chart and info column */
             .chart-wrapper {
                 gap: 0.5rem !important;
                 margin: 1vh auto !important;
             }
             
-            /* Make info column appear closer to chart */
             .info-column {
                 margin-top: 0 !important;
                 padding-top: 0 !important;
             }
             
-            /* Fix the caption spacing issue more directly */
             .plot-caption {
                 margin-top: 1vh !important;
                 margin: 5vh 0 0 0 !important;
-            }
-
-            /* Additional fixes for existing issues in mobile view */
-            .info-column {
-                margin: 0 auto !important;    
-            }
-            
-            #about {
-                margin: 0 3% -10vh 3%;
             }
             
             #about p {
@@ -334,9 +289,9 @@
                 <i class="fas fa-bars"></i>
             </button>
             <nav id="mainNav">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#benchmarks">Benchmarks</a>
+                <a href="home">Home</a>
+                <a href="about">About</a>
+                <a href="benchmarks">Benchmarks</a>
             </nav>
             <div class="overlay" id="overlay"></div>
         </div>
@@ -440,7 +395,6 @@
     </footer>
 
     <script>
-        // Toggle menu functionality
         const menuToggle = document.getElementById('menuToggle');
         const mainNav = document.getElementById('mainNav');
         const overlay = document.getElementById('overlay');
@@ -450,7 +404,6 @@
             mainNav.classList.toggle('active');
             overlay.classList.toggle('active');
             
-            // Change icon based on menu state
             const icon = this.querySelector('i');
             if (mainNav.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
@@ -461,7 +414,6 @@
             }
         });
         
-        // Close menu when clicking outside
         overlay.addEventListener('click', function() {
             mainNav.classList.remove('active');
             overlay.classList.remove('active');
@@ -470,7 +422,6 @@
             icon.classList.add('fa-bars');
         });
         
-        // Close menu when clicking on a nav link
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 mainNav.classList.remove('active');
@@ -513,7 +464,6 @@
             ]
         };
 
-        // Updated radar options with mobile optimizations
         const radarOptions = {
             responsive: true,
             maintainAspectRatio: false,
@@ -521,7 +471,6 @@
                 legend: {
                     position: 'top',
                     labels: {
-                        // Adjust padding between legend and chart for mobile
                         padding: window.innerWidth < 768 ? 2 : 10,
                         boxWidth: window.innerWidth < 768 ? 10 : 20
                     }
@@ -531,7 +480,7 @@
                     text: 'Performance Comparison: Madhuram-β vs GPT‑3 (Zero-shot & Few-shot)',
                     padding: {
                         top: 10,
-                        bottom: window.innerWidth < 768 ? 0 : 15 // Much less padding for mobile
+                        bottom: window.innerWidth < 768 ? 0 : 15
                     },
                     font: {
                         size: window.innerWidth < 768 ? 12 : 14
@@ -571,9 +520,7 @@
             options: radarOptions
         });
 
-        // Handle window resize for chart responsiveness
         window.addEventListener('resize', function() {
-            // Update options based on current window width
             radarOptions.plugins.legend.labels.padding = window.innerWidth < 768 ? 2 : 10;
             radarOptions.plugins.legend.labels.boxWidth = window.innerWidth < 768 ? 10 : 20;
             radarOptions.plugins.title.padding.bottom = window.innerWidth < 768 ? 0 : 15;
@@ -584,7 +531,6 @@
             radarOptions.layout.padding.top = window.innerWidth < 768 ? 0 : 5;
             radarOptions.layout.padding.bottom = window.innerWidth < 768 ? 0 : 10;
             
-            // Update chart with new options
             radarChart.options = radarOptions;
             radarChart.update();
         });
@@ -610,7 +556,7 @@
                 },
                 {
                     label: 'SmolLM2-135M',
-                    data: [42.4, 41.2, 34,   68.4, 51.3, 60.31,37.5, 53.37,49.82,48.7],
+                    data: [42.4, 41.2, 34, 68.4, 51.3, 60.31,37.5, 53.37,49.82,48.7],
                     backgroundColor: '#9966FF',
                     borderRadius: 8,
                     borderSkipped: false
@@ -625,7 +571,6 @@
             ]
         };
 
-        // Mobile optimized bar chart options
         const barOptions = {
             responsive: true,
             maintainAspectRatio: false,
@@ -639,9 +584,7 @@
                     labels: {
                         padding: window.innerWidth < 768 ? 5 : 10,
                         boxWidth: window.innerWidth < 768 ? 10 : 20,
-                        font: {
-                            size: window.innerWidth < 768 ? 9 : 12
-                        }
+                        font: {size: window.innerWidth < 768 ? 9 : 12}
                     }
                 },
                 title: {
@@ -651,9 +594,7 @@
                         top: 10,
                         bottom: window.innerWidth < 768 ? 0 : 10
                     },
-                    font: {
-                        size: window.innerWidth < 768 ? 12 : 14
-                    }
+                    font: {size: window.innerWidth < 768 ? 12 : 14}
                 }
             },
             scales: {
@@ -661,33 +602,21 @@
                     title: { 
                         display: true, 
                         text: 'Benchmarks',
-                        font: {
-                            size: window.innerWidth < 768 ? 9 : 12
-                        }
+                        font: {size: window.innerWidth < 768 ? 9 : 12}
                     },
                     categoryPercentage: 0.6,
                     barPercentage: 0.8,
                     grid: { display: false },
-                    ticks: {
-                        font: {
-                            size: window.innerWidth < 768 ? 8 : 10
-                        }
-                    }
+                    ticks: {font: {size: window.innerWidth < 768 ? 8 : 10}}
                 },
                 y: {
                     title: { 
                         display: true, 
                         text: 'Accuracy (%)',
-                        font: {
-                            size: window.innerWidth < 768 ? 9 : 12
-                        }
+                        font: {size: window.innerWidth < 768 ? 9 : 12}
                     },
                     min: 20,
-                    ticks: {
-                        font: {
-                            size: window.innerWidth < 768 ? 8 : 10
-                        }
-                    }
+                    ticks: {font: {size: window.innerWidth < 768 ? 8 : 10}}
                 }
             }
         };
@@ -699,9 +628,7 @@
             options: barOptions
         });
 
-        // Handle resize for bar chart as well
         window.addEventListener('resize', function() {
-            // Update bar chart options for current screen size
             barOptions.plugins.legend.labels.padding = window.innerWidth < 768 ? 5 : 10;
             barOptions.plugins.legend.labels.boxWidth = window.innerWidth < 768 ? 10 : 20;
             barOptions.plugins.legend.labels.font.size = window.innerWidth < 768 ? 9 : 12;
@@ -712,7 +639,6 @@
             barOptions.scales.y.title.font.size = window.innerWidth < 768 ? 9 : 12;
             barOptions.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 10;
             
-            // Update chart
             barChart.options = barOptions;
             barChart.update();
         });
