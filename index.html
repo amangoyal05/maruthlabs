@@ -279,7 +279,7 @@
     <header>
         <div class="container nav-container">
             <div class="logo">
-                <a href="home">
+                <a href="#home">
                     <img src="./static/lo.png" alt="Maruth Labs Logo">
                     <img src="./static/name.png" alt="Name" class="logo-right">
                 </a>
@@ -288,9 +288,9 @@
                 <i class="fas fa-bars"></i>
             </button>
             <nav id="mainNav">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#benchmarks">Benchmarks</a>
+                <a href="home">Home</a>
+                <a href="about">About</a>
+                <a href="benchmarks">Benchmarks</a>
             </nav>
             <div class="overlay" id="overlay"></div>
         </div>
@@ -398,11 +398,11 @@
         const mainNav = document.getElementById('mainNav');
         const overlay = document.getElementById('overlay');
         const navLinks = document.querySelectorAll('nav a');
-        
+
         menuToggle.addEventListener('click', function() {
             mainNav.classList.toggle('active');
             overlay.classList.toggle('active');
-            
+
             const icon = this.querySelector('i');
             if (mainNav.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
@@ -412,7 +412,7 @@
                 icon.classList.add('fa-bars');
             }
         });
-        
+
         overlay.addEventListener('click', function() {
             mainNav.classList.remove('active');
             overlay.classList.remove('active');
@@ -420,7 +420,7 @@
             icon.classList.remove('fa-times');
             icon.classList.add('fa-bars');
         });
-        
+
         navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 mainNav.classList.remove('active');
@@ -529,7 +529,7 @@
             radarOptions.scales.r.pointLabels.font.size = window.innerWidth < 768 ? 8 : 11;
             radarOptions.layout.padding.top = window.innerWidth < 768 ? 0 : 5;
             radarOptions.layout.padding.bottom = window.innerWidth < 768 ? 0 : 10;
-            
+
             radarChart.options = radarOptions;
             radarChart.update();
         });
@@ -637,7 +637,7 @@
             barOptions.scales.x.ticks.font.size = window.innerWidth < 768 ? 8 : 10;
             barOptions.scales.y.title.font.size = window.innerWidth < 768 ? 9 : 12;
             barOptions.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 10;
-            
+
             barChart.options = barOptions;
             barChart.update();
         });
