@@ -13,6 +13,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; }
+        a:hover { color: #4C93E8; }
+        .logo img.logo-right {margin-left: -1vw;}
+        section { padding: 10.25vh 1.5626vw; }
+        h1, h2, h3 { text-align: center; }
+        .btn:hover { background: #3b7acb; }
+        .welcome-text { font-size: 1.2em; }
+        .mainNav {padding-left:20vw;}
         body {
             margin: 0;
             font-family: 'Inter', sans-serif;
@@ -23,9 +30,9 @@
         }
         a {
             color: inherit;
+            text-decoration: none;
             transition: color 0.3s ease;
         }
-
         header {
             width: 100%;
             background: #fff;
@@ -65,7 +72,6 @@
             cursor: pointer;
             color: #333;
         }
-        #mainNav{padding-left: 20vw;}
         .container-about {
             text-align: justify;
             width: 80%;
@@ -78,7 +84,7 @@
             margin: 0 auto;
             padding: 0 1.5vw;
         }
-        
+       
         h1 {
             font-size: 2.5em;
             margin-bottom: 20px;
@@ -164,21 +170,13 @@
             font-size: 1.5em;
             color: black;
         }
-        a:hover {color: #4C93E8;}
-        .nav-container a {text-decoration: none;}
-        .logo img.logo-right {margin-left: -1vw;}
-        section {padding: 10.25vh 1.5626vw;}
-        h1, h2, h3 {text-align: center;}
-        .btn:hover {background: #3b7acb;}
-        .welcome-text {font-size: 1.2em;}
         i:hover { color: #4C93E8; }
-        
-        @media (max-width: 640px) {        
+
+        @media (max-width: 640px) {
             .menu-toggle {
                 display: block;
                 z-index: 200;
             }
-            
             nav {
                 position: fixed;
                 top: 0;
@@ -195,14 +193,12 @@
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
                 padding: 10vh 0;
             }
-                        
             nav a {
                 font-size: 1.2em;
                 padding: 2vh 0;
                 width: 100%;
                 text-align: center;
             }
-            
             .overlay {
                 position: fixed;
                 top: 0;
@@ -213,61 +209,53 @@
                 display: none;
                 z-index: 90;
             }
-            
             .chart-wrapper, .info-wrapper, .madhuram-details > .container {
                 flex-direction: column;
                 width: 100%;
             }
-            
             .chart-column, .info-column, .text-column, .chart-column-last {
                 width: 90% !important;
                 flex: unset;
             }
-            
             .logo img {
                 height: 8vh;
                 width: auto;
             }
-            
-            .welcome {padding: 10vh 5% 5vh;}
-            .overlay.active {display: block;}
-            .chart-wrapper, .info-wrapper {gap: 20px;}
-            .logo img.logo-right {margin-left: -2vw;}
-            .container h1 {font-size: 8vw;}
-            .container .welcome-text {font-size: 5vw;}
-            .madhuram-details {width: 90%;}
-            .info-column {margin: 0 auto !important;}
-            nav.active {right: 0;}
-            #about {margin: 0 3% -10vh 3%;}
-            header {padding: 0 5vw;}
-            .nav-container {position: relative;}
-            
             #madhuramVsGPTRadar {
                 margin-bottom: 0 !important;
                 padding-bottom: 0 !important;
                 height: 70vh !important;
             }
-            
             .chart-wrapper {
                 gap: 0.5rem !important;
                 margin: 1vh auto !important;
             }
-            
             .info-column {
                 margin-top: 0 !important;
                 padding-top: 0 !important;
             }
-            
             .plot-caption {
                 margin-top: 1vh !important;
                 margin: 5vh 0 0 0 !important;
             }
-            
+
+            .info-column {margin: 0 auto !important;}
+            #about {margin: 0 3% -10vh 3%;}
+            .welcome {padding: 10vh 5% 5vh;}
+            .container h1 {font-size: 8vw;}
+            .container .welcome-text {font-size: 5vw;}
+            .madhuram-details {width: 90%;}
+            .chart-wrapper, .info-wrapper {gap: 20px;}
+            .logo img.logo-right {margin-left: -2vw;}
+            .overlay.active {display: block;}
+            header {padding: 0 5vw;}
+            .nav-container {position: relative;}
+            nav.active {right: 0;}
+
             #about p {
                 font-size: 5vw;
                 text-align: justify;
             }
-            
             #benchmarks p {
                 font-size: 5vw;
                 text-align: justify;
@@ -284,13 +272,11 @@
                     <img src="./static/name.png" alt="Name" class="logo-right">
                 </a>
             </div>
-            <button class="menu-toggle" id="menuToggle">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
             <nav id="mainNav">
-                <a href="home">Home</a>
-                <a href="about">About</a>
-                <a href="benchmarks">Benchmarks</a>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#benchmarks">Benchmarks</a>
             </nav>
             <div class="overlay" id="overlay"></div>
         </div>
@@ -336,9 +322,7 @@
                 Optimized for mobile and wearable devices, Madhuram sets a new benchmark in AI efficiency without compromising on quality or speed.
             </p>
             <div class="chart-wrapper">
-                <div class="chart-column">
-                    <canvas id="madhuramVsGPTRadar" style="height:80vh;"></canvas>
-                </div>
+                <div class="chart-column"><canvas id="madhuramVsGPTRadar" style="height:80vh;"></canvas></div>
                 <div class="info-column">
                     <h3>Analysis</h3>
                     The chart displays key performance metrics for our models in comparison with GPT3-small across various benchmarks.
@@ -370,12 +354,8 @@
                         paving the way for more accessible and efficient AI applications.
                     </p>
                 </div>
-                <div class="chart-column-last" style="position: relative; height:50vh;">
-                    <canvas id="efficiencyBar"></canvas>
-                </div>
-                <div class="plot-caption">
-                    * Comparative data from was sourced from Meta's <a href="https://github.com/facebookresearch/MobileLLM/">MobileLLM Github Repository</a>.
-                </div>
+                <div class="chart-column-last" style="position: relative; height:50vh;"><canvas id="efficiencyBar"></canvas></div>
+                <div class="plot-caption">* Comparative data from was sourced from Meta's <a href="https://github.com/facebookresearch/MobileLLM/">MobileLLM Github Repository</a>.</div>
             </div>
         </div>
     </section>
@@ -481,9 +461,7 @@
                         top: 10,
                         bottom: window.innerWidth < 768 ? 0 : 15
                     },
-                    font: {
-                        size: window.innerWidth < 768 ? 12 : 14
-                    }
+                    font: {size: window.innerWidth < 768 ? 12 : 14}
                 }
             },
             scales: {
@@ -493,14 +471,10 @@
                     ticks: {
                         suggestedMax: 75,
                         backdropPadding: window.innerWidth < 768 ? 0 : 3,
-                        font: {
-                            size: window.innerWidth < 768 ? 9 : 11
-                        }
+                        font: {size: window.innerWidth < 768 ? 9 : 11}
                     },
                     pointLabels: {
-                        font: {
-                            size: window.innerWidth < 768 ? 8 : 11
-                        }
+                        font: {size: window.innerWidth < 768 ? 8 : 11}
                     }
                 }
             },
@@ -529,7 +503,6 @@
             radarOptions.scales.r.pointLabels.font.size = window.innerWidth < 768 ? 8 : 11;
             radarOptions.layout.padding.top = window.innerWidth < 768 ? 0 : 5;
             radarOptions.layout.padding.bottom = window.innerWidth < 768 ? 0 : 10;
-
             radarChart.options = radarOptions;
             radarChart.update();
         });
@@ -562,7 +535,7 @@
                 },
                 {
                     label: 'GPT3-Small',
-                    data: [35.1, 33.7, 35.6, 64.6, 52,   49.7, 59.6, 40.6, 47.7, 46.51],
+                    data: [35.1, 33.7, 35.6, 64.6, 52, 49.7, 59.6, 40.6, 47.7, 46.51],
                     backgroundColor: '#FF9F40',
                     borderRadius: 8,
                     borderSkipped: false
@@ -606,7 +579,9 @@
                     categoryPercentage: 0.6,
                     barPercentage: 0.8,
                     grid: { display: false },
-                    ticks: {font: {size: window.innerWidth < 768 ? 8 : 10}}
+                    ticks: {
+                        font: {size: window.innerWidth < 768 ? 8 : 10}
+                    }
                 },
                 y: {
                     title: { 
