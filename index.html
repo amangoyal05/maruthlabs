@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pb3bE6WfO4HJXXtr6k39AdN/HN3wY8cO68l4LWejzQonhQYry8M6gKMEhueNRpX2D/5HUL1k3V3W3D4fYv5F0A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script>
+        if (window.location.pathname === '/madhuram' ||
+            window.location.pathname === '/madhuram/') {
+                history.replaceState(null, '', '/#benchmarks');
+                window.scrollTo(0, document.getElementById('benchmarks').offsetTop);
+        }
+    </script>
     <style>
         * { box-sizing: border-box; }
         a:hover { color: #4C93E8; }
