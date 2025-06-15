@@ -1,628 +1,740 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Maruth Labs</title>
-    <meta name="description" content="Maruth Labs builds powerful, efficient language models without unnecessary complexity.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="icon" href="./static/icon.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pb3bE6WfO4HJXXtr6k39AdN/HN3wY8cO68l4LWejzQonhQYry8M6gKMEhueNRpX2D/5HUL1k3V3W3D4fYv5F0A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <script>
-        if (window.location.pathname === '/madhuram' ||
-            window.location.pathname === '/madhuram/') {
-                history.replaceState(null, '', '/#benchmarks');
-                window.scrollTo(0, document.getElementById('home').offsetTop);
-        }
-    </script>
-    <style>
-        * { box-sizing: border-box; }
-        a:hover { color: #4C93E8; }
-        .logo img.logo-right {margin-left: -1vw;}
-        section { padding: 10.25vh 1.5626vw; }
-        h1, h2, h3 { text-align: center; }
-        .btn:hover { background: #3b7acb; }
-        .welcome-text { font-size: 1.2em; }
-        #mainNav {padding-left:20vw;}
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            color: #333;
-            background: #fff;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
-        a {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        header {
-            width: 100%;
-            background: #fff;
-            box-shadow: 0 0.15625vw 1.3675213675213675vh rgba(0,0,0,0.05);
-            padding: 0 15.625vw;
-        }
-        .nav-container {
-            max-width: 93.75vw;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo a {
-            display: flex;
-            align-items: center;
-        }
-        .logo img {
-            height: 12vh;
-            margin: 2vh;
-            width: auto;
-        }
-        nav {
-            display: flex;
-            gap: 2.3vw;
-            font-weight: 600;
-        }
-        nav a {
-            font-size: 1em;
-            cursor: pointer;
-        }
-        .menu-toggle {
-            display: none;
-            font-size: 1.5em;
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #333;
-        }
-        .container-about {
-            text-align: justify;
-            width: 80%;
-            font-size: 0.9em;
-            margin: -3.5vh auto 0 auto;
-            padding: 0 1.5vw;
-        }
-        #benchmarks {
-            width: 80%;
-            margin: 0 auto;
-            padding: 0 1.5vw;
-        }
-       
-        h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        h2 {
-            font-size: 2em;
-            margin-bottom: 3.42vh;
-            font-weight: 700;
-        }
-        h3 {
-            font-size: 1.5em;
-            margin-bottom: 2.5685vh;
-        }
-        p {
-            font-size: 1.1em;
-            color: #555;
-            margin-bottom: 6.5vh;
-        }
-        .btn {
-            padding: 2vh 3vw;
-            background: black;
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            border-radius: 0.32vw;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .welcome {
-            text-align: center;
-            background: #f9f9f9;
-            padding: 14vh 20% 5vh;
-            margin-top: 2vh;
-        }
-        .chart-wrapper {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 2.3548vw;
-            align-items: flex-start;
-            margin: 3.2573vh auto;
-            width: 100%;
-        }
-        .chart-column {
-            flex: 0 0 70%;
-            min-width: 23.5vw;
-        }
-        .info-column {
-            text-align: justify;
-            flex: 0 0 30%;
-            min-width: 19.6vw;
-            padding: 1vh 2vw 0.5vh 2vw;
-            font-size: 0.75em;
-            border-radius: 0.47vw;
-            background: #f7f7f7;
-        }
-        .madhuram-details {
-            width: 70%;
-            margin: 10vh auto;
-            padding: 1.5vw;
-            background: #fff;
-            text-align: justify;
-        }
-        .text-column, .chart-column-last {
-            flex: 1;
-            min-width: 300px;
-        }
-        .plot-caption {
-            text-align: center;
-            font-style: italic;
-            margin: 2vh 0;
-            font-size: 0.7em;
-            color: #555;
-        }
-        footer {
-            background: #f7f7f7;
-            padding: 20px;
-            text-align: center;
-            font-size: 0.9em;
-            color: #777;
-        }
-        .social-links a {
-            margin: 2.5641vh 0.78125vw;
-            font-size: 1.5em;
-            color: black;
-        }
-        i:hover { color: #4C93E8; }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content="Maruth Labs builds powerful, efficient language models that run anywhere on any device.">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="icon" href="./static/logo.png" type="image/x-icon">
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pb3bE6WfO4HJXXtr6k39AdN/HN3wY8cO68l4LWejzQonhQYry8M6gKMEhueNRpX2D/5HUL1k3V3W3D4fYv5F0A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+		<title>Maruth Labs</title>
+		<style>
+			/* Reset & Base */
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			body { 
+				font-family: 'Inter', sans-serif; 
+				line-height: 1.7; 
+				color: #333; 
+				background: #fafafa; 
+				font-weight: 400;
+				letter-spacing: -0.01em;
+			}
+			a, button { text-decoration: none; font-family: inherit; }
 
-        @media (max-width: 640px) {
-            .menu-toggle {
-                display: block;
-                z-index: 200;
-            }
-            nav {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: white;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 5vh;
-                transition: right 0.3s ease;
-                z-index: 100;
-                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                padding: 10vh 0;
-            }
-            nav a {
-                font-size: 1.2em;
-                padding: 2vh 0;
-                width: 100%;
-                text-align: center;
-            }
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                display: none;
-                z-index: 90;
-            }
-            .chart-wrapper, .info-wrapper, .madhuram-details > .container {
-                flex-direction: column;
-                width: 100%;
-            }
-            .chart-column, .info-column, .text-column, .chart-column-last {
-                width: 90% !important;
-                flex: unset;
-            }
-            .logo img {
-                height: 8vh;
-                width: auto;
-            }
-            #madhuramVsGPTRadar {
-                margin-bottom: 0 !important;
-                padding-bottom: 0 !important;
-                height: 70vh !important;
-            }
-            .chart-wrapper {
-                gap: 0.5rem !important;
-                margin: 1vh auto !important;
-            }
-            .info-column {
-                margin-top: 0 !important;
-                padding-top: 0 !important;
-            }
-            .plot-caption {
-                margin-top: 1vh !important;
-                margin: 5vh 0 0 0 !important;
-            }
+			/* Typography Enhancements */
+			h1, h2, h3, h4 {
+				font-family: 'Playfair Display', serif;
+				font-weight: 700;
+				letter-spacing: -0.02em;
+				line-height: 1.2;
+			}
+			.hero h1 {
+				font-size: 3.25rem;
+				background: linear-gradient(120deg, #1a1a1a 0%, #444 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+				margin-bottom: 1.5rem;
+			}
+			
+			.about-container .left {
+				font-family: 'Playfair Display', serif;
+				font-weight: 700;
+				line-height: 1.1;
+				background: linear-gradient(120deg, #000 0%, #555 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+			
+			p {
+				font-weight: 400;
+				color: #454545;
+				max-width: 65ch;
+			}
+			
+			.hero p {
+				line-height: 1.8;
+				font-size: 1.2rem;
+				font-weight: 300;
+				margin-bottom: 2.75rem;
+			}
+			
+			section h2 {
+				font-size: 2.5rem;
+				margin-bottom: 2rem;
+				position: relative;
+				display: inline-block;
+				text-align: center;
+			}
+			
+			section h2:after {
+				content: '';
+				position: absolute;
+				bottom: -10px;
+				left: 25%;
+				width: 50%;
+				height: 3px;
+				background: linear-gradient(90deg, transparent, #000, transparent);
+			}
 
-            .info-column {margin: 0 auto !important;}
-            #about {margin: 0 3% -10vh 3%;}
-            .welcome {padding: 10vh 5% 5vh;}
-            .container h1 {font-size: 8vw;}
-            .container .welcome-text {font-size: 5vw;}
-            .madhuram-details {width: 90%;}
-            .chart-wrapper, .info-wrapper {gap: 20px;}
-            .logo img.logo-right {margin-left: -2vw;}
-            .overlay.active {display: block;}
-            header {padding: 0 5vw;}
-            .nav-container {position: relative;}
-            nav.active {right: 0;}
+			/* Sticky Navbar */
+			nav { 
+				position: sticky; 
+				top: 0; 
+				width: 100%; 
+				background: rgba(255,255,255,0.95); 
+				backdrop-filter: blur(8px); 
+				border-bottom: 1px solid #eaeaea; 
+				z-index: 1000; 
+			}
+			.nav-content { 
+				display: flex; 
+				align-items: center; 
+				max-width: 1200px; 
+				margin: 0 auto; 
+				padding: 1rem 2rem; 
+				position: relative;
+			}
+			.nav-logo { 
+				display: flex; 
+				align-items: center; 
+				gap: 0.5rem; 
+			}
+			.nav-logo img { 
+				height: 32px; 
+			}
+			.nav-logo span { 
+				font-size: 1.25rem; 
+				font-weight: 700; 
+				color: #111; 
+				letter-spacing: -0.02em;
+			}
+			.nav-right { 
+				display: flex; 
+				align-items: center; 
+				margin-left: auto; 
+				gap: 2rem; 
+			}
+			.nav-links { 
+				display: flex; 
+				gap: 2rem; 
+				list-style: none; 
+			}
+			.nav-links a { 
+				position: relative; 
+				font-weight: 500; 
+				color: #333; 
+				padding: 0.5rem 0; 
+				transition: color 0.2s;
+				font-size: 0.95rem;
+				letter-spacing: 0.01em;
+			}
+			.nav-links a::after { 
+				content: ''; 
+				position: absolute; 
+				bottom: -4px; 
+				left: 0; 
+				width: 0; 
+				height: 2px; 
+				background: black; 
+				transition: width 0.3s ease; 
+			}
+			.nav-links a:hover { color: black; }
+			.nav-links a:hover::after { width: 100%; }
+			.nav-button { 
+				padding: 0.75rem 1.75rem; 
+				font-size: 0.95rem; 
+				font-weight: 500;
+				height: 3rem; 
+				border: none; 
+				border-radius: 0.5rem; 
+				background: black; 
+				color: #fff; 
+				cursor: pointer; 
+				transition: all 0.3s; 
+				letter-spacing: 0.01em;
+			}
+			.nav-button:hover { 
+				background: rgb(40, 40, 40); 
+				transform: translateY(-2px);
+				box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+			}
 
-            #about p {
-                font-size: 5vw;
-                text-align: justify;
-            }
-            #benchmarks p {
-                font-size: 5vw;
-                text-align: justify;
-            }
-        }
-    </style>
-</head>
-<body id="home">
-    <header>
-        <div class="container nav-container">
-            <div class="logo">
-                <a href="#home">
-                    <img src="./static/lo.png" alt="Maruth Labs Logo">
-                    <img src="./static/name.png" alt="Name" class="logo-right">
-                </a>
-            </div>
-            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
-            <nav id="mainNav">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#benchmarks">Benchmarks</a>
-            </nav>
-            <div class="overlay" id="overlay"></div>
-        </div>
-    </header>
+			/* Hamburger Menu */
+			.hamburger {
+				display: none;
+				flex-direction: column;
+				cursor: pointer;
+				z-index: 1100;
+				margin-left: auto;
+			}
 
-    <section class="welcome" id="home">
-        <div class="container">
-            <h1>Welcome to Maruth Labs</h1>
-            <p class="welcome-text">
-                We build efficient language models that deliver high performance without unnecessary complexity.
-                Discover our breakthrough model <strong>Madhuram</strong> and explore how our innovative design sets a new benchmark in AI efficiency.
-            </p>
-            <button class="btn" onclick="location.href='#benchmarks'">Learn More</button>
-        </div>
-    </section>
+			.hamburger-bar {
+				width: 25px;
+				height: 3px;
+				background-color: #333;
+				margin: 4px 0;
+				transition: 0.4s;
+			}
+			.hamburger.active .hamburger-bar:nth-child(1) {
+				transform: rotate(-45deg) translate(-5px, 6px);
+			}
+			.hamburger.active .hamburger-bar:nth-child(2) {
+				opacity: 0;
+			}
+			.hamburger.active .hamburger-bar:nth-child(3) {
+				transform: rotate(45deg) translate(-5px, -6px);
+			}
 
-    <section id="about">
-        <div class="container container-about">
-            <h2>About Maruth Labs</h2>
-            <p>
-                Maruth Labs is an AI research company based in Delhi, India, committed to revolutionizing language model technology.
-                Our approach focuses on creating ultra-efficient models that perform at the cutting edge without the need for massive computational resources.<br><br>
-                Our flagship model, <strong>Madhuram</strong>, demonstrates that intelligent design can replace sheer scale.
-                By leveraging innovative engineering and rigorous research, we deliver models that are powerful and highly adaptable for deployment on mobile and wearable devices.<br><br>
-                At Maruth Labs, our mission, our identity, and the cornerstone of our product roadmap is ensuring our focus remains unwavering. Our team and business model are aligned to achieve efficiency.
-                We tackle performance and resource management simultaneously, solving these challenges through innovative engineering and research breakthroughs. Our aim is to enhance capabilities while ensuring that efficiency and accessibility are prioritized.
-                This way, we can innovate freely.<br><br>
-                We believe the future of AI lies in efficiency, accessibility, and responsible resource management.
-                Join us as we shape the future of language models and explore the endless possibilities of smarter, leaner AI.
-            </p>
-        </div>
-    </section>
+			/* Hero */
+			.hero { 
+				background: linear-gradient(135deg, #d0f0fa, #ffffff); 
+				padding: 4.5rem 4rem; 
+				text-align: center; 
+				border-radius: 1.5rem; 
+				margin: 2rem auto; 
+				position: relative; 
+				overflow: hidden; 
+				max-width: 1200px;
+			}
+			.hero::before, .hero::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.3); border-radius: 50%; z-index: 0; }
+			.hero::before { top: -50px; right: -50px; width: 200px; height: 200px; }
+			.hero::after { bottom: -60px; left: -60px; width: 220px; height: 220px; }
+			.hero h1 { 
+				z-index: 1; 
+				position: relative; 
+				animation: fadeIn 0.8s ease-out;
+			}
+			.hero p { 
+				max-width: 700px; 
+				margin: 0 auto; 
+				z-index: 1; 
+				position: relative; 
+				animation: fadeIn 0.8s ease-out 0.2s both;
+			}
+			.hero button { 
+				padding: 1.1rem 2.75rem; 
+				font-size: 1.1rem; 
+				margin-top: 1.2rem;
+				font-weight: 500;
+				border: none; 
+				border-radius: 0.5rem; 
+				background: black; 
+				color: #fff; 
+				cursor: pointer; 
+				box-shadow: 0 4px 12px rgba(0,0,0,0.12); 
+				transition: all 0.3s; 
+				z-index: 1; 
+				position: relative; 
+				animation: fadeIn 0.8s ease-out 0.4s both;
+				letter-spacing: 0.01em;
+			}
+			.hero button:hover { 
+				background: rgb(40, 40, 40); 
+				transform: translateY(-3px); 
+				box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+			}
 
-    <section id="benchmarks">
-        <div class="container">
-            <h2>Benchmarks</h2>
-            <p style="text-align: justify;">
-                Introducing <strong>Madhuram</strong>—our breakthrough compact language model designed to deliver high performance with minimal resources.
-                With just 74 million parameters and trained on 130 billion tokens, Madhuram proves that intelligent design can outperform massive-scale models.
-                <br><br>
-                Note: Madhuram-β (Beta) has been trained on only 130 billion tokens, while the other models in the comparison have been exposed to much larger datasets.
-                <br><br>
-                Optimized for mobile and wearable devices, Madhuram sets a new benchmark in AI efficiency without compromising on quality or speed.
-            </p>
-            <div class="chart-wrapper">
-                <div class="chart-column"><canvas id="madhuramVsGPTRadar" style="height:80vh;"></canvas></div>
-                <div class="info-column">
-                    <h3>Analysis</h3>
-                    The chart displays key performance metrics for our models in comparison with GPT3-small across various benchmarks.
-                    <ul>
-                        <li><strong>Madhuram-β (Zero-shot):</strong> Delivers robust results even without additional context.</li>
-                        <li><strong>GPT3-Small (Zero-shot):</strong> Serves as a reliable baseline for comparison.</li>
-                        <li><strong>GPT3-Small (Few-shot):</strong> Shows improved accuracy with extra examples.</li>
-                    </ul>
-                    <p>Overall, the data reinforces that efficient model design can yield competitive performance without enormous scale.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+			/* Animation Keyframes */
+			@keyframes fadeIn {
+				from { opacity: 0; transform: translateY(10px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+			
+			@keyframes slideIn {
+				from { opacity: 0; transform: translateX(-20px); }
+				to { opacity: 1; transform: translateX(0); }
+			}
 
-    <div class="plot-caption">
-        * Madhuram-β was evaluated in standard mode using the same configuration as its production version for reproducibility.<br>
-        * Comparative data from OpenAI GPT3 was sourced from OpenAI's <a href="https://arxiv.org/pdf/2005.14165">research paper</a>.
-    </div>
+			/* Sections and remaining styles... */
+			.about-container { 
+				display: flex; 
+				gap: 3rem; 
+				align-items: flex-start; 
+				margin: 4rem auto; 
+				padding: 4rem 2rem; 
+				max-width: 1200px; 
+			}
+			.about-container .left { 
+				flex: 1; 
+				font-size: 2.5rem; 
+				line-height: 1.1;
+			}
+			.about-container .right { 
+				flex: 2; 
+				font-size: 1.1rem; 
+				color: #454545; 
+				text-align: justify;
+			}
+			.about-container .right p {
+				margin-bottom: 1.5rem;
+				line-height: 1.8;
+			}
+			.about-container .right p:last-child {
+				margin-bottom: 0;
+			}
 
-    <section id="madhuram" class="madhuram-details">
-        <div class="container">
-            <div class="info-wrapper">
-                <div class="text-column">
-                    <p>
-                        Our benchmark results demonstrate that Madhuram holds its own against larger models while using a fraction of the resources.
-                        The data highlights strong zero-shot performance, proving the efficacy of our compact design.
-                        <br><br>
-                        Whether deployed on mobile devices or in resource-constrained environments, Madhuram delivers reliable and consistent results,
-                        paving the way for more accessible and efficient AI applications.
-                    </p>
-                </div>
-                <div class="chart-column-last" style="position: relative; height:50vh;"><canvas id="efficiencyBar"></canvas></div>
-                <div class="plot-caption">* Comparative data from was sourced from Meta's <a href="https://github.com/facebookresearch/MobileLLM/">MobileLLM Github Repository</a>.</div>
-            </div>
-        </div>
-    </section>
+			#usecases { 
+				background: transparent; 
+				padding: 4rem 2rem;
+				margin: 2rem auto;
+				max-width: 1200px;
+			}
+			#usecases h2 {
+				text-align: center;
+				margin-bottom: 3rem;
+				width: 100%;
+			}
+			.cards { 
+				display: flex; 
+				flex-wrap: wrap; 
+				gap: 2rem; 
+				justify-content: center; 
+				margin: 2rem auto; 
+				max-width: 1200px; 
+			}
+			.card { 
+				flex: 1 1 calc(33% - 2rem); 
+				border-radius: 1rem; 
+				padding: 2.5rem; 
+				text-align: center; 
+				min-width: 200px; 
+				transition: all 0.3s; 
+			}
+			.card:hover { 
+				transform: translateY(-5px); 
+				box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+			}
+			.card:nth-child(1) { background: #e8dfd0; }
+			.card:nth-child(2) { background: #cfe3dc; }
+			.card:nth-child(3) { background: #d5d5eb; }
+			.card:nth-child(4) { background: #e0d4f7; }
+			.card:nth-child(5) { background: #d7e3c8; }
+			.card img { width: 60px; height: 60px; margin-bottom: 1rem; }
+			.card h3 { 
+				font-size: 1.35rem; 
+				margin-top: 1rem; 
+				margin-bottom: 0.75rem;
+				color: #1a1a1a; 
+			}
+			.card p { 
+				margin-top: 0.5rem; 
+				font-size: 0.95rem; 
+				color: #555; 
+				line-height: 1.6;
+			}
 
-    <footer>
-        <div class="container">
-            &copy; 2025 Maruth Labs. All rights reserved.
-            <div class="social-links">
-                Follow us on:
-                <a href="https://x.com/maruthlabs" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="https://instagram.com/maruthlabs" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-            </div>
-            Contact us at: <a href="mailto:contact@maruthlabs.com">contact@maruthlabs.com</a>.
-        </div>
-    </footer>
+			/* Blog Section */
+			#blog { 
+				padding: 4rem 2rem; 
+				margin: 2rem auto; 
+				max-width: 1200px; 
+			}
+			#blog h2 {
+				text-align: center;
+				margin-bottom: 3rem;
+				width: 100%;
+			}
+			.blog-grid { 
+				display: grid; 
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+				gap: 2rem; 
+			}
+			.post { 
+				background: #fff; 
+				border-radius: 1rem; 
+				padding: 2.5rem; 
+				box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+				transition: all 0.3s;
+			}
+			.post:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 12px 20px rgba(0,0,0,0.06);
+			}
+			.post h3 { 
+				margin-bottom: 1rem; 
+				color: #1a1a1a; 
+				font-size: 1.4rem;
+			}
+			.post p { 
+				margin-bottom: 1.5rem; 
+				color: #454545; 
+				font-size: 0.95rem;
+				line-height: 1.7;
+			}
+			.post a { 
+				color: #000; 
+				font-weight: 600;
+				position: relative;
+				transition: all 0.3s;
+				display: inline-block;
+			}
+			.post a:after {
+				content: '';
+				position: absolute;
+				bottom: -4px;
+				left: 0;
+				width: 0;
+				height: 1px;
+				background: #000;
+				transition: width 0.3s ease;
+			}
+			.post a:hover {
+				color: #555;
+			}
+			.post a:hover:after {
+				width: 100%;
+			}
+			.blog-grid .post { 
+				display: flex;
+				flex-direction: column; 
+				height: 100%;
+			}
+			.blog-grid .post a { 
+				margin-top: auto; 
+			}
 
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const mainNav = document.getElementById('mainNav');
-        const overlay = document.getElementById('overlay');
-        const navLinks = document.querySelectorAll('nav a');
+			/* CTA Section */
+			#cta { 
+				color: black; 
+				text-align: center; 
+				padding: 5rem 2rem; 
+				border-radius: 1rem; 
+				margin: 4rem auto; 
+				max-width: 1200px; 
+			}
+			#cta h2 { 
+				font-size: 2.5rem; 
+				margin-bottom: 1.5rem; 
+			}
+			#cta p { 
+				font-size: 1.2rem; 
+				margin: 0 auto 2.5rem;
+				max-width: 700px;
+				color: #454545; 
+			}
+			#cta button { 
+				padding: 1.1rem 2.75rem; 
+				font-size: 1.1rem;
+				font-weight: 500; 
+				border: none; 
+				border-radius: 0.5rem; 
+				background: black; 
+				color: white; 
+				cursor: pointer; 
+				transition: all 0.3s;
+				box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+			}
+			#cta button:hover { 
+				background: rgb(40, 40, 40);
+				transform: translateY(-3px);
+				box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+			}
 
-        menuToggle.addEventListener('click', function() {
-            mainNav.classList.toggle('active');
-            overlay.classList.toggle('active');
+			/* Footer */
+			footer { 
+				background: #000;
+				padding: 3rem 2rem 2rem; 
+				text-align: center; 
+				color: #fff; 
+				font-size: 0.9rem;
+				line-height: 1.6;
+			}
+			footer p {
+				text-align: center;
+				width: 100%;
+				margin: 0 auto;
+				color: #fff;
+			}
+			.footer-links { 
+				display: flex; 
+				justify-content: center; 
+				gap: 2rem; 
+				list-style: none; 
+				color: #fff;
+				margin-bottom: 1.5rem;
+			}
+			.footer-links a { 
+				color: #fff; 
+				transition: color 0.2s;
+				font-weight: 500; 
+			}
+			.footer-links a:hover { 
+				color: #ccc; 
+			}
+			.footer-links i {
+				font-size: 1.25rem;
+				transition: transform 0.3s;
+			}
+			.footer-links i:hover {
+				transform: translateY(-3px);
+			}
+			/* Responsive Fixes */
+			@media (max-width: 768px) {
+				/* Navbar Responsive Styles */
+				.nav-content {
+					padding: 1rem;
+				}
+				.nav-right {
+					display: none;
+					position: fixed;             
+					inset: 0;
+					width: 100vw;                
+					height: 100vh;               
+					background: rgba(255,255,255,0.95);
+					backdrop-filter: blur(10px);
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					gap: 1.5rem;
+					padding-top: 2rem;
+					z-index: 1000;
+				}
+				.nav-right.active {
+					display: flex;
+				}
+				.hamburger {
+					display: flex;
+					margin-left: auto;
+					z-index: 1100;
+				}
+				.nav-links {
+					flex-direction: column;
+					align-items: center;
+					gap: 2rem;
+					width: 100%;
+				}
+				.nav-links a {
+					font-size: 1.3rem;
+					padding: 0.75rem 0;
+					width: 100%;
+					text-align: center;
+				}
 
-            const icon = this.querySelector('i');
-            if (mainNav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
+				/* Other Mobile Responsive Styles */
+				.about-container { 
+					flex-direction: column;
+					gap: 2rem;
+					padding: 3rem 1.5rem;
+				}
+				.hero {
+					padding: 4rem 1.5rem;
+					margin: 1.5rem 1rem;
+				}
+				.hero h1 { 
+					font-size: 2rem; 
+				}
+				.hero p { 
+					font-size: 1rem;
+					margin-bottom: 2rem;
+				}
+				.cards { 
+					justify-content: center; 
+				}
+				.card { 
+					flex: 1 1 100%; 
+				}
+				.blog-grid { 
+					grid-template-columns: 1fr; 
+				}
+				section h2 {
+					font-size: 2rem;
+				}
+				#cta h2 {
+					font-size: 2rem;
+				}
+				#cta p {
+					font-size: 1rem;
+				}
+				.footer-links {
+					flex-wrap: wrap;
+					gap: 1rem 2rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<nav>
+			<div class="nav-content">
+				<div class="nav-logo">
+					<img src="./static/logo.png" alt="Maruth Labs Logo" />
+					<span>Maruth Labs</span>
+				</div>
+				
+				<!-- Hamburger Menu for Mobile -->
+				<div class="hamburger">
+					<div class="hamburger-bar"></div>
+					<div class="hamburger-bar"></div>
+					<div class="hamburger-bar"></div>
+				</div>
+				
+				<div class="nav-right">
+					<ul class="nav-links">
+						<li><a href="#about">About</a></li>
+						<li><a href="#usecases">Use Cases</a></li>
+						<li><a href="#blog">Blog</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
 
-        overlay.addEventListener('click', function() {
-            mainNav.classList.remove('active');
-            overlay.classList.remove('active');
-            const icon = menuToggle.querySelector('i');
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        });
+		<!-- Hero -->
+		<div class="hero">
+			<h1>Versatile AI Model for Cloud & Edge Computing</h1>
+			<p>Madhuram delivers powerful language capabilities on any device - from cloud servers to edge devices, with seamless performance across all platforms.</p>
+		</div>
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mainNav.classList.remove('active');
-                overlay.classList.remove('active');
-                const icon = menuToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            });
-        });
+		<!-- About Section -->
+		<section id="about" class="about-container">
+			<div class="left">Powerful AI everywhere you need it.</div>
+			<div class="right">
+				<p>At Maruth Labs, we've created a versatile language model that delivers same performance across all computing environments. Whether deployed in the cloud or running directly on your device, Madhuram provides consistent, high-quality results.</p>
+				<p>Our advanced optimization techniques ensure that Madhuram maintains powerful capabilities while adapting to available resources, making sophisticated AI accessible on virtually any platform - from powerful cloud servers to resource-constrained edge devices.</p>
+			</div>
+		</section>
+       <!-- Use Cases Section -->
+		<section id="usecases">
+			<h2 style="display: block; text-align: center; width: 100%;">What You Can Build with Madhuram</h2>
+			<div class="cards">
+				<div class="card">
+					<img src="./static/content_gen.svg" alt="Content Creation Icon" />
+					<h3>Content Creation</h3>
+					<p>Generate creative content with cloud level quality, even when running locally on your device.</p>
+				</div>
+				<div class="card">
+					<img src="./static/doc-proc.svg" alt="Email Generation Icon" />
+					<h3>Document processing</h3>
+					<p>Analyze and summarize documents locally or in the cloud, based on your preference.</p>
+				</div>
+				<div class="card">
+					<img src="./static/conversational_agent.svg" alt="Conversational Agents Icon" />
+					<h3>Flexible AI Assistants</h3>
+					<p>Build responsive AI assistants that work with or without internet connectivity.</p>
+				</div>
+				<div class="card">
+					<img src="./static/kiosks.svg" alt="Document Processing Icon" />
+					<h3>On premise customer support kiosks</h3>
+					<p>Deploy On-Premise Customer Support Kiosks for instant, personalized assistance, enhancing customer experience and streamlining support operations</p>
+				</div>
+				<div class="card">
+					<img src="./static/hybrid.svg" alt="Hybrid Deployments Icon" />
+					<h3>Hybrid Deployments</h3>
+					<p>Deploy AI capabilities across your infrastructure with consistent performance everywhere.</p>
+				</div>
+			</div>
+		</section>
 
-        const tasks = ["ARC (Average)", "Hellaswag", "OBQA", "WinoGrande", "PIQA", "BoolQ", "WSC", "RTE", "SuperGLUE", "Average"];
-        const madhuramData = [36.84, 33.95, 31.4, 51.78, 63.76, 53.12, 63.46, 53.07, 54.86, 49.14];
-        const gpt3smallZeroShot = [35.1, 33.7, 35.6, 52, 64.6, 49.7, 59.6, 47.7, 40.6, 46.51];
-        const gpt3smallFewShot = [34.1, 33.5, 37.0, 51.3, 64.3, 43.1, 58.7, 52.3, 50.2, 47.17];
+		<!-- Blog Section -->
+		<section id="blog">
+			<h2 style="display: block; text-align: center; width: 100%;">Insights & Updates</h2>
+			<div class="blog-grid">
+				<div class="post">
+					<h3>Perseus: A Novel Approach to Efficient Language Modeling</h3>
+					<p>Read about our approach for creating an efficient language model that reimagines the way we look at positional embeddings.</p>
+					<a href="perseus.html">Read the Deep Dive →</a>
+				</div>
+				<div class="post">
+					<h3>Performance vs. Scale: Our Benchmark Results</h3>
+					<p>Check how Madhuram fares against other language models on benchmark datasets.</p>
+					<a href="performance-vs-scale.html">Read the Deep Dive →</a>
+				</div>
+				<div class="post">
+					<h3>Madhuram in Your Pocket: Real-World Mobile Performance That Delivers</h3>
+					<p>Check Madhuram's performance on edge-device.</p>
+					<a href="madhuram-in-your-pocket.html">Read the Deep Dive →</a>
+				</div>
+			</div>
+		</section>
 
-        const radarData = {
-            labels: tasks,
-            datasets: [
-                {
-                    label: 'Madhuram-β (Zero-shot)',
-                    data: madhuramData,
-                    backgroundColor: 'rgba(76, 147, 232, 0.2)',
-                    borderColor: '#4C93E8',
-                    pointBackgroundColor: '#4C93E8'
-                },
-                {
-                    label: 'GPT‑3 (Small, Zero-shot)',
-                    data: gpt3smallZeroShot,
-                    backgroundColor: 'rgba(75, 192, 192, 0.05)',
-                    borderColor: '#4BC0C0',
-                    pointBackgroundColor: '#4BC0C0'
-                },
-                {
-                    label: 'GPT‑3 (Small, Few-shot)',
-                    data: gpt3smallFewShot,
-                    backgroundColor: 'rgba(76, 175, 80, 0.05)',
-                    borderColor: '#4CAF50',
-                    pointBackgroundColor: '#4CAF50'
-                }
-            ]
-        };
+		<!-- CTA Section -->
+		<section id="cta">
+			<h2>Join the AI Flexibility Revolution</h2>
+			<p>Partner with Maruth Labs to bring powerful AI capabilities to any platform—cloud or on-device, the choice is yours.</p>
+			<button><a href="mailto:contact@maruthlabs.com" style="color: white;">Collaborate with Us</a></button>
+		</section>
 
-        const radarOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: {
-                        padding: window.innerWidth < 768 ? 2 : 10,
-                        boxWidth: window.innerWidth < 768 ? 10 : 20
-                    }
-                },
-                title: {
-                    display: true,
-                    text: 'Performance Comparison: Madhuram-β vs GPT‑3 (Zero-shot & Few-shot)',
-                    padding: {
-                        top: 10,
-                        bottom: window.innerWidth < 768 ? 0 : 15
-                    },
-                    font: {size: window.innerWidth < 768 ? 12 : 14}
-                }
-            },
-            scales: {
-                r: {
-                    min: 20,
-                    max: 75,
-                    ticks: {
-                        suggestedMax: 75,
-                        backdropPadding: window.innerWidth < 768 ? 0 : 3,
-                        font: {size: window.innerWidth < 768 ? 9 : 11}
-                    },
-                    pointLabels: {
-                        font: {size: window.innerWidth < 768 ? 8 : 11}
-                    }
-                }
-            },
-            layout: {
-                padding: {
-                    top: window.innerWidth < 768 ? 0 : 5,
-                    bottom: window.innerWidth < 768 ? 0 : 10
-                }
-            }
-        };
+		<!-- Footer -->
+		<footer>
+			<ul class="footer-links">
+				<a href="https://x.com/maruthlabs" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+				<a href="https://www.linkedin.com/company/maruthlabs/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+				<a href="https://instagram.com/maruthlabs" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+			</ul>
+			<p>2025 Maruth Labs. Built in India, powering global innovation.</p>
+		</footer>
 
-        const radarCtx = document.getElementById('madhuramVsGPTRadar').getContext('2d');
-        let radarChart = new Chart(radarCtx, {
-            type: 'radar',
-            data: radarData,
-            options: radarOptions
-        });
+		<script>
+			// Hamburger Menu Toggle
+			document.querySelector('.hamburger').addEventListener('click', function() {
+				this.classList.toggle('active');
+				document.querySelector('.nav-right').classList.toggle('active');
+			});
 
-        window.addEventListener('resize', function() {
-            radarOptions.plugins.legend.labels.padding = window.innerWidth < 768 ? 2 : 10;
-            radarOptions.plugins.legend.labels.boxWidth = window.innerWidth < 768 ? 10 : 20;
-            radarOptions.plugins.title.padding.bottom = window.innerWidth < 768 ? 0 : 15;
-            radarOptions.plugins.title.font.size = window.innerWidth < 768 ? 12 : 14;
-            radarOptions.scales.r.ticks.backdropPadding = window.innerWidth < 768 ? 0 : 3;
-            radarOptions.scales.r.ticks.font.size = window.innerWidth < 768 ? 9 : 11;
-            radarOptions.scales.r.pointLabels.font.size = window.innerWidth < 768 ? 8 : 11;
-            radarOptions.layout.padding.top = window.innerWidth < 768 ? 0 : 5;
-            radarOptions.layout.padding.bottom = window.innerWidth < 768 ? 0 : 10;
-            radarChart.options = radarOptions;
-            radarChart.update();
-        });
+			// Smooth Scrolling for Navigation Links
+			document.querySelectorAll('a[href^="#"]').forEach(link => {
+				link.addEventListener('click', e => {
+					e.preventDefault();
+					const target = document.getElementById(link.getAttribute('href').substring(1));
+					
+					// Close mobile menu if open
+					const navRight = document.querySelector('.nav-right');
+					const hamburger = document.querySelector('.hamburger');
+					if (navRight && navRight.classList.contains('active')) {
+						navRight.classList.remove('active');
+						hamburger.classList.remove('active');
+					}
+					
+					if (target) window.scrollTo({ 
+						top: target.offsetTop - 20, 
+						behavior: 'smooth' 
+					});
+				});
+			});
 
-        const modelCategories = ['ARC', 'Hellaswag', 'OBQA', 'PIQA', 'Winogrande', 'BoolQ', 'WSC', 'Super_Glue', 'RTE', 'Average'];
-
-        const barData = {
-            labels: modelCategories,
-            datasets: [
-                {
-                    label: 'Madhuram-β',
-                    data: [36.84, 33.95, 31.4, 63.76, 51.78, 53.12, 63.46, 53.07, 54.86, 49.14],
-                    backgroundColor: '#4C93E8',
-                    borderRadius: 8,
-                    borderSkipped: false
-                },
-                {
-                    label: 'MobileLLM-125M',
-                    data: [37.25,39.5, 41.1, 65.7, 52.1, 60.4, 36.54,54.9, 54.15,49.07],
-                    backgroundColor: '#4BC0C0',
-                    borderRadius: 8,
-                    borderSkipped: false
-                },
-                {
-                    label: 'SmolLM2-135M',
-                    data: [42.4, 41.2, 34, 68.4, 51.3, 60.31,37.5, 53.37,49.82,48.7],
-                    backgroundColor: '#9966FF',
-                    borderRadius: 8,
-                    borderSkipped: false
-                },
-                {
-                    label: 'GPT3-Small',
-                    data: [35.1, 33.7, 35.6, 64.6, 52, 49.7, 59.6, 40.6, 47.7, 46.51],
-                    backgroundColor: '#FF9F40',
-                    borderRadius: 8,
-                    borderSkipped: false
-                }
-            ]
-        };
-
-        const barOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            animation: {
-                duration: 1000,
-                easing: 'easeOutQuart'
-            },
-            plugins: {
-                legend: { 
-                    position: 'top',
-                    labels: {
-                        padding: window.innerWidth < 768 ? 5 : 10,
-                        boxWidth: window.innerWidth < 768 ? 10 : 20,
-                        font: {size: window.innerWidth < 768 ? 9 : 12}
-                    }
-                },
-                title: {
-                    display: true,
-                    text: 'Model Performance Comparison Across Different Benchmarks',
-                    padding: {
-                        top: 10,
-                        bottom: window.innerWidth < 768 ? 0 : 10
-                    },
-                    font: {size: window.innerWidth < 768 ? 12 : 14}
-                }
-            },
-            scales: {
-                x: {
-                    title: { 
-                        display: true, 
-                        text: 'Benchmarks',
-                        font: {size: window.innerWidth < 768 ? 9 : 12}
-                    },
-                    categoryPercentage: 0.6,
-                    barPercentage: 0.8,
-                    grid: { display: false },
-                    ticks: {
-                        font: {size: window.innerWidth < 768 ? 8 : 10}
-                    }
-                },
-                y: {
-                    title: { 
-                        display: true, 
-                        text: 'Accuracy (%)',
-                        font: {size: window.innerWidth < 768 ? 9 : 12}
-                    },
-                    min: 20,
-                    ticks: {font: {size: window.innerWidth < 768 ? 8 : 10}}
-                }
-            }
-        };
-
-        const barCtx = document.getElementById('efficiencyBar').getContext('2d');
-        let barChart = new Chart(barCtx, {
-            type: 'bar',
-            data: barData,
-            options: barOptions
-        });
-
-        window.addEventListener('resize', function() {
-            barOptions.plugins.legend.labels.padding = window.innerWidth < 768 ? 5 : 10;
-            barOptions.plugins.legend.labels.boxWidth = window.innerWidth < 768 ? 10 : 20;
-            barOptions.plugins.legend.labels.font.size = window.innerWidth < 768 ? 9 : 12;
-            barOptions.plugins.title.padding.bottom = window.innerWidth < 768 ? 0 : 10;
-            barOptions.plugins.title.font.size = window.innerWidth < 768 ? 12 : 14;
-            barOptions.scales.x.title.font.size = window.innerWidth < 768 ? 9 : 12;
-            barOptions.scales.x.ticks.font.size = window.innerWidth < 768 ? 8 : 10;
-            barOptions.scales.y.title.font.size = window.innerWidth < 768 ? 9 : 12;
-            barOptions.scales.y.ticks.font.size = window.innerWidth < 768 ? 8 : 10;
-
-            barChart.options = barOptions;
-            barChart.update();
-        });
-    </script>
-</body>
+			// Scroll Reveal Animation
+			const observerOptions = {
+				root: null,
+				rootMargin: '0px',
+				threshold: 0.1
+			};
+			
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.style.opacity = '1';
+						entry.target.style.transform = 'translateY(0)';
+					}
+				});
+			}, observerOptions);
+			
+			// Observe all sections except hero
+			document.querySelectorAll('section').forEach(section => {
+				section.style.opacity = '0';
+				section.style.transform = 'translateY(20px)';
+				section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+				observer.observe(section);
+			});
+			
+			// Observe all cards with slight delay
+			document.querySelectorAll('.card').forEach((card, index) => {
+				card.style.opacity = '0';
+				card.style.transform = 'translateY(20px)';
+				card.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s ease-out ${index * 0.1}s`;
+				observer.observe(card);
+			});
+			
+			// Observe all blog posts with slight delay
+			document.querySelectorAll('.post').forEach((post, index) => {
+				post.style.opacity = '0';
+				post.style.transform = 'translateY(20px)';
+				post.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s ease-out ${index * 0.1}s`;
+				observer.observe(post);
+			});
+		</script>
+	</body>
 </html>
