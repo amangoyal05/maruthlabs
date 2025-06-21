@@ -186,9 +186,7 @@
 			.hamburger.active .hamburger-bar:nth-child(2) {
 				opacity: 0;
 			}
-			.hamburger.active .hamburger-bar:nth-child(3) {
-				transform: rotate(45deg) translate(-5px, -6px);
-			}
+			.hamburger.active .hamburger-bar:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
 
 			/* Hero */
 			.hero { 
@@ -473,6 +471,13 @@
 			.footer-links i:hover {
 				transform: translateY(-3px);
 			}
+			.video-container {
+				position: relative;
+				width: 100%;
+				height: 0;
+				padding-bottom: 56.25%;
+				margin: 0 0 -30% 0;
+			}
 			/* Responsive Fixes */
 			@media (max-width: 768px) {
 				/* Navbar Responsive Styles */
@@ -554,6 +559,20 @@
 					flex-wrap: wrap;
 					gap: 1rem 2rem;
 				}
+				.video-container {
+					position: relative;
+					width: 100%;
+					height: 0;
+					padding-bottom: 56.25%;
+					margin: 0 0 -30% 0;
+				}
+				.video-container iframe {
+					position: absolute;
+					top: -15%;
+					left: 10%;
+					width: 70%;
+					height: 70%;
+				}
 			}
 		</style>
 	</head>
@@ -595,6 +614,19 @@
 			<div class="right">
 				<p>At Maruth Labs, we've created a versatile language model that delivers same performance across all computing environments. Whether deployed in the cloud or running directly on your device, Madhuram provides consistent, high-quality results.</p>
 				<p>Our advanced optimization techniques ensure that Madhuram maintains powerful capabilities while adapting to available resources, making sophisticated AI accessible on virtually any platform - from powerful cloud servers to resource-constrained edge devices.</p>
+			</div>
+		</section>
+		<section id="about" class="about-container">
+			<!-- YouTube Video Embed -->
+			<div class="video-container">
+				<iframe
+					style="position: absolute; top: -15%; left: 15%; width: 70%; height: 70%;"
+					src="https://www.youtube.com/embed/Ka_Fd21EIiQ"
+					title="YouTube video player"
+					frameborder="0"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+					allowfullscreen>
+				</iframe>
 			</div>
 		</section>
        <!-- Use Cases Section -->
