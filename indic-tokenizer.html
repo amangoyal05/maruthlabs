@@ -137,7 +137,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="table-note">Figure 1: Fertility Rate comparison of our Indic Tokenizer with SUTRA, Sarvam-1, and Gemma-3 on Flores dataset.</p>
+                <p class="table-note">Table 1: Fertility Rate comparison of our Indic Tokenizer with SUTRA, Sarvam-1, and Gemma-3 on Flores dataset.</p>
                 <p><strong>Key Findings:</strong></p>
                 <ul>
                     <li><strong>Our tokenizer achieves the best overall fertility (1.796 average)</strong> compared to Gemma-3 (2.275), SUTRA (1.811), and Sarvam-1 (1.894).</li>
@@ -170,7 +170,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="table-note">Figure 2: Normalized sequence length comparison of our tokenizer, Sarvam-1, and Gemma-3 with SUTRA as baseline on Flores dataset.</p>
+                <p class="table-note">Table 2: Normalized sequence length comparison of our tokenizer, Sarvam-1, and Gemma-3 with SUTRA as baseline on Flores dataset. (Closer to 1 is better) </p>
                 
                 <p><strong>Our Indic Tokenizer demonstrates excellent sequence efficiency</strong> with mean normalized length of 1.021 (closest to SUTRA's 1.000 baseline) and low standard deviation (0.134).</p>
                 
@@ -181,14 +181,14 @@
                             <tr><th>Model</th><th>Average Fertility</th><th>Fertility Standard Deviation</th><th>Average OOV Rate</th><th>Average Sequence Length</th><th>Sequence Length Standard Deviation</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td class="emphasized">Indic Tokenizer (Our)</td><td>1.7960</td><td>0.364</td><td>0.0%</td><td>1.021</td><td>0.134</td></tr>
+                            <tr class="highlighted-row"><td class="emphasized">Indic Tokenizer (Our)</td><td>1.7960</td><td>0.364</td><td>0.0%</td><td>1.021</td><td>0.134</td></tr>
                             <tr><td class="emphasized">SUTRA</td><td>1.811</td><td>0.536</td><td>0.0%</td><td>1.000</td><td>0.000</td></tr>
                             <tr><td class="emphasized">Sarvam-1</td><td>1.894</td><td>0.387</td><td>0.0%</td><td>1.105</td><td>0.167</td></tr>
                             <tr><td class="emphasized">Gemma-3</td><td>2.275</td><td>0.803</td><td>0.0%</td><td>1.289</td><td>0.466</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="table-note">Figure 3: Overall comparison of our tokenizer, SUTRA, Sarvam-1, and Gemma-3 on Flores dataset.</p>
+                <p class="table-note">Figure 1: Overall comparison of our tokenizer, SUTRA, Sarvam-1, and Gemma-3 on Flores dataset.</p>
 
                 <p><strong>Our tokenizer leads in key metrics:</strong></p>
                 <ul>
@@ -220,7 +220,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="table-note">Figure 4: Vocabulary distribution across languages and character types.</p>
+                <p class="table-note">Figure 2: Vocabulary distribution across languages and character types.</p>
                 
                 <p>This distribution reflects the rebalancing strategy while maintaining reasonable representation for all languages. English maintains the largest share due to its role as a lingua franca, but each Indic language receives substantial representation proportional to its tokenization needs.</p>
 
@@ -239,7 +239,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="table-note">Table 1: Comparison across development iterations.</p>
+                <p class="table-note">Table 3: Comparison across development iterations.</p>
 
                 <p><strong>Hardware reduction: 16x lesser hardware</strong> than the failed attempt while achieving superior quality compared to established tokenizers. This dramatic reduction has important implications for the democratization of multilingual NLP. By reducing hardware needs from 64 vCPUs to 4 vCPUs, the approach makes multilingual tokenizer development accessible to researchers and organizations with limited computational budgets.</p>
 
