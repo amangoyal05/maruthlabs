@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="description" content="Detailed blog post about our indic tokenizer, a indic language model achieving competitive performance with trained using a new tokenizer.">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="icon" href="./static/logo.png" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-pb3bE6WfO4HJXXtr6k39AdN/HN3wY8cO68l4LWejzQonhQYry8M6gKMEhueNRpX2D/5HUL1k3V3W3D4fYv5F0A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <title>Building Our Indic Tokenizer: A Cost-Effective Multilingual Tokenizer</title>
+        <link rel="stylesheet" href="./static/indic-tokenizer.css">
+    </head>
+    <body>
+        <!-- Navbar -->
+        <nav>
+            <div class="nav-content">
+                <div class="nav-logo">
+                    <img alt="Maruth Labs Logo" src="./static/logo.png"/>
+                    <span>Maruth Labs</span>
+                </div>
+                <!-- Hamburger Menu for Mobile -->
+                <div class="hamburger" onclick="toggleNav()">
+                    <div class="hamburger-bar"></div>
+                    <div class="hamburger-bar"></div>
+                    <div class="hamburger-bar"></div>
+                </div>
+                <div class="nav-right">
+                    <ul class="nav-links">
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#usecases">Use Cases</a></li>
+                        <li><a href="index.html#blog">Blogs</a></li>
+                    </ul>
+					<a href="https://huggingface.co/spaces/maruthlabs/madhuram"><button class="nav-button" id="tryNav">Try Madhuram</button></a>
+                </div>
+            </div>
+        </nav>
+
+        <header class="blog-header">
+            <h1>Building Indic Tokenizer: A Cost-Effective Approach</h1>
+            <div class="blog-meta">
+                <div><i class="far fa-calendar"></i><span>July 30, 2025</span></div>
+                <div><i class="far fa-clock"></i><span>10 min read</span></div>
+            </div>
+        </header>
+
+        <div class="blog-container">
+            <section id="about" class="blog-content">
+                <h2>The Challenge of Multilingual Tokenization</h2>
+                <p>Creating effective tokenizers for multiple languages, especially those with different scripts like English and Indic languages, presents unique challenges. This article documents the journey of building our <strong>"Indic Tokenizer"</strong>, a multilingual tokenizer supporting <strong>English, Hindi, Bengali, Kannada, Tamil, Punjabi, and Telugu</strong> - from expensive failures to an efficient, cost-effective solution.</p>
+                <p>Multilingual tokenization is particularly challenging because <strong>different language families have vastly different characteristics</strong>. While English uses straightforward alphabetic characters, Indic languages employ complex scripts with conjuncts, combining marks, and context-dependent character variations. These differences mean that tokenization strategies effective for one language family often fail catastrophically for others</p>
+
+                <h2>Failure #1: ByteLevel Tokenization Falls Short</h2>
+                <p>The first approach seemed logical: use <strong>ByteLevel tokenization</strong>, which works well for English by treating text as raw bytes. However, this approach proved disastrous for Indic languages</p>
+                <p><strong>The Problem:</strong> Indic scripts have complex character compositions with combining marks, conjuncts, and multi-byte UTF-8 representations. ByteLevel tokenization fragments these meaningful linguistic units into meaningless byte sequences, destroying the semantic structure that's crucial for these languages. For example, a single Devanagari conjunct character could be split into multiple byte-level tokens, making it impossible for models to learn proper word boundaries or morphological patterns</p>
+                <p>This failure highlights a fundamental issue in cross-linguistic NLP: <strong>what works for morphologically simple languages like English often breaks down when applied to morphologically rich languages</strong>. The byte-level approach, while elegant for ASCII-based languages, ignores the linguistic reality of complex writing systems</p>
+                <p><strong>Result:</strong> Poor tokenization quality with high fertility rates (too many tokens per word) and loss of linguistic meaning.</p>
+
+                <h2>Failure #2: The Data Deluge Disaster</h2>
+                <p>Learning from the ByteLevel failure, the second attempt took a different approach: throw more data at the problem. This reflects a common misconception in modern NLP that more data automatically leads to better results.</p>
+                <p><strong>The Approach:</strong></p>
+                <ul>
+                    <li><strong>Data:</strong> 170 GB of multilingual data</li>
+                    <li><strong>Tokenizer:</strong> Vanilla BPE tokenizer</li>
+                    <li><strong>Massive Compute Resources:</strong> 64 vCPUs</li>
+                    <li><strong>Training Time:</strong> 10 hours for data preparation + 1 hour for tokenizer training</li>
+                </ul>
+                <p><strong>The Problems:</strong></p>
+                <ul>
+                    <li><strong>Coverage issue:</strong> Less than 1.0 for most of the languages</li>
+                    <li><strong>Out-of-Vocabulary Rate:</strong> Non-zero OOV rates despite massive vocabulary</li>
+                    <li><strong>Tokenization Quality:</strong> Poor even after adding extensive initial character sets</li>
+                </ul>
+                <p>This failure demonstrates the <strong>"data fallacy"</strong> - the assumption that poor model performance can always be solved by adding more training data. In reality, <strong>noisy, unfiltered data</strong> often hurts performance more than it helps, especially in multilingual settings where data quality varies dramatically across languages.</p>
+                <p><strong>Key Insight:</strong> More data doesn't automatically solve tokenization quality issues. The problem wasn't quantity - it was approach and data quality.</p>
+            
+                <h2>Success #1: Small-Scale Breakthrough</h2>
+                <p>Frustrated with expensive failures, the third attempt took a <strong>minimalist approach</strong> inspired by research showing that careful data curation outperforms brute-force scaling.</p>
+                <p><strong>The Pivot:</strong></p>
+                <ul>
+                    <li><strong>Languages Covered:</strong> Reduced to just English and Hindi</li>
+                    <li><strong>Tiny vocabulary:</strong> 15,000 tokens</li>
+                    <li><strong>Dataset:</strong> Small dataset (less than 500 MB) curated using public dataset</li>
+                    <li><strong>Modest hardware:</strong> 4 vCPUs</li>
+                </ul>
+                <p><strong>Result:</strong></p>
+                <ul>
+                    <li><strong>Fertility Rate:</strong> Significant reduced fertility rate</li>
+                    <li><strong>Training Time:</strong> Data curation and training completed in under 5 minutes</li>
+                    <li><strong>Training Environment:</strong> Can be trained on any laptop with internet connection</li>
+                </ul>
+                <p>This success validates the <strong>"less is more"</strong> principle in machine learning. By focusing on two languages and applying strict quality filters, the tokenizer could learn meaningful patterns rather than memorizing noise. The dramatic reduction in hardware also demonstrates that effective NLP <strong>doesn't require massive computational resources</strong> when approached thoughtfully.</p>
+                <p><strong>The Revelation:</strong> Quality data curation and appropriate vocabulary sizing matter more than brute-force scaling.</p>
+
+                <h2>Success #2: The Indic Tokenizer</h2>
+                <p>Building on the small-scale success, the final iteration expanded thoughtfully, applying lessons from multilingual tokenization research.</p>
+                <p><strong>Technical Specifications:</strong></p>
+                <ul>
+                    <li><strong>Languages:</strong> 7 languages (English, Hindi, Bengali, Kannada, Tamil, Punjabi, Telugu)</li>
+                    <li><strong>Vocabulary Size:</strong> 65,536 tokens</li>
+                    <li><strong>Training Data:</strong> 1.2 million samples</li>
+                    <li><strong>Data Size:</strong> approximately 950 MB after cleaning</li>
+                    <li><strong>Hardware:</strong> 4 vCPUs only</li>
+                    <li><strong>Training Time:</strong> approximately 20 minutes data prep + approximately 2 minutes tokenizer training</li>
+                </ul>
+
+                <h3>Data Engineering Strategy</h3>
+                <p>The key was intelligent data curation rather than volume. This approach draws from research showing that <strong>data quality is more important than quantity</strong> for multilingual models. The filtering process removed low-quality text, ensuring each training sample contributed meaningful linguistic information. The system implemented strict validation criteria: minimum text length requirements, character validity checks based on Unicode ranges, and emoji/unwanted character removal. This aggressive filtering <strong>reduced data volume but dramatically improved quality</strong>, following principles established in recent multilingual NLP research.</p>
+                
+                <h3>Language Balancing</h3>
+                <p>Instead of equal representation, languages were <strong>rebalanced based on tokenization complexity</strong>. This reflects linguistic reality: some languages require more tokens per word due to their morphological complexity. Bengali, for example, should be given a <strong>much higher multiplier</strong> due to its complex script and extensive use of conjuncts, while English should receive an<strong> almost negligible multiplier</strong>.</p>
+                <p>This balancing strategy addresses a critical issue in multilingual tokenization: <strong>naive equal sampling often underrepresents morphologically complex languages</strong>, leading to poor performance on exactly the languages that need the most attention.</p>
+
+                <h3>Tokenizer Architecture</h3>
+                <p>The tokenizer used <strong>BPE (Byte-Pair Encoding) with byte fallback</strong> for robustness. This combination provides the linguistic awareness of BPE while maintaining the fallback capability <strong>to handle any Unicode character</strong> through byte-level encoding. The preprocessing pipeline included <strong>punctuation isolation, pattern-based splitting, digit handling, and Metaspace processing</strong>. The comprehensive initial alphabet included individual characters.</p>
+
+                <h2>Comprehensive Performance Comparison</h2>
+                <p>Our tokenizer's performance was evaluated against three established multilingual tokenizers: <strong>Gemma-3, TWO AI’s SUTRA, and Sarvam’s Sarvam-1</strong>. The evaluation used the FLORES development dataset across all seven supported languages.</p>
+
+                <h3>Fertility Analysis (Tokens per Word)</h3>
+                <p>The fertility metric measures tokenization efficiency - lower values indicate more efficient tokenization with fewer tokens needed per word.</p>
+
+                <div class="table-container">
+                    <table id="fertility-table" class="performance-table">
+                        <thead>
+                            <tr><th>Language</th><th>Indic Tokenizer (Our)</th><th>SUTRA</th><th>Sarvam-1</th><th>Gemma-3</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="emphasized">English</td><td>1.35</td><td>1.14</td><td>1.43</td><td>1.28</td></tr>
+                            <tr><td class="emphasized">Hindi</td><td>1.47</td><td>1.46</td><td>1.4</td><td>1.43</td></tr>
+                            <tr><td class="emphasized">Punjabi</td><td>1.55</td><td>1.25</td><td>1.68</td><td>2.87</td></tr>
+                            <tr><td class="emphasized">Bengali</td><td>1.71</td><td>1.85</td><td>2.07</td><td>1.72</td></tr>
+                            <tr><td class="emphasized">Telugu</td><td>2.09</td><td>2.23</td><td>2.14</td><td>2.88</td></tr>
+                            <tr><td class="emphasized">Tamil</td><td>2.16</td><td>2.28</td><td>2.17</td><td>2.42</td></tr>
+                            <tr><td class="emphasized">Kannada</td><td>2.24</td><td>2.47</td><td>2.37</td><td>3.33</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="table-note">Figure 1: Fertility Rate comparison of our Indic Tokenizer with SUTRA, Sarvam-1, and Gemma-3.</p>
+                <p><strong>Key Findings:</strong></p>
+                <ul>
+                    <li><strong>Our tokenizer achieves the best overall fertility (1.796 average)</strong> compared to Gemma-3 (2.275), SUTRA (1.811), and Sarvam-1 (1.894).</li>
+                    <li><strong>Most consistent performance</strong> with lowest standard deviation (0.364) across languages.</li>
+                    <li><strong>Exceptional performance on Kannada:</strong> 33% improvement over Gemma-3 (2.24 vs 3.33).</li>
+                    <li><strong>Strong performance on morphologically complex languages</strong> like Telugu and Tamil.</li>
+                </ul>
+
+                <p>The fertility results show our tokenizer performs particularly well on morphologically complex languages like Kannada, where it achieves a 33% improvement over Gemma-3. This reflects the success of the language-aware balancing strategy and careful initial alphabet design.</p>
+
+                <h3>Out-of-Vocabulary (OOV) Analysis</h3>
+                <p>All four tokenizers achieved perfect coverage with 0% OOV rates across all languages, indicating robust vocabulary coverage for the test datasets. The zero OOV rate is particularly significant, as it indicates the tokenizer can handle any text in the supported languages without encountering unknown tokens - a critical requirement for production systems.</p>
+
+                <h3>Sequence Length Efficiency</h3>
+                <p>Normalized sequence length comparison against SUTRA baseline shows relative efficiency:</p>
+
+                <div class="table-container">
+                    <table id="sequence-table" class="performance-table">
+                        <thead>
+                            <tr><th>Language</th><th>Indic Tokenizer (Our)</th><th>SUTRA</th><th>Sarvam-1</th><th>Gemma-3</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="emphasized">English</td><td>1.187</td><td>1.000</td><td>1.297</td><td>1.128</td></tr>
+                            <tr><td class="emphasized">Hindi</td><td>1.007</td><td>1.000</td><td>0.993</td><td>0.979</td></tr>
+                            <tr><td class="emphasized">Punjabi</td><td>1.234</td><td>1.000</td><td>1.373</td><td>2.286</td></tr>
+                            <tr><td class="emphasized">Bengali</td><td>0.927</td><td>1.000</td><td>1.125</td><td>0.932</td></tr>
+                            <tr><td class="emphasized">Telugu</td><td>0.936</td><td>1.000</td><td>0.979</td><td>1.290</td></tr>
+                            <tr><td class="emphasized">Tamil</td><td>0.946</td><td>1.000</td><td>0.964</td><td>1.058</td></tr>
+                            <tr><td class="emphasized">Kannada</td><td>0.910</td><td>1.000</td><td>1.005</td><td>1.351</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="table-note">Figure 2: Normalized sequence length comparison of our tokenizer, Sarvam-1, and Gemma-3 with SUTRA as baseline.</p>
+                
+                <p><strong>Our Indic Tokenizer demonstrates excellent sequence efficiency</strong> with mean normalized length of 1.021 (closest to SUTRA's 1.000 baseline) and low standard deviation (0.134).</p>
+                
+                <h3>Overall Model Comparison Summary</h3>
+                <div class="table-container">
+                    <table id="overall-table" class="performance-table">
+                        <thead>
+                            <tr><th>Model</th><th>Average Fertility</th><th>Fertility Standard Deviation</th><th>Average OOV Rate</th><th>Average Sequence Length</th><th>Sequence Length Standard Deviation</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="emphasized">Indic Tokenizer (Our)</td><td>1.7960</td><td>0.364</td><td>0.0%</td><td>1.021</td><td>0.134</td></tr>
+                            <tr><td class="emphasized">SUTRA</td><td>1.811</td><td>0.536</td><td>0.0%</td><td>1.000</td><td>0.000</td></tr>
+                            <tr><td class="emphasized">Sarvam-1</td><td>1.894</td><td>0.387</td><td>0.0%</td><td>1.105</td><td>0.167</td></tr>
+                            <tr><td class="emphasized">Gemma-3</td><td>2.275</td><td>0.803</td><td>0.0%</td><td>1.289</td><td>0.466</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="table-note">Figure 3: Overall comparison of our tokenizer, SUTRA, Sarvam-1, and Gemma-3.</p>
+
+                <p><strong>Our tokenizer leads in key metrics:</strong></p>
+                <ul>
+                    <li>Best overall fertility (most efficient tokenization)</li>
+                    <li>Most consistent performance across languages</li>
+                    <li>Excellent sequence efficiency close to SUTRA baseline</li>
+                    <li>Superior handling of morphologically complex languages</li>
+                </ul>
+
+                <h3>Vocabulary Distribution Analysis</h3>
+                <p>The final tokenizer achieved optimal distribution reflecting both usage frequency and linguistic complexity:</p>
+
+                <div class="table-container">
+                    <table id="vocab-table" class="performance-table">
+                        <thead>
+                            <tr><th>Language</th><th>Tokens</th><th>Percentage</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="emphasized">English</td><td>20,275</td><td>30.9%</td></tr>
+                            <tr><td class="emphasized">Bengali</td><td>9,128</td><td>13.9%</td></tr>
+                            <tr><td class="emphasized">Kannada</td><td>7,919</td><td>12.1%</td></tr>
+                            <tr><td class="emphasized">Hindi</td><td>7,381</td><td>11.3%</td></tr>
+                            <tr><td class="emphasized">Telugu</td><td>7,192</td><td>11.0%</td></tr>
+                            <tr><td class="emphasized">Tamil</td><td>6,614</td><td>10.1%</td></tr>
+                            <tr><td class="emphasized">Punjabi</td><td>5,755</td><td>8.8%</td></tr>
+                            <tr><td class="emphasized">Numbers</td><td>667</td><td>1.0%</td></tr>
+                            <tr><td class="emphasized">Punctuation</td><td>283</td><td>0.4%</td></tr>
+                            <tr><td class="emphasized">Other</td><td>307</td><td>0.5%</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="table-note">Figure 4: Vocabulary distribution across languages and character types.</p>
+                
+                <p>This distribution reflects the rebalancing strategy while maintaining reasonable representation for all languages. English maintains the largest share due to its role as a lingua franca, but each Indic language receives substantial representation proportional to its tokenization needs.</p>
+
+                <h2>Hardware Analysis</h2>
+                <p>The journey from failure to success shows dramatic hardware improvements:</p>
+
+                <div class="table-container">
+                    <table class="performance-table">
+                        <thead>
+                            <tr><th>Attempt</th><th>Data Size</th><th>Compute</th><th>Time</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="emphasized">Failure #2</td><td>170 GB</td><td>64 vCPUs</td><td>11 hours</td></tr>
+                            <tr><td class="emphasized">Success #1</td><td>Small</td><td>4 vCPUs</td><td>5 min</td></tr>
+                            <tr><td class="emphasized">Success #2</td><td>950 MB</td><td>4 vCPUs</td><td>22 min</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="table-note">Table 1: Comparison across development iterations.</p>
+
+                <p><strong>Hardware reduction: 16x lesser hardware</strong> than the failed attempt while achieving superior quality compared to established tokenizers. This dramatic reduction has important implications for the democratization of multilingual NLP. By reducing hardware needs from 64 vCPUs to 4 vCPUs, the approach makes multilingual tokenizer development accessible to researchers and organizations with limited computational budgets.</p>
+
+                <h2>Key Lessons Learned</h2>
+                
+                <h3>1. Quality Over Quantity</h3>
+                <p>Aggressive data filtering and curation produced better results than massive, unfiltered datasets. This aligns with recent research showing that careful data curation can match or exceed the performance of much larger, noisier datasets.</p>
+
+                <h3>2. Language-Aware Balancing</h3>
+                <p>Understanding each language's tokenization complexity enables better training balance. This goes beyond simple corpus statistics to consider the underlying linguistic properties that affect tokenization efficiency.</p>
+
+                <h3>3. Smart Initial Vocabulary</h3>
+                <p>Including morphologically meaningful subwords in the initial alphabet improves convergence. This reflects the importance of linguistic knowledge in designing NLP systems, rather than relying purely on statistical learning.</p>
+
+                <h3>4. Iterative Development</h3>
+                <p>Small-scale experimentation enabled rapid iteration and learning without massive costs. This methodology allows for quick hypothesis testing and reduces the risk of expensive failures.</p>
+
+                <h3>5. Hardware Efficiency</h3>
+                <p>Proper data engineering eliminates the need for expensive compute resources. This demonstrates that thoughtful algorithm design can often substitute for brute computational force.</p>
+
+                <h2>Technical Implementation</h2>
+                <p>The complete implementation demonstrates several best practices for multilingual tokenizer development:</p>
+                <ul>
+                    <li><strong>Robust Unicode Filtering:</strong> The system implements comprehensive Unicode range checking to ensure only valid characters for target languages are included, preventing contamination from unwanted scripts.</li>
+                    <li><strong>Language-Specific Validation:</strong> Each text sample undergoes validation to ensure it meets minimum quality standards and belongs to the intended language, using character distribution analysis rather than expensive language detection models.</li>
+                    <li><strong>Balanced Corpus Creation:</strong> The rebalancing algorithm ensures adequate representation for morphologically complex languages while maintaining computational efficiency.</li>
+                    <li><strong>Production-Ready Integration:</strong> The tokenizer includes HuggingFace wrapper compatibility and comprehensive testing, making it immediately usable in existing NLP pipelines.</li>
+                </ul>
+
+                <h2>Broader Implications</h2>
+                <p>The success of our tokenizer has several important implications for the field of multilingual NLP:</p>
+                
+                <p><strong>Accessibility:</strong> By reducing costs dramatically, the approach makes multilingual tokenizer development accessible to smaller research groups and organizations in developing countries where computational resources are limited.</p>
+                
+                <p><strong>Sustainability:</strong> The reduced computational requirements align with growing concerns about the environmental impact of large-scale NLP training, demonstrating that effective models don't always require massive resource consumption.</p>
+                
+                <p><strong>Linguistic Equity:</strong> The language-aware balancing strategy addresses issues of linguistic bias in multilingual models, ensuring that morphologically complex languages receive adequate representation.</p>
+            </section>
+
+            <section id="conclusion" class="blog-content">
+                <h2>Conclusion</h2>
+                <p>Building effective multilingual tokenizers doesn't require massive resources or datasets. The tokenizer demonstrates that thoughtful engineering, quality data curation, and iterative development can produce superior results compared to established tokenizers at a fraction of the cost.</p>
+                
+                <p><strong>Final specifications:</strong></p>
+                <ul>
+                    <li><strong>Languages Covered:</strong> 7 languages supported (English, Hindi, Bengali, Kannada, Tamil, Telugu, and Punjabi)</li>
+                    <li><strong>Vocabulary Size:</strong> 65,536</li>
+                    <li><strong>Training Environment:</strong> Trainable on laptop hardware</li>
+                    <li><strong>Fertility Rate:</strong> Best-in-class performance across fertility and consistency metrics</li>
+                </ul>
+                
+                <p>The key insight: successful multilingual NLP isn't about having the most data or compute - it's about <strong>understanding the languages, curating quality data, and engineering solutions</strong> that respect linguistic diversity. This approach not only produces better results but also democratizes access to multilingual NLP capabilities.</p>
+                
+                <p>The development journey illustrates a broader principle in machine learning: constraints often drive innovation. By being forced to work with limited resources, the project discovered more efficient approaches that ultimately outperformed resource-intensive alternatives.<br><hr>
+                    <i>
+                        For collaboration opportunities, or technical questions, please reach out to our team. Together, we can make lightweight, accessible language models a reality for everyone.
+                        <br>Contact us at <a href="mailto:contact@maruthlabs.com">contact@maruthlabs.com</a>.
+                    </i>
+                </p>
+            </section>
+
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <ul class="footer-links">
+                <a href="https://x.com/maruthlabs" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://instagram.com/maruthlabs" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </ul>
+            <p>2025 Maruth Labs. Built in India, powering global innovation.</p>
+        </footer>
+
+        <script defer src="./static/indic-tokenizer.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    </body>
+</html>
