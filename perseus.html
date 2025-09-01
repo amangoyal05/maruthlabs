@@ -32,7 +32,19 @@
                         <li><a href="index.html#usecases">Use Cases</a></li>
                         <li><a href="index.html#blog">Blogs</a></li>
                     </ul>
-					<a href="https://huggingface.co/spaces/maruthlabs/madhuram"><button class="nav-button" id="tryNav">Try Madhuram</button></a>
+					<div class="dropdown">
+						<button class="nav-button dropdown-toggle" id="tryNavBtn" aria-haspopup="true" aria-expanded="false" aria-controls="tryNavMenu">
+							Try Now<i class="fa-solid fa-caret-down" aria-hidden="true"></i>
+						</button>
+						<ul class="dropdown-menu" id="tryNavMenu" role="menu" aria-labelledby="tryNavBtn">
+							<li role="none">
+								<a role="menuitem" class="dropdown-item" href="https://huggingface.co/spaces/maruthlabs/madhuram">Madhuram</a>
+							</li>
+							<li role="none">
+								<a role="menuitem" class="dropdown-item" href="https://huggingface.co/spaces/maruthlabs/madhuram-translate">Madhuram-Translate</a>
+							</li>
+						</ul>
+					</div>
                 </div>
             </div>
         </nav>

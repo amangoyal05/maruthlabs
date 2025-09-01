@@ -1,31 +1,74 @@
-// Hamburger Menu Toggle
-document.querySelector('.hamburger').addEventListener('click', function() {
-    this.classList.toggle('active');
-    document.querySelector('.nav-right').classList.toggle('active');
-});
-
-// Close mobile menu when clicking navigation links
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        document.querySelector('.nav-right').classList.remove('active');
-        document.querySelector('.hamburger').classList.remove('active');
-    });
-});
-
-// CTA Button Functionality
-document.getElementById('tryNav').addEventListener('click', () => {
-    window.location.href = 'index.html#cta';
-});
-
-// Smooth Scrolling Animation for Page Load
-document.addEventListener('DOMContentLoaded', () => {
-    const blogContent = document.querySelector('.blog-content');
-    blogContent.style.opacity = '0';
-    blogContent.style.transform = 'translateY(20px)';
-    blogContent.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+document.addEventListener('DOMContentLoaded', function () {
+    // Hamburger toggle (mobile)
+    const hamburger = document.querySelector('.hamburger');
+    const navRight = document.querySelector('.nav-right');
     
-    setTimeout(() => {
-        blogContent.style.opacity = '1';
-        blogContent.style.transform = 'translateY(0)';
-    }, 100);
-});
+    if (hamburger && navRight) {
+        hamburger.addEventListener('click', function () {
+            this.classList.toggle('active');
+            navRight.classList.toggle('active');
+        });
+    }
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (navRight) navRight.classList.remove('active');
+            if (hamburger) hamburger.classList.remove('active');
+        });
+    });
+
+    (function () {
+        const btn = document.getElementById('tryNavBtn');
+        const menu = document.getElementById('tryNavMenu');
+
+        if (!btn || !menu) return;
+
+        function closeMenu() {
+            menu.classList.remove('show');
+            btn.setAttribute('aria-expanded', 'false');
+        }
+        function openMenu() {
+            menu.classList.add('show');
+            btn.setAttribute('aria-expanded', 'true');
+        }
+        function toggleMenu() {
+            if (menu.classList.contains('show')) closeMenu(); else openMenu();
+        }
+
+        // Toggle when clicking the button
+        btn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        // Close on outside click
+        document.addEventListener('click', function (e) {
+            if (!menu.contains(e.target) && e.target !== btn) closeMenu();
+        });
+
+        // Close on Esc
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeMenu();
+        });
+
+        // Keyboard: open via ArrowDown and focus first item
+        btn.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                openMenu();
+                const first = menu.querySelector('.dropdown-item');
+                if (first) first.focus();
+            }
+        });
+
+        // Close the menu when a dropdown item is clicked (good for mobile)
+        menu.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                closeMenu();
+                // If using internal links, also close mobile nav
+                if (navRight) navRight.classList.remove('active');
+                if (hamburger) hamburger.classList.remove('active');
+            });
+        });
+    })();
+});  

@@ -12,11 +12,6 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
-// CTA Button Functionality
-document.getElementById('tryNav').addEventListener('click', () => {
-    window.location.href = 'index.html#cta';
-});
-
 // Smooth Scrolling Animation for Page Load
 document.addEventListener('DOMContentLoaded', () => {
     const blogContent = document.querySelector('.blog-content');
@@ -46,42 +41,6 @@ const opts = {
     plugins: { legend: { labels: { color: '#2d3748' } } },
     scales: { x: { ticks: { color: '#4a5568' } }, y: { ticks: { color: '#4a5568' } } }
 };
-
-// const fertCvs = swapTable('fertility-table', 'fertChart');
-// fertCvs.width = 800;
-// fertCvs.height = 400;
-
-// if (fertCvs) {
-//     new Chart(fertCvs, {
-//         type: 'bar',
-//         data: {
-//             labels: ['English','Hindi','Punjabi','Bengali','Telugu','Tamil','Kannada'],
-//             datasets: [
-//                 { label: 'Indic Tokenizer (Ours)', data: [1.35,1.47,1.55,1.71,2.09,2.16,2.24], backgroundColor: '#2d3748' },
-//                 { label: 'SUTRA', data: [1.14,1.46,1.25,1.85,2.23,2.28,2.47], backgroundColor: '#718096' },
-//                 { label: 'Sarvam-1', data: [1.43,1.40,1.68,2.07,2.14,2.17,2.37], backgroundColor: '#a0aec0' },
-//                 { label: 'Gemma-3',data: [1.28,1.43,2.87,1.72,2.88,2.42,3.33], backgroundColor: '#cbd5e0' }
-//             ]
-//         },
-//         options: opts
-//     });
-// }
-
-// const seqCvs = swapTable('sequence-table', 'seqChart');
-// if (seqCvs) {
-//     new Chart(seqCvs, {
-//         type: 'line',
-//         data: {
-//             labels: ['English','Hindi','Punjabi','Bengali','Telugu','Tamil','Kannada'],
-//             datasets: [
-//                 { label: 'Indic Tokenizer (Ours)', data: [1.187,1.007,1.234,0.927,0.936,0.946,0.910], borderColor: '#1a202c', tension: 0.3 },
-//                 { label: 'Sarvam-1', data: [1.297,0.993,1.373,1.125,0.979,0.964,1.005], borderColor: '#718096', tension: 0.3 },
-//                 { label: 'Gemma-3', data: [1.128,0.979,2.286,0.932,1.290,1.058,1.351], borderColor: '#a0aec0', tension: 0.3 }
-//             ]
-//         },
-//         options: opts
-//     });
-// }
 
 const ovCvs = swapTable('overall-table', 'ovChart');
 if (ovCvs) {
@@ -126,3 +85,27 @@ if (vocCvs) {
         }
     });
 }
+
+document.getElementById('tryNav').addEventListener('click', (e) => {
+    if (window.innerWidth <= 768) {
+        e.preventDefault();
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.toggle('active');
+    }
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.dropdown')) {
+        document.querySelector('.dropdown').classList.remove('active');
+    }
+});
+
+// Close mobile menu when clicking dropdown links
+document.querySelectorAll('.dropdown-content a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.querySelector('.nav-right').classList.remove('active');
+        document.querySelector('.hamburger').classList.remove('active');
+        document.querySelector('.dropdown').classList.remove('active');
+    });
+});

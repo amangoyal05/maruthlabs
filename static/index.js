@@ -64,3 +64,49 @@ document.querySelectorAll('.post').forEach((post, index) => {
     post.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s ease-out ${index * 0.1}s`;
     observer.observe(post);
 });
+
+
+(function() {
+    const btn = document.getElementById('tryNavBtn');
+    const menu = document.getElementById('tryNavMenu');
+
+    if (!btn || !menu) return;
+
+    function closeMenu() {
+        menu.classList.remove('show');
+        btn.setAttribute('aria-expanded', 'false');
+    }
+    function openMenu() {
+        menu.classList.add('show');
+        btn.setAttribute('aria-expanded', 'true');
+    }
+    function toggleMenu() {
+        if (menu.classList.contains('show')) closeMenu(); else openMenu();
+    }
+
+    // Toggle when clicking the button
+    btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close on outside click
+    document.addEventListener('click', function(e){
+        if (!menu.contains(e.target) && e.target !== btn) closeMenu();
+    });
+
+    // Close on Esc
+    document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeMenu();
+    });
+
+    // Optional: keyboard open via ArrowDown
+    btn.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            openMenu();
+            const first = menu.querySelector('.dropdown-item');
+            if (first) first.focus();
+        }
+    });
+})();

@@ -38,7 +38,19 @@
 						<li><a href="#usecases">Use Cases</a></li>
 						<li><a href="#blog">Blogs</a></li>
 					</ul>
-					<a href="https://huggingface.co/spaces/maruthlabs/madhuram"><button class="nav-button" id="tryNav">Try Madhuram</button></a>
+					<div class="dropdown">
+						<button class="nav-button dropdown-toggle" id="tryNavBtn" aria-haspopup="true" aria-expanded="false" aria-controls="tryNavMenu">
+							Try Now<i class="fa-solid fa-caret-down" aria-hidden="true"></i>
+						</button>
+						<ul class="dropdown-menu" id="tryNavMenu" role="menu" aria-labelledby="tryNavBtn">
+							<li role="none">
+								<a role="menuitem" class="dropdown-item" href="https://huggingface.co/spaces/maruthlabs/madhuram">Madhuram</a>
+							</li>
+							<li role="none">
+								<a role="menuitem" class="dropdown-item" href="https://huggingface.co/spaces/maruthlabs/madhuram-translate">Madhuram-Translate</a>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</nav>
@@ -47,7 +59,7 @@
 		<div class="hero">
 			<h1>Versatile AI Model for Cloud & Edge Computing</h1>
 			<p>Madhuram delivers powerful language capabilities on any device - from cloud servers to edge devices, with seamless performance across all platforms.</p>
-			<a href="https://huggingface.co/spaces/maruthlabs/madhuram"><button id="tryNav">Try Madhuram</button></a>
+			<a href="https://huggingface.co/spaces/maruthlabs/madhuram-translate"><button id="tryNav">Try Madhuram-Translate</button></a>
 		</div>
 
 		<!-- About Section -->
@@ -71,7 +83,7 @@
 				</iframe>
 			</div>
 		</section>
-       <!-- Use Cases Section -->
+		<!-- Use Cases Section -->
 		<section id="usecases">
 			<h2 style="display: block; text-align: center; width: 100%;">What You Can Build with Madhuram</h2>
 			<div class="cards">
@@ -108,9 +120,9 @@
 			<h2 style="display: block; text-align: center; width: 100%;">Insights & Updates</h2>
 			<div class="blog-grid">
 				<div class="post">
-					<h3>Building Indic Tokenizer: A Cost-Effective Approach</h3>
-					<p>Read about our cost efficient approach for creating an indic tokenizer using minimal data and hardware.</p>
-					<a href="indic-tokenizer.html">Read the Deep Dive →</a>
+					<h3>Building Madhuram-Translate: From Tokenizer to Translation</h3>
+					<p>Read about our translation model built using our cost efficient indic tokenizer using minimal data and hardware.</p>
+					<a href="madhuram-translate.html">Read the Deep Dive →</a>
 				</div>
 				<div class="post">
 					<h3>Perseus: Efficient Language Modeling</h3>
