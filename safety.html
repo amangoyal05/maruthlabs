@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Guidelines | MaruthLabs</title>
+    <link rel="icon" type="image/png" href="MaruthLabsLogo.png">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-hero {
+            background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+        }
+        .gradient-cta {
+            background: linear-gradient(180deg, #81d4fa 0%, #4fc3f7 100%);
+        }
+        .principle-badge {
+            display: inline-block;
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+        .policy-section {
+            margin-bottom: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        .policy-section:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+        .policy-section h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+        .policy-section p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.0625rem;
+        }
+        .policy-section strong {
+            color: #111827;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Navigation -->
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
+            
+                <!-- Research Dropdown -->
+                <div class="relative group">
+                    <button class="hover:text-cyan-600 transition flex items-center gap-1">
+                        Research <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Perseus Architecture</span>
+                            <span class="text-xs text-gray-500">Efficient language modeling</span>
+                        </a>
+                        <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram-v0.5</span>
+                            <span class="text-xs text-gray-500">Technical guide & benchmarks</span>
+                        </a>
+                        <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram in Your Pocket</span>
+                            <span class="text-xs text-gray-500">Mobile performance analysis</span>
+                        </a>
+                        <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition">
+                            <span class="block font-medium text-gray-900">Madhuram-Translate</span>
+                            <span class="text-xs text-gray-500">From tokenizer to translation</span>
+                        </a>
+                    </div>
+                </div>
+            
+                <a href="about.html" class="hover:text-cyan-600 transition">About</a>
+                <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="hover:text-cyan-600 transition">Partner</a>
+            </div>
+            <a href="https://huggingface.co/spaces/maruthlabs/madhuram" target="_blank" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                Try Madhuram <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-hero pt-20 pb-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
+                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900">Safety</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                Safety & Ethics
+            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                At Maruth Labs, we believe the safest AI is the one that respects your data sovereignty. Our safety philosophy is built on the architecture of privacy and control.
+            </p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-16 px-6 bg-white">
+        <div class="max-w-3xl mx-auto">
+            
+            <div class="policy-section">
+                <span class="principle-badge">Principle 01</span>
+                <h2>Privacy by Architecture</h2>
+                <p>
+                    Traditional AI safety often relies on server-side filters. Our approach is fundamental: <strong>Data should not leave the device unless explicitly authorized.</strong>
+                </p>
+                <p>
+                    By prioritizing Edge deployment (running Madhuram locally on your phone or server), we eliminate the most common AI safety risk: data leakage. When you use Madhuram in local mode, your prompts, context, and outputs are processed entirely on your hardware. Maruth Labs has zero visibility into your data.
+                </p>
+            </div>
+
+            <div class="policy-section">
+                <span class="principle-badge">Principle 02</span>
+                <h2>Transparency & Hallucination</h2>
+                <p>
+                    Small language models (SLMs) like Madhuram are efficient, but like all LLMs, they can hallucinate facts. We are committed to transparency regarding model capabilities.
+                </p>
+                <p>
+                    We recommend Madhuram for specific task, rather than as a general-purpose model in production grade pipelines. Users should always verify factual claims generated by the model against trusted sources.
+                </p>
+            </div>
+
+            <div class="policy-section">
+                <span class="principle-badge">Principle 03</span>
+                <h2>Dual-Use Mitigation</h2>
+                <p>
+                    We actively filter our training datasets (including FineWeb-Edu and Cosmopedia) to remove harmful, toxic, or dangerous content before the model ever sees it.
+                </p>
+                <p>
+                    Furthermore, <strong>Madhuram is a strictly closed-source model.</strong> By retaining exclusive control over the model weights, we prevent malicious actors from stripping away safety guardrails or fine-tuning the model for harmful purposes, such as generating disinformation, malware, or non-consensual content.
+                </p>
+            </div>
+
+            <div class="policy-section" style="border-top: 2px solid #111827; margin-top: 4rem;">
+                <h2>Report a Vulnerability</h2>
+                <p>
+                    If you discover a safety vulnerability or a way to bypass our safety training, please report it directly to our engineering team. We prioritize safety patches over feature releases.
+                </p>
+                <a href="mailto:contact@maruthlabs.com?subject=Safety%20Vulnerability%20Report" class="inline-flex items-center gap-2 text-cyan-600 hover:text-cyan-700 font-medium underline">
+                    contact@maruthlabs.com <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-cta py-16 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">
+                Questions about Safety?
+            </h2>
+            <p class="text-gray-700 mb-8">
+                We're committed to responsible AI development. Reach out to discuss our safety practices.
+            </p>
+            <a href="mailto:contact@maruthlabs.com?subject=Safety%20Inquiry" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition inline-flex items-center gap-2">
+                Contact Safety Team <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Built in India.<br>
+                        Powering the next generation of distributed intelligence.
+                    </p>
+                    <p class="text-gray-500 text-sm">Delhi, India</p>
+                </div>
+
+                <!-- Models -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram v0.5</a></li>
+                    </ul>
+                </div>
+
+                <!-- Research -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

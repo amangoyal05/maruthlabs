@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About the Lab | MaruthLabs</title>
+    <link rel="icon" type="image/png" href="MaruthLabsLogo.png">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-hero {
+            background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+        }
+        .gradient-cta {
+            background: linear-gradient(180deg, #81d4fa 0%, #4fc3f7 100%);
+        }
+        .feature-icon {
+            background: linear-gradient(135deg, #26c6da 0%, #29b6f6 100%);
+        }
+        .stat-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            background: #111827;
+            border-color: #111827;
+            transform: translateY(-2px);
+        }
+        .stat-card:hover .stat-num,
+        .stat-card:hover .stat-label {
+            color: white;
+        }
+        .stat-num {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .about-content h2 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #9ca3af;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .about-content p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+        .lead-text {
+            font-size: 1.5rem;
+            color: #374151;
+            font-style: italic;
+            border-left: 4px solid #111827;
+            padding-left: 1.5rem;
+            margin-bottom: 4rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Navigation -->
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Products</a>
+                <a href="index.html#usecases" class="hover:text-cyan-600 transition">Use Cases</a>
+                <a href="index.html#blogs" class="hover:text-cyan-600 transition">Blogs</a>
+                <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20am%20interested%20in%20exploring%20a%20partnership%20with%20you.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AWe%20are%20interested%20in%3A%0A-%20%5B%20%5D%20Edge%20Deployment%20(Madhuram)%0A-%20%5B%20%5D%20Research%20Collaboration%0A-%20%5B%20%5D%20API%20Access%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="hover:text-cyan-600 transition">Partner with us</a>
+            </div>
+            <a href="mailto:contact@maruthlabs.com?subject=Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20would%20like%20to%20know%20more%20about%20your%20products.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AI%20am%20interested%20in%3A%0A-%20%5B%20%5D%20Trying%20Madhuram%0A-%20%5B%20%5D%20Partnership%20Opportunities%0A-%20%5B%20%5D%20Technical%20Documentation%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                Contact Us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-hero pt-20 pb-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
+                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900">About</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-8 text-center">
+                Intelligence shouldn't be heavy.
+            </h1>
+            <p class="lead-text max-w-3xl mx-auto border-l-cyan-500">
+                We are building the physics of efficient intelligence. Our goal is to decouple AI capability from computational mass.
+            </p>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="py-16 px-6 bg-white">
+        <div class="max-w-3xl mx-auto about-content">
+            
+            <h2>The Mission</h2>
+            <p>
+                For the last decade, the AI industry has been obsessed with scale. The prevailing logic was simple: more parameters, more data, more GPUs. While this created impressive capabilities, it also created a centralization of power.
+            </p>
+            <p>
+                At Maruth Labs, we take the inverse approach. We ask: <strong>"What is the minimum architectural complexity required to achieve reasoning?"</strong>
+            </p>
+            <p>
+                We build Small Language Models (SLMs) that punch above their weight class. By optimizing the fundamental mathematics of attention and positional embeddings (Project Perseus), we bring server-grade intelligence to edge devices.
+            </p>
+
+            <h2>The Name</h2>
+            <p>
+                "Maruth" is derived from the ancient concept of the wind—fast, invisible, and ubiquitous.
+            </p>
+            <p>
+                This reflects our engineering philosophy. Good infrastructure should be like the wind: you feel its impact everywhere, but you never see the machinery. Our models are designed to be light, fast, and to move seamlessly between the cloud and the device in your pocket.
+            </p>
+
+            <h2>The Lab</h2>
+            <p>
+                Headquartered in <strong>Delhi, India</strong>, we are a multidisciplinary team operating at the intersection of linguistic theory, hardware optimization, and high-performance computing.
+            </p>
+            <p>
+                We believe research moves faster when it's shared. We publish our failures, benchmarks, and updates in real-time to accelerate the collective understanding of efficient intelligence.
+            </p>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 gap-4 mt-12">
+                <div class="stat-card">
+                    <div class="stat-num">Delhi</div>
+                    <div class="stat-label">
+                        Research HQ
+                    </div>
+                </div>
+
+                <a href="https://x.com/maruthlabs" target="_blank" class="stat-card block">
+                    <div class="stat-num">X / Twitter</div>
+                    <div class="stat-label">
+                        Follow Updates <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                    </div>
+                </a>
+
+                <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank" class="stat-card block">
+                    <div class="stat-num">LinkedIn</div>
+                    <div class="stat-label">
+                        Company Profile <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                    </div>
+                </a>
+
+                <div class="stat-card">
+                    <div class="stat-num">Proprietary</div>
+                    <div class="stat-label">
+                        Architecture
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="mt-16">Join the Search</h2>
+            <p>
+                We are a small, high-density team. We don't have product managers or endless meetings. We just have builders.
+            </p>
+            <p>
+                If you are obsessed with challenging the standard norms, we want to hear from you.
+            </p>
+            <a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20am%20interested%20in%20joining%20the%20team.%0A%0AName%3A%20%0ABackground%3A%20%0A%0ALinks%20to%20work%3A%0A%0A" class="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition mt-4">
+                Send us your work <i class="fas fa-arrow-right text-xs"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Built in India.<br>
+                        Powering the next generation of distributed intelligence.
+                    </p>
+                    <p class="text-gray-500 text-sm">Delhi, India</p>
+                </div>
+
+                <!-- Models -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                    </ul>
+                </div>
+
+                <!-- Research -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

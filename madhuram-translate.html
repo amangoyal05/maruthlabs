@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Madhuram-Translate: From Tokenizer to Translation | MaruthLabs</title>
+    <link rel="icon" type="image/png" href="MaruthLabsLogo.png">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-hero {
+            background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+        }
+        .gradient-cta {
+            background: linear-gradient(180deg, #81d4fa 0%, #4fc3f7 100%);
+        }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            margin: 1.5rem 0;
+        }
+        .performance-table th,
+        .performance-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .performance-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .performance-table tr:hover {
+            background-color: #f9fafb;
+        }
+        .highlighted-row {
+            background-color: #ecfeff !important;
+            font-weight: 600;
+        }
+        .highlighted-row td {
+            color: #0891b2;
+        }
+        .emphasized {
+            font-weight: 600;
+            color: #111827;
+        }
+        .table-note {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        .blog-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .blog-content h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #374151;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .blog-content p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .blog-content ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+        .blog-content strong {
+            color: #111827;
+        }
+        .experimental-notice {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        .experimental-notice p {
+            color: #92400e;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Navigation -->
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
+                
+                <!-- Research Dropdown -->
+                <div class="relative group">
+                    <button class="hover:text-cyan-600 transition flex items-center gap-1">
+                        Research <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Perseus Architecture</span>
+                            <span class="text-xs text-gray-500">Efficient language modeling</span>
+                        </a>
+                        <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram-v0.5</span>
+                            <span class="text-xs text-gray-500">Technical guide & benchmarks</span>
+                        </a>
+                        <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram in Your Pocket</span>
+                            <span class="text-xs text-gray-500">Mobile performance analysis</span>
+                        </a>
+                        <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition">
+                            <span class="block font-medium text-gray-900">Madhuram-Translate</span>
+                            <span class="text-xs text-gray-500">From tokenizer to translation</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <a href="about.html" class="hover:text-cyan-600 transition">About</a>
+                <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="hover:text-cyan-600 transition">Partner</a>
+            </div>
+            <a href="https://huggingface.co/spaces/maruthlabs/madhuram" target="_blank" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                Try Madhuram <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <section class="gradient-hero pt-16 pb-12 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
+                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <a href="index.html#blogs" class="hover:text-cyan-600 transition">Research</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900">Madhuram-Translate</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                Building Madhuram-Translate: From Tokenizer to Translation
+            </h1>
+            <div class="flex items-center justify-center gap-4 text-sm text-gray-600">
+                <span class="flex items-center gap-2">
+                    <i class="far fa-calendar"></i>
+                    July 31, 2025
+                </span>
+                <span class="flex items-center gap-2">
+                    <i class="far fa-clock"></i>
+                    15 min read
+                </span>
+                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-medium">Research</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-12 px-6 bg-white">
+        <div class="max-w-4xl mx-auto blog-content">
+            
+            <div class="experimental-notice">
+                <p><i class="fas fa-flask mr-2"></i><strong>Experimental Model:</strong> Madhuram-Translate was an experimental research project. A better, more capable version will be made available in the near future.</p>
+            </div>
+
+            <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                Creating effective tokenizers for multiple languages, especially those with different scripts like English and Indic languages, presents unique challenges. This article documents the journey of building <strong>"Madhuram,"</strong> a multilingual tokenizer supporting <strong>English, Hindi, Bengali, Kannada, Tamil, Punjabi, and Telugu</strong> - from expensive failures to an efficient, cost-effective solution that powers state-of-the-art translation performance.
+            </p>
+
+            <p>
+                Multilingual tokenization is particularly challenging because <strong>different language families have vastly different characteristics</strong>. While English uses straightforward alphabetic characters, Indic languages employ complex scripts with conjuncts, combining marks, and context-dependent character variations. These differences mean that tokenization strategies effective for one language family often fail catastrophically for others.
+            </p>
+
+            <h2>Failure #1: ByteLevel Tokenization Falls Short</h2>
+            <p>
+                The first approach seemed logical: use <strong>ByteLevel tokenization</strong>, which works well for English by treating text as raw bytes. However, this approach proved disastrous for Indic languages.
+            </p>
+            <p>
+                <strong>The Problem:</strong> Indic scripts have complex character compositions with combining marks, conjuncts, and multi-byte UTF-8 representations. ByteLevel tokenization fragments these meaningful linguistic units into meaningless byte sequences, destroying the semantic structure that's crucial for these languages.
+            </p>
+            <p>
+                <strong>Result:</strong> Poor tokenization quality with high fertility rates (too many tokens per word) and loss of linguistic meaning.
+            </p>
+
+            <h2>Failure #2: The Data Deluge Disaster</h2>
+            <p>
+                Learning from the ByteLevel failure, the second attempt took a different approach: throw more data at the problem.
+            </p>
+            <p><strong>The Approach:</strong></p>
+            <ul>
+                <li><strong>Data:</strong> 170 GB of multilingual data</li>
+                <li><strong>Tokenizer:</strong> Vanilla BPE tokenizer</li>
+                <li><strong>Massive Compute Resources:</strong> 64 vCPUs</li>
+                <li><strong>Training Time:</strong> 10 hours for data preparation + 1 hour for tokenizer training</li>
+            </ul>
+            <p>
+                This failure demonstrates the <strong>"data fallacy"</strong> - the assumption that poor model performance can always be solved by adding more training data. <strong>Key Insight:</strong> More data doesn't automatically solve tokenization quality issues.
+            </p>
+
+            <h2>Success #1: Small-Scale Breakthrough</h2>
+            <p>
+                Frustrated with expensive failures, the third attempt took a <strong>minimalist approach</strong>.
+            </p>
+            <p><strong>The Pivot:</strong></p>
+            <ul>
+                <li><strong>Languages Covered:</strong> Reduced to just English and Hindi</li>
+                <li><strong>Tiny vocabulary:</strong> 15,000 tokens</li>
+                <li><strong>Dataset:</strong> Small, curated public dataset</li>
+                <li><strong>Modest hardware:</strong> 4 vCPUs</li>
+            </ul>
+            <p><strong>Results:</strong></p>
+            <ul>
+                <li><strong>Quality:</strong> Significant quality improvement</li>
+                <li><strong>Training Time:</strong> Under 5 minutes</li>
+                <li><strong>Cost Reduction:</strong> 16x cost reduction</li>
+            </ul>
+            <p>
+                <strong>The Revelation:</strong> Quality data curation and appropriate vocabulary sizing matter more than brute-force scaling.
+            </p>
+
+            <h2>Success #2: The Madhuram Tokenizer</h2>
+            <p>
+                Building on the small-scale success, the final iteration expanded thoughtfully.
+            </p>
+            <p><strong>Technical Specifications:</strong></p>
+            <ul>
+                <li><strong>Languages:</strong> 7 languages (English, Hindi, Bengali, Kannada, Tamil, Punjabi, Telugu)</li>
+                <li><strong>Vocabulary Size:</strong> 65,536 tokens</li>
+                <li><strong>Training Data:</strong> 1.2M carefully curated samples</li>
+                <li><strong>Data Size:</strong> &lt;950 MB after aggressive cleaning</li>
+                <li><strong>Hardware:</strong> 4 vCPUs only</li>
+                <li><strong>Training Time:</strong> &lt;20 minutes data prep + &lt;2 minutes tokenizer training</li>
+            </ul>
+
+            <h3>Data Engineering Strategy</h3>
+            <p>
+                The key was intelligent data curation rather than volume. The filtering process removed low-quality text, ensuring each training sample contributed meaningful linguistic information.
+            </p>
+
+            <h3>Language Balancing</h3>
+            <p>
+                Instead of equal representation, languages were <strong>rebalanced based on tokenization complexity</strong>. Bengali received a 6x multiplier due to its complex script, while English received only a 2x multiplier.
+            </p>
+
+            <h2>Comprehensive Performance Comparison</h2>
+            <p>
+                Madhuram's performance was evaluated against three established multilingual tokenizers: <strong>Gemma-3 27B, TWO AI's SUTRA, and Sarvam's Sarvam-1</strong>.
+            </p>
+
+            <h3>Fertility Analysis (Tokens per Word)</h3>
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Language</th>
+                            <th>Madhuram</th>
+                            <th>SUTRA</th>
+                            <th>Sarvam-1</th>
+                            <th>Gemma-3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="emphasized">English</td><td>1.35</td><td>1.14</td><td>1.43</td><td>1.28</td></tr>
+                        <tr><td class="emphasized">Hindi</td><td>1.47</td><td>1.46</td><td>1.40</td><td>1.43</td></tr>
+                        <tr><td class="emphasized">Punjabi</td><td>1.55</td><td>1.25</td><td>1.68</td><td>2.87</td></tr>
+                        <tr><td class="emphasized">Bengali</td><td>1.71</td><td>1.85</td><td>2.07</td><td>1.72</td></tr>
+                        <tr><td class="emphasized">Telugu</td><td>2.09</td><td>2.23</td><td>2.14</td><td>2.88</td></tr>
+                        <tr><td class="emphasized">Tamil</td><td>2.16</td><td>2.28</td><td>2.17</td><td>2.42</td></tr>
+                        <tr><td class="emphasized">Kannada</td><td>2.24</td><td>2.47</td><td>2.37</td><td>3.33</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">Table 1: Fertility Rate comparison on FLORES dataset.</p>
+
+            <p><strong>Key Findings:</strong></p>
+            <ul>
+                <li><strong>Madhuram achieves the best overall fertility (1.796 average)</strong></li>
+                <li><strong>Most consistent performance</strong> with lowest standard deviation (0.364)</li>
+                <li><strong>Exceptional performance on Kannada:</strong> 33% improvement over Gemma-3</li>
+            </ul>
+
+            <h2>Madhuram-Translate: Translation Performance</h2>
+            <p>
+                Building on our tokenizer, we developed <strong>Madhuram-Translate</strong>, a specialized translation model for English-to-Indic language translation.
+            </p>
+
+
+            <h3>Translation Performance on FLORES Dev</h3>
+            <p>Evaluated using ChrF++ metric:</p>
+
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Language Pair</th>
+                            <th>Gemma-2-2B</th>
+                            <th>LLaMA-3.2-3B</th>
+                            <th>LlaMA-3.1-8B</th>
+                            <th>Sarvam-1</th>
+                            <th>Madhuram</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="emphasized">en-bn</td><td>29.91</td><td>30.6</td><td>37.24</td><td>41.0</td><td>40.28</td></tr>
+                        <tr><td class="emphasized">en-hi</td><td>44.81</td><td>38.48</td><td>44.85</td><td>37.52</td><td class="best-score">48.56</td></tr>
+                        <tr><td class="emphasized">en-kn</td><td>23.21</td><td>26.81</td><td>33.8</td><td>41.54</td><td class="best-score">42.49</td></tr>
+                        <tr><td class="emphasized">en-pa</td><td>21.24</td><td>22.78</td><td>29.81</td><td>39.53</td><td class="best-score">42.99</td></tr>
+                        <tr><td class="emphasized">en-ta</td><td>32.74</td><td>27.4</td><td>35.3</td><td>44.02</td><td class="best-score">44.58</td></tr>
+                        <tr><td class="emphasized">en-te</td><td>26.05</td><td>24.58</td><td>32.1</td><td>45.76</td><td>44.47</td></tr>
+                        <tr class="highlighted-row"><td class="emphasized">Average</td><td>29.66</td><td>28.44</td><td>35.52</td><td>41.56</td><td>43.86</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">Table 2: Translation performance on FLORES Dev dataset using ChrF++ metric.</p>
+
+            <p><strong>Key Results:</strong></p>
+            <ul>
+                <li><strong>Overall Performance:</strong> Madhuram-Translate achieves an average ChrF++ score of 43.86</li>
+                <li><strong>Consistent Excellence:</strong> Strong performance across all language pairs</li>
+                <li><strong>Tokenization Advantage:</strong> Superior performance correlates with efficient tokenization</li>
+            </ul>
+
+            <h2>Cost Analysis</h2>
+            <p>The journey from failure to success shows dramatic improvements:</p>
+
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr><th>Attempt</th><th>Data Size</th><th>Compute</th><th>Time</th><th>Result</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="emphasized">Failure #2</td><td>170 GB</td><td>64 vCPUs</td><td>11 hours</td><td>Poor quality</td></tr>
+                        <tr><td class="emphasized">Success #1</td><td>&lt;500 MB</td><td>4 vCPUs</td><td>5 min</td><td>Good quality</td></tr>
+                        <tr class="highlighted-row"><td class="emphasized">Success #2</td><td>&lt;950 MB</td><td>4 vCPUs</td><td>22 min</td><td>Superior quality</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">Table 3: Development iteration comparison.</p>
+
+            <p>
+                <strong>Cost reduction: 470x cheaper</strong> than the failed attempt while achieving superior quality.
+            </p>
+
+            <h2>Key Lessons Learned</h2>
+            
+            <h3>1. Quality Over Quantity</h3>
+            <p>Aggressive data filtering and curation produced better results than massive, unfiltered datasets.</p>
+
+            <h3>2. Language-Aware Balancing</h3>
+            <p>Understanding each language's tokenization complexity enables better training balance.</p>
+
+            <h3>3. Downstream Impact</h3>
+            <p>Superior tokenization directly translates to better downstream performance, as demonstrated by Madhuram-Translate's exceptional translation quality.</p>
+
+            <h2>Conclusion</h2>
+            <p>
+                Building effective multilingual tokenizers doesn't require massive resources or datasets. The Madhuram tokenizer demonstrates that thoughtful engineering, quality data curation, and iterative development can produce <strong>superior results</strong> compared to established tokenizers at a fraction of the cost.
+            </p>
+            
+            
+            <p>
+                The key insight: successful multilingual NLP isn't about having the most data or compute—it's about <strong>understanding your languages, curating quality data, and engineering solutions</strong> that respect linguistic diversity.
+            </p>
+
+            <hr class="my-8">
+            <p class="text-sm text-gray-500 italic">
+                For collaboration opportunities or technical questions, please reach out to our team at <a href="mailto:contact@maruthlabs.com" class="text-cyan-600 hover:underline">contact@maruthlabs.com</a>.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-cta py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                Explore Our Research
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="madhuram-v0-5.html" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2 justify-center">
+                    Madhuram v0.5 <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+                <a href="perseus.html" class="border-2 border-gray-900 text-gray-900 px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-900 hover:text-white transition flex items-center gap-2 justify-center">
+                    Perseus Architecture <i class="fas fa-book text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Built in India.<br>
+                        Powering the next generation of distributed intelligence.
+                    </p>
+                    <p class="text-gray-500 text-sm">Delhi, India</p>
+                </div>
+
+                <!-- Models -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram v0.5</a></li>
+                        <li><a href="https://huggingface.co/spaces/maruthlabs/madhuram" target="_blank" class="text-gray-600 hover:text-cyan-600 transition">Madhuram Demo</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+                    </ul>
+                </div>
+
+                <!-- Research -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

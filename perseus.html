@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perseus: Efficient Language Modeling | MaruthLabs</title>
+    <link rel="icon" type="image/png" href="MaruthLabsLogo.png">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-hero {
+            background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+        }
+        .gradient-cta {
+            background: linear-gradient(180deg, #81d4fa 0%, #4fc3f7 100%);
+        }
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        .performance-table th,
+        .performance-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .performance-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #111827;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+        .performance-table tr:hover {
+            background-color: #f9fafb;
+        }
+        .emphasized {
+            font-weight: 600;
+            color: #111827;
+        }
+        .table-note {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+        .table-note a {
+            color: #0891b2;
+            text-decoration: underline;
+        }
+        .blog-content a {
+            color: #0891b2;
+            text-decoration: underline;
+        }
+        .blog-content a:hover {
+            color: #0e7490;
+        }
+    </style>
+</head>
+<body class="bg-white">
+
+    <!-- Navigation -->
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
+            
+                <!-- Research Dropdown -->
+                <div class="relative group">
+                    <button class="hover:text-cyan-600 transition flex items-center gap-1">
+                        Research <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Perseus Architecture</span>
+                            <span class="text-xs text-gray-500">Efficient language modeling</span>
+                        </a>
+                        <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram-v0.5</span>
+                            <span class="text-xs text-gray-500">Technical guide & benchmarks</span>
+                        </a>
+                        <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram in Your Pocket</span>
+                            <span class="text-xs text-gray-500">Mobile performance analysis</span>
+                        </a>
+                        <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition">
+                            <span class="block font-medium text-gray-900">Madhuram-Translate</span>
+                            <span class="text-xs text-gray-500">From tokenizer to translation</span>
+                        </a>
+                    </div>
+                </div>
+            
+                <a href="about.html" class="hover:text-cyan-600 transition">About</a>
+                <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="hover:text-cyan-600 transition">Partner</a>
+            </div>
+            <a href="https://huggingface.co/spaces/maruthlabs/madhuram" target="_blank" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                Try Madhuram <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <section class="gradient-hero pt-16 pb-12 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
+                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <a href="index.html#blogs" class="hover:text-cyan-600 transition">Blogs</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900">Perseus: Efficient Language Modeling</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                Perseus: Efficient Language Modeling
+            </h1>
+            <div class="flex items-center justify-center gap-4 text-sm text-gray-600">
+                <span class="flex items-center gap-2">
+                    <i class="far fa-calendar"></i>
+                    June 30, 2025
+                </span>
+                <span class="flex items-center gap-2">
+                    <i class="far fa-clock"></i>
+                    8 min read
+                </span>
+                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-medium">Technology</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-12 px-6 bg-white">
+        <div class="max-w-4xl mx-auto blog-content">
+            <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                In an era where language models grow exponentially in size and computational requirements, <strong>Perseus</strong> introduces a paradigm shift: <strong>mathematical innovation over brute-force scaling.</strong> Our <strong>73M-parameter</strong> model, <em>Madhuram</em>, matches the performance of significantly larger models while requiring up to <strong>45% fewer parameters</strong>.
+            </p>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Key Results</h2>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li>43.82% average accuracy across standard NLP benchmarks.</li>
+                <li>$755 total training cost (160 GPU hours).</li>
+                <li>Direct edge deployment without quantization.</li>
+                <li>Competitive with models 2-5× larger.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">The Efficiency Crisis in Language Models</h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Current language model development follows the "bigger is better" formula, i.e., more parameters + more data = better performance. This approach has led to:
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>Exponential cost increases</strong>: Training costs now exceed millions of dollars.</li>
+                <li><strong>Deployment barriers due to hardware needs</strong>: Most models require specialized hardware and quantization.</li>
+                <li><strong>High environmental impact</strong>: Massive carbon footprints from training and inference.</li>
+                <li><strong>Access inequality</strong>: Only well-funded organizations can afford state-of-the-art models.</li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Perseus challenges this paradigm by demonstrating that <strong>innovation can achieve similar results with dramatically fewer resources.</strong>
+            </p>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Perseus Architecture: The Core Innovation</h2>
+            
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Advanced Positional Embeddings</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Traditional language models use simple sinusoidal patterns to encode token positions. <strong>Perseus</strong> replaces this with a sophisticated mathematical framework that captures richer structural information about token relationships.
+            </p>
+            
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Key Technical Advantages:</h3>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>Enhanced Semantic Relationships</strong>: Captures complex interdependencies between tokens at different positions, enabling better understanding of long-range dependencies.</li>
+                <li><strong>Mathematically Optimized Representations</strong>: Uses advanced geometric transformations to maximize information density while maintaining computational efficiency.</li>
+                <li><strong>Adaptive Position Encoding</strong>: Dynamically adjusts positional representations based on specific token configurations.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Architectural Components</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Perseus integrates several specialized components:
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>Enhanced Token Embeddings</strong>: Modified embedding space prioritizing semantic richness and parameter efficiency</li>
+                <li><strong>Optimized Attention Mechanism</strong>: Redesigned attention layers leveraging embedding structure.</li>
+                <li><strong>Grouped-Query Attention</strong>: Streamlined multi-head attention reducing overhead while retaining representational power. [<a href="https://arxiv.org/pdf/2305.13245">Paper link</a>]</li>
+                <li><strong>QK Normalization</strong>: Custom normalization preserving numerical stability through deep layers. [<a href="https://arxiv.org/pdf/2010.04245">Paper link</a>]</li>
+                <li><strong>Geometric Transformation Layers</strong>: Specialized mathematical operations preserving structural properties.</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Training Methodology</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <strong>Dataset Composition (130B tokens)</strong>
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>FineWeb-Edu (100B tokens):</strong> High-quality educational web content. [<a href="https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu">Dataset link</a>]</li>
+                <li><strong>Cosmopedia (30B tokens):</strong> Synthetic educational content for enhanced reasoning. [<a href="https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus">Dataset link</a>]</li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <strong>Training Configuration</strong>
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>Context Length:</strong> 2048 Tokens</li>
+                <li><strong>Optimizer:</strong> AdamW with tuned hyperparameters</li>
+                <li><strong>Learning Rate:</strong> Cosine decay with warmup</li>
+                <li><strong>Hardware:</strong> 8xH100 GPUs for 20 hours</li>
+                <li><strong>Total Cost:</strong> $755</li>
+            </ul>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Technical Implementation Challenges</h3>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Developing Perseus wasn't without challenges. Some of the most significant technical hurdles included:
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>Numerical Stability:</strong> The advanced positional embedding approach required careful implementation to maintain numerical stability across various sequence lengths. We developed custom numerical precision techniques and gradient clipping strategies.</li>
+                <li><strong>Optimization Complexity:</strong> Standard optimizers needed significant tuning to work effectively with the novel embedding space. We implemented adaptive learning rate schedules and custom momentum parameters.</li>
+                <li><strong>Hardware Efficiency:</strong> Making computations efficient on modern hardware required specialized tensor operations and memory management strategies.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Benchmark Performance</h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                We evaluated Madhuram using <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-eval</a> on standard NLP benchmarks, achieving an overall average accuracy of 43.82% across diverse commonsense reasoning and language understanding tasks. The results demonstrate that our 73M parameter model delivers competitive performance against larger models.
+            </p>
+
+            <div class="table-container">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Task Type</th>
+                            <th>Madhuram</th>
+                            <th>SmolLM2-135M</th>
+                            <th>MobileLLM-125M</th>
+                            <th>OPT-350M</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="emphasized">ARC (Average)</td>
+                            <td>36.66%</td>
+                            <td>43.90%</td>
+                            <td>37.25%</td>
+                            <td>33.80%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">HellaSwag</td>
+                            <td>34.62%</td>
+                            <td>42.10%</td>
+                            <td>39.50%</td>
+                            <td>40.10%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">OBQA</td>
+                            <td>33%</td>
+                            <td>34.60%</td>
+                            <td>41.10%</td>
+                            <td>33.30%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">PIQA</td>
+                            <td>63.76%</td>
+                            <td>68.40%</td>
+                            <td>65.70%</td>
+                            <td>64.80%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">SIQA</td>
+                            <td>38.43%</td>
+                            <td>-</td>
+                            <td>42.90%</td>
+                            <td>42.60%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">WinoGrande</td>
+                            <td>51.30%</td>
+                            <td>51.30%</td>
+                            <td>52.10%</td>
+                            <td>52.40%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">BoolQ</td>
+                            <td>56.12%</td>
+                            <td>-</td>
+                            <td>60.40%</td>
+                            <td>54.00%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">Average</td>
+                            <td class="emphasized">43.82%</td>
+                            <td>-</td>
+                            <td class="emphasized">47.03%</td>
+                            <td class="emphasized">43.90%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">Table 1: Performance comparison of Madhuram with MobileLLM, OPT-350M [<a href="https://arxiv.org/pdf/2402.14905">Refer here</a>], and SmolLM2 [<a href="https://arxiv.org/pdf/2502.02737">Refer here</a>] across different NLP tasks.</p>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Madhuram vs. GPT3-Small</h3>
+            <div class="table-container">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark</th>
+                            <th>Madhuram (Zero-shot)</th>
+                            <th>GPT3-Small (Zero-shot)</th>
+                            <th>GPT3-Small (Few-shot)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="emphasized">ARC-Easy</td>
+                            <td class="emphasized">47.47%</td>
+                            <td>43.60%</td>
+                            <td>42.70%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">ARC-Challenge</td>
+                            <td>25.85%</td>
+                            <td class="emphasized">26.60%</td>
+                            <td>25.50%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">HellaSwag</td>
+                            <td>34.62%</td>
+                            <td>33.70%</td>
+                            <td class="emphasized">35.50%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">OBQA</td>
+                            <td>33%</td>
+                            <td>35.60%</td>
+                            <td class="emphasized">37.00%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">PIQA</td>
+                            <td>63.76%</td>
+                            <td>64.60%</td>
+                            <td class="emphasized">64.30%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">WinoGrande</td>
+                            <td>51.30%</td>
+                            <td class="emphasized">52.00%</td>
+                            <td>51.30%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">BoolQ</td>
+                            <td class="emphasized">56.12%</td>
+                            <td>49.70%</td>
+                            <td>43.10%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">Average</td>
+                            <td class="emphasized">44.59%</td>
+                            <td>43.69%</td>
+                            <td>42.77%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">Table 2: Zero-shot and few-shot performance against GPT3-Small [<a href="https://arxiv.org/pdf/2005.14165">Refer here</a>]</p>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Knowledge-Intensive Tasks: Madhuram vs. STAR-5/Quality</h3>
+            <div class="table-container">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Madhuram</th>
+                            <th>STAR-5/Quality</th>
+                            <th>Difference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="emphasized">ARC (Easy)</td>
+                            <td class="emphasized">47.47%</td>
+                            <td>39.10%</td>
+                            <td style="color: #059669">+8.37%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">HellaSwag</td>
+                            <td class="emphasized">34.62%</td>
+                            <td>29.20%</td>
+                            <td style="color: #059669">+5.42%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">WinoGrande</td>
+                            <td>51.30%</td>
+                            <td class="emphasized">52.10%</td>
+                            <td style="color: #dc2626">-0.80%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">PIQA</td>
+                            <td class="emphasized">63.76%</td>
+                            <td>62.10%</td>
+                            <td style="color: #059669">+1.66%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">SciQ</td>
+                            <td>70.20%</td>
+                            <td class="emphasized">72.70%</td>
+                            <td style="color: #dc2626">-2.50%</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">Average</td>
+                            <td class="emphasized">53.47%</td>
+                            <td>51.00%</td>
+                            <td style="color: #059669">+2.47%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note">Table 3: Performance against Liquid AI's STAR-5/Quality model [<a href="https://openreview.net/pdf?id=HsHxSN23rM">Refer here</a>] demonstrates Madhuram's edge in knowledge-intensive tasks.</p>
+
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Overall Efficiency Comparison</h3>
+            <div class="table-container">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Parameters</th>
+                            <th>Training Tokens</th>
+                            <th>Parameter Efficiency</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="emphasized">Madhuram (Perseus)</td>
+                            <td>73M</td>
+                            <td>130B</td>
+                            <td>1.00x</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">SmolLM2-135M</td>
+                            <td>135M</td>
+                            <td>2T</td>
+                            <td>0.55x</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">MobileLLM-125M</td>
+                            <td>125M</td>
+                            <td>1T</td>
+                            <td>0.59x</td>
+                        </tr>
+                        <tr>
+                            <td class="emphasized">GPT3-Small</td>
+                            <td>125M</td>
+                            <td>300B</td>
+                            <td>0.59x</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="table-note"><i>Parameter Efficiency = (Madhuram Parameters / Comparison Model Parameters).</i></p>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Real-World Impact & Applications</h2>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>Edge Deployment Ready</strong>: With only 73M parameters, Perseus can run on mobile devices, IoT, edge servers, and embedded systems without quantization.</li>
+                <li><strong>Cost-Effective Training</strong>: At $755 training cost, advanced NLP models become accessible to small teams, academics, and emerging markets.</li>
+                <li><strong>Environmental Benefits</strong>: 45% fewer parameters and lower compute reduce the carbon footprint significantly.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Limitations & Future Work</h2>
+            
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Current Limitations</h3>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li>Performance gaps remain on some benchmarks.</li>
+                <li>Requires validation on long-context tasks.</li>
+                <li>Needs domain-specific fine-tuning.</li>
+            </ul>
+            
+            <h3 class="text-xl font-semibold text-gray-900 mt-6 mb-3">Future Directions</h3>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>Scaling Studies</strong>: Investigate efficiency gains at 1B+ parameters.</li>
+                <li><strong>Extended Context</strong>: Evaluate performance on longer sequences.</li>
+                <li><strong>Multimodal Extensions</strong>: Adapt Perseus embeddings for vision and audio.</li>
+                <li><strong>Domain Specialization</strong>: Fine-tune for specific verticals (healthcare, education, finance).</li>
+                <li><strong>Training Data</strong>: Scale training on bigger dataset.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Seeking Collaborators</h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                We're actively seeking partnerships for:
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>GPU resources:</strong> For scaling experiments.</li>
+                <li><strong>Dataset contributions:</strong> Domain-specific training data.</li>
+                <li><strong>Integration:</strong> Deploying Perseus in real-world applications.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Conclusion</h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                Perseus demonstrates that the future of language models lies not in endless scaling, but <strong>in mathematical innovation and architectural efficiency.</strong> By rethinking fundamental components like positional embeddings, we can create models that are:
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li><strong>More accessible:</strong> Lower training and deployment costs.</li>
+                <li><strong>More sustainable:</strong> Reduced environmental impact.</li>
+                <li><strong>More practical:</strong> Direct edge deployment without optimization.</li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                The implications extend beyond academic research to practical applications that can benefit from efficient, high-performance language understanding. As we continue developing Perseus, we invite the community to join us in building a more accessible and sustainable future for AI.
+            </p>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <i>
+                    For collaboration opportunities, or technical questions, please reach out to our team. Together, we can make lightweight, accessible language models a reality for everyone.
+                    <br>Contact us at <a href="mailto:contact@maruthlabs.com">contact@maruthlabs.com</a>.
+                </i>
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-cta py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                Join the AI Flexibility<br>Revolution
+            </h2>
+            <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20am%20interested%20in%20exploring%20a%20partnership%20with%20you.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AWe%20are%20interested%20in%3A%0A-%20%5B%20%5D%20Edge%20Deployment%20(Madhuram)%0A-%20%5B%20%5D%20Research%20Collaboration%0A-%20%5B%20%5D%20API%20Access%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2 mx-auto inline-flex">
+                Partner with us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Built in India.<br>
+                        Powering the next generation of distributed intelligence.
+                    </p>
+                    <p class="text-gray-500 text-sm">Delhi, India</p>
+                </div>
+
+                <!-- Models -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram v0.5</a></li>
+                    </ul>
+                </div>
+
+                <!-- Research -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

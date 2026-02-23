@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaruthLabs</title>
+    <link rel="icon" type="image/png" href="MaruthLabsLogo.png">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-white">
+
+    <!-- Navigation -->
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
+                
+                <!-- Research Dropdown -->
+                <div class="relative group">
+                    <button class="hover:text-cyan-600 transition flex items-center gap-1">
+                        Research <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Perseus Architecture</span>
+                            <span class="text-xs text-gray-500">Efficient language modeling</span>
+                        </a>
+                        <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram-v0.5</span>
+                            <span class="text-xs text-gray-500">Technical guide & benchmarks</span>
+                        </a>
+                        <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition border-b border-gray-100">
+                            <span class="block font-medium text-gray-900">Madhuram in Your Pocket</span>
+                            <span class="text-xs text-gray-500">Mobile performance analysis</span>
+                        </a>
+                        <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50 hover:text-cyan-600 transition">
+                            <span class="block font-medium text-gray-900">Madhuram-Translate</span>
+                            <span class="text-xs text-gray-500">From tokenizer to translation</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <a href="about.html" class="hover:text-cyan-600 transition">About</a>
+                <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="hover:text-cyan-600 transition">Partner</a>
+            </div>
+            <a href="https://huggingface.co/spaces/maruthlabs/madhuram" target="_blank" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                Try Madhuram <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="about" class="gradient-hero pt-16 pb-32 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+                Versatile Language Model<br>
+                for cloud & edge<br>
+                computing
+            </h1>
+            <p class="text-gray-600 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
+                At MaruthLabs, we've created a versatile language model that delivers same performance across all computing environments. Whether deployed in the cloud or running directly on your device, Madhuram provides consistent, high-quality results.
+            </p>
+            <div class="flex items-center justify-center gap-4">
+                <a href="https://huggingface.co/spaces/maruthlabs/madhuram" target="_blank" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                    Try Madhuram <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <a href="mailto:contact@maruthlabs.com?subject=Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20would%20like%20to%20know%20more%20about%20your%20products.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AI%20am%20interested%20in%3A%0A-%20%5B%20%5D%20Trying%20Madhuram%0A-%20%5B%20%5D%20Partnership%20Opportunities%0A-%20%5B%20%5D%20Technical%20Documentation%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-800 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-700 transition flex items-center gap-2">
+                    Contact Us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="px-6 -mt-16 mb-20">
+        <div class="max-w-5xl mx-auto">
+            <div class="video-wrapper shadow-2xl">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/Ka_Fd21EIiQ?rel=0&modestbranding=1&playsinline=1"
+                    title="Madhuram in Action - Realme 9"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                    loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Everywhere Section -->
+    <section class="py-20 px-6 bg-white">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                Powerful AI everywhere<br>
+                you need it.
+            </h2>
+            <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                Our advanced optimization techniques ensure that Madhuram maintains powerful capabilities while adapting to available resources, making sophisticated AI accessible on virtually any platform - from powerful cloud servers to resource-constrained edge devices.
+            </p>
+        </div>
+    </section>
+
+    <!-- Product Section -->
+    <section id="product" class="py-16 px-6 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="text-cyan-600 font-semibold text-sm tracking-wide uppercase mb-2 block">Our Product</span>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Madhuram</h2>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        An ultra-efficient language model with <span class="font-semibold text-gray-900">150 million parameters</span> delivering competitive performance while fully optimized for mobile and wearable devices.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed mb-8">
+                        Have an edge-device you really want to make smart? Look no further. Madhuram brings the power of large language models to devices with limited computational resources.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="https://huggingface.co/spaces/maruthlabs/madhuram" target="_blank" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                            Try Now <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                        <a href="madhuram-v0-5.html" class="border-2 border-gray-900 text-gray-900 px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-900 hover:text-white transition flex items-center gap-2">
+                            View Blog <i class="fas fa-book text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white rounded-2xl p-6 card-shadow">
+                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-microchip text-white text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-2xl mb-1">150M</h3>
+                        <p class="text-gray-600 text-sm">Parameters</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 card-shadow">
+                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-mobile-alt text-white text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-2xl mb-1">Edge</h3>
+                        <p class="text-gray-600 text-sm">Optimized</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 card-shadow">
+                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-cloud text-white text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-2xl mb-1">Hybrid</h3>
+                        <p class="text-gray-600 text-sm">Deployment</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-6 card-shadow">
+                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                            <i class="fas fa-bolt text-white text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-gray-900 text-2xl mb-1">Fast</h3>
+                        <p class="text-gray-600 text-sm">Inference</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Carousel Section -->
+    <section id="usecases" class="py-16 px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">
+                How you can use<br>Madhuram?
+            </h2>
+            
+            <div class="carousel-container relative">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Slide 1: Hybrid deployments -->
+                    <div class="carousel-slide">
+                        <div class="bg-gray-50 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-network-wired text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Hybrid deployments</h3>
+                            <p class="text-gray-600 text-sm mb-4">Deploy AI capabilities across your infrastructure with consistent performance everywhere.</p>
+                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect fill='%23f5f5f5' width='400' height='200'/%3E%3Ccircle cx='100' cy='100' r='30' fill='%234fc3f7'/%3E%3Ccircle cx='200' cy='80' r='25' fill='%2329b6f6'/%3E%3Ccircle cx='300' cy='120' r='35' fill='%2303a9f4'/%3E%3Cpath d='M130 100 L175 80 M225 80 L265 105' stroke='%23999' stroke-width='2'/%3E%3C/svg%3E" alt="Hybrid Deployment" class="max-h-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2: Specialized Agentic models -->
+                    <div class="carousel-slide">
+                        <div class="bg-gray-50 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-robot text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Specialized Agentic models</h3>
+                            <p class="text-gray-600 text-sm mb-4">Deploy domain-tailored AI agents that can plan, reason, and act autonomously to optimize complex workflows.</p>
+                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200'%3E%3Crect fill='%23f5f5f5' width='400' height='200'/%3E%3Crect x='150' y='70' width='100' height='60' rx='8' fill='%234fc3f7'/%3E%3Ccircle cx='130' cy='100' r='20' fill='%2329b6f6'/%3E%3Ccircle cx='270' cy='100' r='20' fill='%2303a9f4'/%3E%3Ctext x='200' y='105' text-anchor='middle' fill='white' font-size='14'%3EAI%3C/text%3E%3C/svg%3E" alt="Agentic Models" class="max-h-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3: Customer support chatbots -->
+                    <div class="carousel-slide">
+                        <div class="bg-gray-50 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-comments text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Customer support chatbots</h3>
+                            <p class="text-gray-600 text-sm mb-4">Deliver 24/7 intelligent, context-aware chatbots that resolve common issues, escalate seamlessly, and reduce support costs.</p>
+                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3Crect fill='%23f5f5f5' width='200' height='120'/%3E%3Crect x='40' y='30' width='60' height='60' rx='8' fill='%234fc3f7'/%3E%3Crect x='110' y='30' width='60' height='60' rx='8' fill='%2329b6f6'/%3E%3C/svg%3E" alt="Chatbots" class="max-h-full">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4: Edge-device localization -->
+                    <div class="carousel-slide">
+                        <div class="bg-gray-50 rounded-2xl p-6 h-full">
+                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 mb-2">Edge-device localization</h3>
+                            <p class="text-gray-600 text-sm mb-4">Perform real-time, on-device localization to enable low-latency, privacy-preserving location and context-aware features.</p>
+                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3Crect fill='%23f5f5f5' width='200' height='120'/%3E%3Crect x='70' y='20' width='60' height='80' rx='8' fill='%234fc3f7'/%3E%3Ccircle cx='100' cy='50' r='15' fill='white'/%3E%3C/svg%3E" alt="Localization" class="max-h-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blogs Section -->
+    <section id="blogs" class="py-16 px-6 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">
+                Insights & updates
+            </h2>
+            
+            <div class="carousel-container relative">
+                <div class="carousel-track" id="blogsCarouselTrack">
+                    <!-- Blog Card 1 - Madhuram v0.5 -->
+                    <div class="carousel-slide">
+                        <a href="madhuram-v0-5.html" class="group cursor-pointer block h-full">
+                            <div class="blog-card blog-card-v05 rounded-2xl h-48 mb-4 overflow-hidden relative">
+                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                                    <rect x="150" y="70" width="100" height="60" rx="4" fill="none" stroke="white" stroke-width="2"/>
+                                    <line x1="170" y1="70" x2="170" y2="50" stroke="white" stroke-width="2"/>
+                                    <line x1="200" y1="70" x2="200" y2="50" stroke="white" stroke-width="2"/>
+                                    <line x1="230" y1="70" x2="230" y2="50" stroke="white" stroke-width="2"/>
+                                    <line x1="170" y1="130" x2="170" y2="150" stroke="white" stroke-width="2"/>
+                                    <line x1="200" y1="130" x2="200" y2="150" stroke="white" stroke-width="2"/>
+                                    <line x1="230" y1="130" x2="230" y2="150" stroke="white" stroke-width="2"/>
+                                    <line x1="150" y1="90" x2="130" y2="90" stroke="white" stroke-width="2"/>
+                                    <line x1="150" y1="110" x2="130" y2="110" stroke="white" stroke-width="2"/>
+                                    <line x1="250" y1="90" x2="270" y2="90" stroke="white" stroke-width="2"/>
+                                    <line x1="250" y1="110" x2="270" y2="110" stroke="white" stroke-width="2"/>
+                                    <text x="200" y="105" text-anchor="middle" fill="white" font-size="16" font-family="monospace">v0.5</text>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Madhuram v0.5: Technical Guide</h3>
+                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Complete technical overview with benchmarks, architecture details, and performance comparisons.</p>
+                            <div class="flex gap-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Documentation</span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Benchmarks</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Blog Card 2 - Translation/Language theme -->
+                    <div class="carousel-slide">
+                        <a href="madhuram-translate.html" class="group cursor-pointer block h-full">
+                            <div class="blog-card blog-card-translate rounded-2xl h-48 mb-4 overflow-hidden relative">
+                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                                    <circle cx="200" cy="100" r="80" fill="none" stroke="white" stroke-width="2"/>
+                                    <ellipse cx="200" cy="100" rx="80" ry="30" fill="none" stroke="white" stroke-width="1"/>
+                                    <ellipse cx="200" cy="100" rx="30" ry="80" fill="none" stroke="white" stroke-width="1"/>
+                                    <line x1="120" y1="100" x2="280" y2="100" stroke="white" stroke-width="1"/>
+                                    <text x="60" y="60" fill="white" font-size="24" font-family="serif">अ</text>
+                                    <text x="320" y="60" fill="white" font-size="20" font-family="serif">A</text>
+                                    <text x="60" y="160" fill="white" font-size="20" font-family="serif">அ</text>
+                                    <text x="320" y="160" fill="white" font-size="24" font-family="serif">ক</text>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Building Madhuram-Translate: From Tokenizer to Translation</h3>
+                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Read about our translation model built using our cost efficient indic tokenizer using minimal data and hardware.</p>
+                            <div class="flex gap-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Research</span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Tokenization</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Blog Card 3 - Neural network/code theme -->
+                    <div class="carousel-slide">
+                        <a href="perseus.html" class="group cursor-pointer block h-full">
+                            <div class="blog-card blog-card-perseus rounded-2xl h-48 mb-4 overflow-hidden relative">
+                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                                    <circle cx="80" cy="50" r="8" fill="white"/>
+                                    <circle cx="80" cy="100" r="8" fill="white"/>
+                                    <circle cx="80" cy="150" r="8" fill="white"/>
+                                    <circle cx="200" cy="75" r="10" fill="white"/>
+                                    <circle cx="200" cy="125" r="10" fill="white"/>
+                                    <circle cx="320" cy="100" r="12" fill="white"/>
+                                    <line x1="88" y1="50" x2="190" y2="75" stroke="white" stroke-width="2"/>
+                                    <line x1="88" y1="100" x2="190" y2="75" stroke="white" stroke-width="2"/>
+                                    <line x1="88" y1="100" x2="190" y2="125" stroke="white" stroke-width="2"/>
+                                    <line x1="88" y1="150" x2="190" y2="125" stroke="white" stroke-width="2"/>
+                                    <line x1="210" y1="75" x2="308" y2="100" stroke="white" stroke-width="2"/>
+                                    <line x1="210" y1="125" x2="308" y2="100" stroke="white" stroke-width="2"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Perseus: Efficient Language Modeling</h3>
+                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Read about our approach for creating an efficient language model that reimagines the way we look at positional embeddings.</p>
+                            <div class="flex gap-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Architecture</span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Research</span>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- Blog Card 4 - Mobile/pocket theme -->
+                    <div class="carousel-slide">
+                        <a href="madhuram-in-your-pocket.html" class="group cursor-pointer block h-full">
+                            <div class="blog-card blog-card-pocket rounded-2xl h-48 mb-4 overflow-hidden relative">
+                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
+                                    <rect x="160" y="40" width="80" height="120" rx="10" fill="none" stroke="white" stroke-width="3"/>
+                                    <line x1="160" y1="70" x2="240" y2="70" stroke="white" stroke-width="2"/>
+                                    <circle cx="200" cy="145" r="8" fill="none" stroke="white" stroke-width="2"/>
+                                    <path d="M80 100 Q100 80 120 100 T160 100" fill="none" stroke="white" stroke-width="2"/>
+                                    <path d="M70 100 Q100 70 130 100 T170 100" fill="none" stroke="white" stroke-width="1" opacity="0.6"/>
+                                    <line x1="280" y1="80" x2="320" y2="80" stroke="white" stroke-width="3"/>
+                                    <line x1="290" y1="100" x2="340" y2="100" stroke="white" stroke-width="3"/>
+                                    <line x1="280" y1="120" x2="320" y2="120" stroke="white" stroke-width="3"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Madhuram in Your Pocket: Real-World Mobile Performance</h3>
+                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Check Madhuram's performance on edge-device with detailed benchmarks and comparisons.</p>
+                            <div class="flex gap-2">
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Edge</span>
+                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Mobile</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <button id="blogsPrevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button id="blogsNextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-cta py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                Join the AI Flexibility<br>Revolution
+            </h2>
+            <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20am%20interested%20in%20exploring%20a%20partnership%20with%20you.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AWe%20are%20interested%20in%3A%0A-%20%5B%20%5D%20Edge%20Deployment%20(Madhuram)%0A-%20%5B%20%5D%20Research%20Collaboration%0A-%20%5B%20%5D%20API%20Access%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2 mx-auto inline-flex">
+                Partner with us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Built in India.<br>
+                        Powering the next generation of distributed intelligence.
+                    </p>
+                    <p class="text-gray-500 text-sm">Delhi, India</p>
+                </div>
+
+                <!-- Models -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram v0.5</a></li>
+                    </ul>
+                </div>
+
+                <!-- Research -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/script.js"></script>
+
+</body>
+</html>
