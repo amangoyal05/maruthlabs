@@ -1,0 +1,153 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.gradient-hero {
+    background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+}
+
+.gradient-cta {
+    background: linear-gradient(180deg, #81d4fa 0%, #4fc3f7 100%);
+}
+
+.card-shadow {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #000;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 1rem;
+}
+
+.feature-icon {
+    background: linear-gradient(135deg, #26c6da 0%, #29b6f6 100%);
+}
+
+/* Carousel Styles */
+.carousel-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+    .carousel-slide {
+        min-width: 50%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .carousel-slide {
+        min-width: 33.333%;
+    }
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #d1d5db;
+    transition: all 0.3s;
+}
+
+.carousel-dot.active {
+    background-color: #0891b2;
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* Blog card backgrounds */
+.blog-card {
+    background: linear-gradient(135deg, #26c6da 0%, #29b6f6 50%, #0288d1 100%);
+    position: relative;
+}
+
+.blog-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.blog-card svg {
+    opacity: 0.5;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.group:hover .blog-card svg {
+    opacity: 0.7;
+    transform: scale(1.05);
+}
+
+/* Specific card variations */
+.blog-card-translate {
+    background: linear-gradient(135deg, #00bcd4 0%, #26c6da 50%, #4dd0e1 100%);
+}
+
+.blog-card-perseus {
+    background: linear-gradient(135deg, #26c6da 0%, #29b6f6 50%, #03a9f4 100%);
+}
+
+.blog-card-pocket {
+    background: linear-gradient(135deg, #29b6f6 0%, #0288d1 50%, #0277bd 100%);
+}
+
+.blog-card-v05 {
+    background: linear-gradient(135deg, #00acc1 0%, #26c6da 50%, #4dd0e1 100%);
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 50;
+    min-width: 16rem;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+}
+
+.group:hover .dropdown-menu {
+    display: block;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Selection color */
+::selection {
+    background-color: #b2ebf2;
+    color: #111827;
+}
