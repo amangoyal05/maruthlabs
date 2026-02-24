@@ -108,4 +108,18 @@ setInterval(() => {
     blogsCurrentSlide++;
     if (blogsCurrentSlide > maxSlide) blogsCurrentSlide = 0;
     updateBlogsCarousel();
+
 }, 6000);
+
+function toggleMobileMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const icon = document.getElementById('menuIcon');
+    
+    if (menu.classList.contains('active')) {
+        menu.classList.remove('active');
+        icon.classList.replace('fa-times', 'fa-bars');
+    } else {
+        menu.classList.add('active');
+        icon.classList.replace('fa-bars', 'fa-times');
+    }
+}
