@@ -81,24 +81,58 @@
 <body class="bg-white">
 
     <!-- Navigation -->
-    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-2">
-                <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
-                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
-            </a>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
-                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
-                <a href="index.html#product" class="hover:text-cyan-600 transition">Products</a>
-                <a href="index.html#usecases" class="hover:text-cyan-600 transition">Use Cases</a>
-                <a href="index.html#blogs" class="hover:text-cyan-600 transition">Blogs</a>
-                <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20am%20interested%20in%20exploring%20a%20partnership%20with%20you.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AWe%20are%20interested%20in%3A%0A-%20%5B%20%5D%20Edge%20Deployment%20(Madhuram)%0A-%20%5B%20%5D%20Research%20Collaboration%0A-%20%5B%20%5D%20API%20Access%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="hover:text-cyan-600 transition">Partner with us</a>
-            </div>
-            <a href="mailto:contact@maruthlabs.com?subject=Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20would%20like%20to%20know%20more%20about%20your%20products.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AI%20am%20interested%20in%3A%0A-%20%5B%20%5D%20Trying%20Madhuram%0A-%20%5B%20%5D%20Partnership%20Opportunities%0A-%20%5B%20%5D%20Technical%20Documentation%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-900 text-white px-5 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
-                Contact Us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
-            </a>
-        </div>
-    </nav>
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100 sticky top-0 z-[60] shadow-sm">
+	    <div class="max-w-7xl mx-auto flex items-center justify-between">
+	        <a href="index.html" class="flex items-center gap-2 shrink-0">
+	            <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+	            <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+	        </a>
+	
+	        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+	            <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
+	            <div class="relative group">
+	                <button class="hover:text-cyan-600 transition flex items-center gap-1">Research <i class="fas fa-chevron-down text-[10px]"></i></button>
+	                <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+	                    <!-- <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Perseus Architecture</a>
+	                    <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.5</a>
+	                    <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Edge Performance</a>
+	                    <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50">Madhuram-Translate</a> -->
+						<a href="perseus.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Perseus Architecture</a>
+						<a href="madhuram-v0-5.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.5</a>
+						<a href="madhuram-in-your-pocket.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Edge Performance</a>
+						<a href="madhuram-translate.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-Translate</a>
+	                </div>
+	            </div>
+	            <a href="about.html" class="hover:text-cyan-600 transition">About</a>
+	            <a href="mailto:contact@maruthlabs.com" class="hover:text-cyan-600 transition">Partner</a>
+	        </div>
+	
+	        <div class="flex items-center gap-2 sm:gap-4">
+	            <a href="https://chat.maruthlabs.com" target="_blank" class="bg-gray-900 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+	                <span class="hidden sm:inline">Try Madhuram</span>
+	                <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+	            </a>
+	            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-900 p-2 hover:bg-gray-50 rounded-lg transition">
+	                <i id="menuIcon" class="fas fa-bars text-xl"></i>
+	            </button>
+	        </div>
+	    </div>
+	
+	    <div id="mobileMenu" class="md:hidden bg-white overflow-hidden">
+	        <div class="flex flex-col p-6 gap-6 font-semibold text-gray-800">
+	            <a href="index.html#product" onclick="toggleMobileMenu()">Models</a>
+	            <div class="flex flex-col gap-4">
+	                <span class="text-[10px] uppercase text-gray-400 font-black tracking-widest">Research Deep-Dives</span>
+	                <a href="perseus.html" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Perseus Architecture</a>
+	                <a href="madhuram-v0-5.html" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.5</a>
+	                <a href="madhuram-in-your-pocket.html" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Edge Performance</a>
+	                <a href="madhuram-translate.html" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-Translate</a>
+	            </div>
+	            <a href="about.html" onclick="toggleMobileMenu()">About Us</a>
+	            <a href="mailto:contact@maruthlabs.com" onclick="toggleMobileMenu()">Partner With Us</a>
+	        </div>
+	    </div>
+	</nav>
 
     <!-- Hero Section -->
     <section class="gradient-hero pt-20 pb-16 px-6">
@@ -264,3 +298,4 @@
 </body>
 
 </html>
+
