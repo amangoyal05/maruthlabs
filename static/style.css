@@ -151,3 +151,15 @@ html {
     background-color: #b2ebf2;
     color: #111827;
 }
+
+#mobileMenu {
+    transition: all 0.3s ease-in-out;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+}
+#mobileMenu.active {
+    max-height: 600px; /* Large enough to show all links */
+    opacity: 1;
+    padding-bottom: 2rem;
+}
