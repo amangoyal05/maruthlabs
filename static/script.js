@@ -128,3 +128,11 @@ function toggleMobileMenu() {
         icon.classList.replace('fa-times', 'fa-bars');
     }
 }
+
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('mobileMenu');
+    const menuButton = document.querySelector('button[onclick="toggleMobileMenu()"]');
+    if (menu && menu.classList.contains('active') && !menu.contains(e.target) && !menuButton.contains(e.target)) {
+        toggleMobileMenu();
+    }
+});
