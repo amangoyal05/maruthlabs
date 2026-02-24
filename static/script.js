@@ -115,11 +115,14 @@ function toggleMobileMenu() {
     const menu = document.getElementById('mobileMenu');
     const icon = document.getElementById('menuIcon');
     
+    // Toggle the 'active' class for the drawer
+    menu.classList.toggle('active');
+    
+    // Swap between the hamburger (bars) and close (times) icon
     if (menu.classList.contains('active')) {
-        menu.classList.remove('active');
-        icon.classList.replace('fa-times', 'fa-bars');
-    } else {
-        menu.classList.add('active');
         icon.classList.replace('fa-bars', 'fa-times');
+    } else {
+        icon.classList.replace('fa-times', 'fa-bars');
     }
 }
+
