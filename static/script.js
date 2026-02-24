@@ -112,27 +112,41 @@ setInterval(() => {
 }, 6000);
 
 function toggleMobileMenu() {
-    console.log("Menu toggle triggered"); // Useful for debugging
     const menu = document.getElementById('mobileMenu');
     const icon = document.getElementById('menuIcon');
-
     if (!menu || !icon) return;
 
-    // Toggle the 'active' class
-    menu.classList.toggle('active');
+    const isOpen = menu.style.maxHeight && menu.style.maxHeight !== '0px';
 
-    // Swap the icons
-    if (menu.classList.contains('active')) {
-        icon.classList.replace('fa-bars', 'fa-times');
-    } else {
+    if (isOpen) {
+        menu.style.maxHeight = '0px';
+        menu.style.opacity = '0';
+        menu.style.paddingBottom = '0';
+        menu.style.borderTop = 'none';
         icon.classList.replace('fa-times', 'fa-bars');
+    } else {
+        menu.style.maxHeight = '600px';
+        menu.style.opacity = '1';
+        menu.style.paddingBottom = '2rem';
+        menu.style.borderTop = '1px solid #f3f4f6';
+        icon.classList.replace('fa-bars', 'fa-times');
     }
 }
 
+// Close menu when any link inside it is clicked
+document.getElementById('mobileMenu')?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+        const menu = document.getElementById('mobileMenu');
+        if (menu && menu.style.maxHeight !== '0px') toggleMobileMenu();
+    });
+});
+
+// Close menu on outside click
 document.addEventListener('click', (e) => {
     const menu = document.getElementById('mobileMenu');
-    const menuButton = document.querySelector('button[onclick="toggleMobileMenu()"]');
-    if (menu && menu.classList.contains('active') && !menu.contains(e.target) && !menuButton.contains(e.target)) {
+    const menuBtn = document.querySelector('button[onclick="toggleMobileMenu()"]');
+    if (menu && menu.style.maxHeight && menu.style.maxHeight !== '0px'
+        && !menu.contains(e.target) && menuBtn && !menuBtn.contains(e.target)) {
         toggleMobileMenu();
     }
 });
