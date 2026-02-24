@@ -112,17 +112,19 @@ setInterval(() => {
 }, 6000);
 
 function toggleMobileMenu() {
+    console.log("Menu toggle triggered"); // Useful for debugging
     const menu = document.getElementById('mobileMenu');
     const icon = document.getElementById('menuIcon');
-    
-    // Toggle the 'active' class for the drawer
+
+    if (!menu || !icon) return;
+
+    // Toggle the 'active' class
     menu.classList.toggle('active');
-    
-    // Swap between the hamburger (bars) and close (times) icon
+
+    // Swap the icons
     if (menu.classList.contains('active')) {
         icon.classList.replace('fa-bars', 'fa-times');
     } else {
         icon.classList.replace('fa-times', 'fa-bars');
     }
 }
-
