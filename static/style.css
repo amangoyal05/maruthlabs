@@ -152,14 +152,21 @@ html {
     color: #111827;
 }
 
+/* Mobile Menu Animation */
 #mobileMenu {
     transition: all 0.3s ease-in-out;
     max-height: 0;
-    overflow: hidden;
     opacity: 0;
 }
+
 #mobileMenu.active {
-    max-height: 600px; /* Large enough to show all links */
+    max-height: 600px; /* Large enough to fit all links */
     opacity: 1;
+    border-top: 1px solid #f3f4f6;
     padding-bottom: 2rem;
+}
+
+/* Fix for overlapping elements on extra small screens */
+.shrink-0 {
+    flex-shrink: 0;
 }
