@@ -13,6 +13,13 @@ body { font-family: 'Inter', sans-serif; }
     background: #000;
 }
 
+.video-wrapper.vertical {
+    padding-bottom: 177.78%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .video-wrapper iframe {
     position: absolute;
     top: 0;
@@ -129,9 +136,6 @@ html { scroll-behavior: smooth; }
     overflow: hidden;
 }
 
-/* Justified body copy. Only worth it in wide columns: below ~48rem, and in
-   narrow cards, justification opens visible rivers and hyphenation breaks
-   words badly, so it is left ragged-right instead. */
 .justify-block {
     text-align: left;
     hyphens: manual;
