@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madhuram-v0.6: Technical Guide | MaruthLabs</title>
+    <meta name="description" content="Madhuram-v0.6: a 151M parameter language model with a 16K context window, built on the Perseus architecture.">
+    <link rel="icon" type="image/png" href="static/MaruthLabsLogo.png">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-hero {
+            background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%);
+        }
+        .gradient-cta {
+            background: linear-gradient(180deg, #81d4fa 0%, #4fc3f7 100%);
+        }
+        .feature-icon {
+            background: linear-gradient(135deg, #26c6da 0%, #29b6f6 100%);
+        }
+        .doc-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .doc-content h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #111827;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .doc-content p {
+            color: #4b5563;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-align: justify;
+            text-justify: inter-word;
+            hyphens: auto;
+        }
+        .doc-content ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #4b5563;
+            line-height: 1.8;
+        }
+        .doc-content li {
+            margin-bottom: 0.5rem;
+            text-align: justify;
+            hyphens: auto;
+        }
+        /* captions and short notes read better ragged-right */
+        .doc-content p.italic,
+        .doc-content p.text-sm {
+            text-align: left;
+            hyphens: manual;
+        }
+        /* justification opens ugly rivers on narrow columns */
+        @media (max-width: 640px) {
+            .doc-content p,
+            .doc-content li { text-align: left; }
+        }
+        .doc-content strong {
+            color: #111827;
+        }
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            margin: 1.5rem 0;
+        }
+        .performance-table th,
+        .performance-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .performance-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .performance-table tr:hover {
+            background-color: #f9fafb;
+        }
+        .highlight-row {
+            background-color: #ecfeff !important;
+            font-weight: 600;
+        }
+        .highlight-row td {
+            color: #0891b2;
+        }
+        .best-score {
+            color: #059669;
+            font-weight: 700;
+        }
+        .highlight-row td.best-score {
+            color: #047857;
+            font-weight: 700;
+        }
+        .chart-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1.5rem 1.25rem 1rem;
+            background: #fff;
+        }
+        .chart-wrap { position: relative; height: 380px; }
+        @media (max-width: 640px) { .chart-wrap { height: 320px; } }
+        .chart-title { font-size: 0.9375rem; font-weight: 700; color: #111827; }
+        .chart-sub { font-size: 0.75rem; color: #6b7280; margin-top: 0.15rem; }
+        .ctx-toggle {
+            font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.05em; padding: 0.3rem 0.7rem; border-radius: 999px;
+            border: 1px solid #e5e7eb; color: #6b7280; background: #fff;
+            cursor: pointer; transition: all .15s;
+        }
+        .ctx-toggle:hover { border-color: #cbd5e1; color: #374151; }
+        .ctx-toggle.on { background: #0891b2; border-color: #0891b2; color: #fff; }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100 sticky top-0 z-[60] shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 shrink-0">
+                <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
+                <div class="relative group">
+                    <button class="hover:text-cyan-600 transition flex items-center gap-1">Research <i class="fas fa-chevron-down text-[10px]"></i></button>
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Perseus Architecture</a>
+                        <a href="madhuram-v0-6.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.6</a>
+                        <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.5</a>
+                        <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Edge Performance</a>
+                        <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50">Madhuram-Translate</a>
+                    </div>
+                </div>
+                <a href="api-docs.html" class="hover:text-cyan-600 transition">API</a>
+                <a href="about.html" class="hover:text-cyan-600 transition">About</a>
+                <a href="mailto:contact@maruthlabs.com" class="hover:text-cyan-600 transition">Partner</a>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-4">
+                <a href="https://chat.maruthlabs.com" target="_blank" class="bg-gray-900 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                    <span class="hidden sm:inline">Try Madhuram</span>
+                    <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-900 p-2 hover:bg-gray-50 rounded-lg transition">
+                    <i id="menuIcon" class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="md:hidden bg-white overflow-hidden">
+            <div class="flex flex-col p-6 gap-6 font-semibold text-gray-800">
+                <a href="index.html#product" onclick="toggleMobileMenu()">Models</a>
+                <div class="flex flex-col gap-4">
+                    <span class="text-[10px] uppercase text-gray-400 font-black tracking-widest">Research Deep-Dives</span>
+                    <a href="perseus.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Perseus Architecture</a>
+                    <a href="madhuram-v0-6.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.6</a>
+                    <a href="madhuram-v0-5.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.5</a>
+                    <a href="madhuram-in-your-pocket.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Edge Performance</a>
+                    <a href="madhuram-translate.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-Translate</a>
+                </div>
+                <a href="api-docs.html" onclick="toggleMobileMenu()">API Documentation</a>
+                <a href="about.html" onclick="toggleMobileMenu()">About Us</a>
+                <a href="mailto:contact@maruthlabs.com" onclick="toggleMobileMenu()">Partner With Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <section class="gradient-hero pt-16 pb-12 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
+                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Products</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900">Technical Guide</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                Madhuram-v0.6: Technical Overview
+            </h1>
+            <div class="flex items-center justify-center gap-4 text-sm text-gray-600">
+                <span class="flex items-center gap-2">
+                    <i class="far fa-calendar"></i>
+                    July 2026
+                </span>
+                <span class="flex items-center gap-2">
+                    <i class="far fa-clock"></i>
+                    5 min read
+                </span>
+                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-medium">Model Release</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-12 px-6 bg-white">
+        <div class="max-w-4xl mx-auto doc-content">
+            <p class="text-xl text-gray-600 leading-relaxed mb-8">
+                Madhuram-v0.6 pairs a 16,384-token context window with a 600 billion token training budget at 151 million parameters. Evaluated against models trained on two to nineteen trillion tokens, it leads its size class on knowledge benchmarks.
+            </p>
+
+            <!-- Spec Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-12">
+                <div class="bg-gray-50 rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-microchip text-white text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">151M</h3>
+                    <p class="text-gray-600 text-sm">Parameters</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-expand-arrows-alt text-white text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">16384</h3>
+                    <p class="text-gray-600 text-sm">Context Window</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-database text-white text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">600B</h3>
+                    <p class="text-gray-600 text-sm">Training Tokens</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 text-center">
+                    <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-cube text-white text-xl"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">Perseus</h3>
+                    <p class="text-gray-600 text-sm">Architecture</p>
+                </div>
+            </div>
+
+            <h2>Core Specifications</h2>
+            <p>
+                Madhuram-v0.6 is a 151 million parameter model built on the Perseus architecture and trained on 600 billion tokens of English text. It runs a 16,384-token context window, four times that of v0.5, and is designed to hold that window on consumer hardware rather than only in a datacentre.
+            </p>
+
+            <h2>Working With Long Context</h2>
+            <p>
+                A 16K window is roughly 12,000 words of input: a full research paper, a long support thread, several source files, or an afternoon of conversation. The model accepts all of it in a single pass, on the same weights that run on a phone.
+            </p>
+            <p>
+                Retrieval quality across that window is measured directly rather than asserted. The results are in the long-context section below, reported at every context length from 2K to 16K and set against three comparable models.
+            </p>
+
+            <h2>Commonsense Reasoning</h2>
+            <p>
+                All four models were run through the same harness with identical settings rather than quoting self-reported figures. Results are zero-shot on base checkpoints. Across the commonsense suite the four models sit within 1.07 points of each other.
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>BoolQ</th>
+                            <th>ARC-E</th>
+                            <th>ARC-C</th>
+                            <th>PIQA</th>
+                            <th>SIQA</th>
+                            <th>WinoGrande</th>
+                            <th>OBQA</th>
+                            <th>HellaSwag</th>
+                            <th>Average</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td>Madhuram-v0.6</td>
+                            <td>60.46</td>
+                            <td>57.37</td>
+                            <td>29.78</td>
+                            <td>67.25</td>
+                            <td>39.56</td>
+                            <td>51.38</td>
+                            <td>32.40</td>
+                            <td>41.97</td>
+                            <td>47.52</td>
+                        </tr>
+                        <tr>
+                            <td>SmolLM2-135M</td>
+                            <td>60.43</td>
+                            <td>58.88</td>
+                            <td>29.52</td>
+                            <td>68.44</td>
+                            <td>39.25</td>
+                            <td>53.35</td>
+                            <td class="best-score">32.80</td>
+                            <td class="best-score">43.13</td>
+                            <td class="best-score">48.23</td>
+                        </tr>
+                        <tr>
+                            <td>Gemma-3-270M</td>
+                            <td>58.47</td>
+                            <td>56.94</td>
+                            <td>28.16</td>
+                            <td class="best-score">68.77</td>
+                            <td class="best-score">39.97</td>
+                            <td>53.20</td>
+                            <td>30.40</td>
+                            <td>41.33</td>
+                            <td>47.16</td>
+                        </tr>
+                        <tr>
+                            <td>LFM2.5-230M</td>
+                            <td class="best-score">61.10</td>
+                            <td class="best-score">59.64</td>
+                            <td class="best-score">35.41</td>
+                            <td>63.71</td>
+                            <td>38.02</td>
+                            <td class="best-score">54.38</td>
+                            <td>32.60</td>
+                            <td>39.38</td>
+                            <td>48.03</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-500 mt-2 italic">Zero-shot, evaluated using lm-evaluation-harness. Best scores in each category highlighted in green.</p>
+
+            <h2>Knowledge Benchmarks</h2>
+            <p>
+                The knowledge results are where the training-efficiency gap is clearest. Madhuram leads GPQA Diamond and SciQ outright, and beats both SmolLM2 and Gemma 3 on MMLU by five to seven points, despite a three to tenfold data disadvantage. LFM2.5 takes MMLU, CommonSenseQA and TriviaQA, broad factual recall being precisely where nineteen trillion tokens pay off.
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Training Tokens</th>
+                            <th>GPQA Diamond</th>
+                            <th>SciQ</th>
+                            <th>MMLU</th>
+                            <th>CommonSenseQA</th>
+                            <th>TriviaQA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td>Madhuram-v0.6</td>
+                            <td>600B</td>
+                            <td class="best-score">30.81</td>
+                            <td class="best-score">87.40</td>
+                            <td>31.71</td>
+                            <td>20.88</td>
+                            <td>6.21</td>
+                        </tr>
+                        <tr>
+                            <td>SmolLM2-135M</td>
+                            <td>2T</td>
+                            <td>20.71</td>
+                            <td>78.20</td>
+                            <td>24.49</td>
+                            <td>20.39</td>
+                            <td>5.02</td>
+                        </tr>
+                        <tr>
+                            <td>Gemma-3-270M</td>
+                            <td>6T</td>
+                            <td>21.21</td>
+                            <td>83.90</td>
+                            <td>26.04</td>
+                            <td>20.39</td>
+                            <td>9.66</td>
+                        </tr>
+                        <tr>
+                            <td>LFM2.5-230M</td>
+                            <td>19T</td>
+                            <td>29.29</td>
+                            <td>81.20</td>
+                            <td class="best-score">40.10</td>
+                            <td class="best-score">38.33</td>
+                            <td class="best-score">12.88</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-500 mt-2 italic">Zero-shot on base checkpoints. Best scores in each category highlighted in green.</p>
+
+            <h2>Instruction-Tuned Performance</h2>
+            <p>
+                After supervised finetuning, Madhuram leads its size class on graduate-level science reasoning and multi-step reasoning, and roughly a third ahead of both size-class peers on instruction following. LFM2.5 holds substantial advantages on instruction following and mathematics, the return on nineteen trillion pretraining tokens combined with multi-stage reinforcement learning, and precisely the ceiling that additional data and compute raise.
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>GPQA Diamond</th>
+                            <th>BBH (3-shot)</th>
+                            <th>IFEval</th>
+                            <th>GSM8K (5-shot)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td>Madhuram-v0.6</td>
+                            <td class="best-score">29.30</td>
+                            <td class="best-score">25.20</td>
+                            <td>40.90</td>
+                            <td>7.24</td>
+                        </tr>
+                        <tr>
+                            <td>SmolLM2-135M</td>
+                            <td>21.70</td>
+                            <td>23.20</td>
+                            <td>30.00</td>
+                            <td>1.67</td>
+                        </tr>
+                        <tr>
+                            <td>Gemma-3-270M</td>
+                            <td>26.30</td>
+                            <td>24.30</td>
+                            <td>31.00</td>
+                            <td>3.41</td>
+                        </tr>
+                        <tr>
+                            <td>LFM2.5-230M</td>
+                            <td>25.80</td>
+                            <td>24.00</td>
+                            <td class="best-score">70.00</td>
+                            <td class="best-score">29.90</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-500 mt-2 italic">BBH 3-shot, GSM8K 5-shot reported as the mean of the flexible-extract and strict-match parsers, GPQA and IFEval zero-shot. Best scores in each category highlighted in green.</p>
+
+            <h2>Long-Context Retrieval</h2>
+            <p>
+                The 16K window is validated with RULER needle-in-a-haystack evaluations, averaged across eight retrieval task variants at context lengths from 2K to 16K. Madhuram outperforms both size-class peers at every context length, and by a widening margin as context grows. SmolLM2-135M-Instruct cannot run 16K context at all. LFM2.5 leads throughout, holding above 90% recall across the full range.
+            </p>
+
+            <div class="chart-card my-8">
+                <div class="flex flex-wrap items-start justify-between gap-3 mb-1">
+                    <div>
+                        <p class="chart-title">Needle in a haystack: RULER</p>
+                        <p class="chart-sub">Average of 8 NIAH tasks vs. context length &middot; post-trained checkpoints</p>
+                    </div>
+                    <div class="flex gap-1.5 shrink-0">
+                        <button class="ctx-toggle on" data-scale="linear">Linear</button>
+                        <button class="ctx-toggle" data-scale="zoom">Zoom 40 to 100</button>
+                    </div>
+                </div>
+                <div class="chart-wrap"><canvas id="niahChart"></canvas></div>
+                <p class="text-xs text-gray-400 mt-3">
+                    Hover a point for exact values &middot; click a legend entry to hide a model &middot;
+                    SmolLM2 maximum context is 8K
+                </p>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>2K</th>
+                            <th>4K</th>
+                            <th>8K</th>
+                            <th>16K</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td>Madhuram-v0.6</td>
+                            <td>87.50</td><td>79.90</td><td>66.30</td><td>52.30</td>
+                        </tr>
+                        <tr>
+                            <td>SmolLM2-135M-Instruct</td>
+                            <td>68.90</td><td>60.80</td><td>49.60</td><td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Gemma-3-270M-IT</td>
+                            <td>71.50</td><td>67.00</td><td>55.40</td><td>47.10</td>
+                        </tr>
+                        <tr>
+                            <td>LFM2.5-230M</td>
+                            <td class="best-score">96.90</td><td class="best-score">97.60</td>
+                            <td class="best-score">97.10</td><td class="best-score">90.50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-500 mt-2 italic">Average recall (%) across the eight RULER NIAH tasks , single 1 to 3, multikey 1 to 3, multiquery and multivalue, on post-trained checkpoints. SmolLM2 maximum context is 8K. Best scores in each category highlighted in green.</p>
+
+            <h2>On-Device Inference</h2>
+            <p>
+                Converted to GGUF and run through llama.cpp on a Nothing Phone (3a), Madhuram delivers the fastest decode of the four models tested while occupying the least storage. LFM2.5 leads on prefill; Madhuram leads on token generation, which is what dominates perceived latency in interactive use.
+            </p>
+
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Prefill (tok/s)</th>
+                            <th>Decode (tok/s)</th>
+                            <th>Size on disk</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="highlight-row">
+                            <td>Madhuram-v0.6 (151M)</td>
+                            <td>452</td>
+                            <td class="best-score">119</td>
+                            <td class="best-score">100 MB</td>
+                        </tr>
+                        <tr>
+                            <td>SmolLM2-135M</td>
+                            <td>230</td><td>117</td><td>104 MB</td>
+                        </tr>
+                        <tr>
+                            <td>LFM2.5-230M</td>
+                            <td class="best-score">645</td><td>86</td><td>151 MB</td>
+                        </tr>
+                        <tr>
+                            <td>Gemma-3-270M</td>
+                            <td>293</td><td>54</td><td>247 MB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm text-gray-500 mt-2 italic">Nothing Phone (3a), Snapdragon 7s Gen 3. 4-bit quantisation, 4 threads, medians of 6 runs. Prefill measured on a 2048-token prompt. Same device, build and quantisation for all four models.</p>
+
+            <h2>Deployment</h2>
+            <p>
+                The model serves as a versatile baseline for distributed intelligence, targeting environments where low latency and privacy are paramount:
+            </p>
+            <ul>
+                <li><strong>Hosted:</strong> Available through the chat interface and an OpenAI-compatible API for free.</li>
+                <li><strong>On-Device:</strong> Converts to GGUF for llama.cpp, validated on consumer smartphone hardware.</li>
+                <li><strong>Embedded Systems:</strong> Functional on resource-constrained IoT hardware.</li>
+                <li><strong>Private Cloud:</strong> Deployable as a high-speed agent within secure enterprise firewalls.</li>
+            </ul>
+
+            <h2>Availability</h2>
+            <ul>
+                <li><strong>Chat:</strong> <a href="https://chat.maruthlabs.com" class="text-cyan-600 hover:underline">chat.maruthlabs.com</a></li>
+                <li><strong>API:</strong> <a href="api-docs.html" class="text-cyan-600 hover:underline">API documentation</a></li>
+                <li><strong>Edge:</strong> <a href="madhuram-in-your-pocket.html" class="text-cyan-600 hover:underline">Edge deployment guide</a></li>
+            </ul>
+
+            <h2>Next Steps</h2>
+            <p>
+                Work in progress includes multilingual expansion, better long-context, and scaling-law studies to inform a larger model. For inquiries regarding specific evaluation results or research collaborations, please contact the lab.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="gradient-cta py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
+                Explore Madhuram-v0.6
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://chat.maruthlabs.com" target="_blank" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2 justify-center">
+                    Try Madhuram <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <a href="api-docs.html" class="border-2 border-gray-900 text-gray-900 px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-900 hover:text-white transition flex items-center gap-2 justify-center">
+                    Get API access <i class="fas fa-code text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Built in India.<br>
+                        Powering the next generation of distributed intelligence.
+                    </p>
+                    <p class="text-gray-500 text-sm">Delhi, India</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://chat.maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.6</a></li>
+                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Access</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-6.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.6</a></li>
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+                        <li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        const el = document.getElementById('niahChart');
+        if (!el || typeof Chart === 'undefined') return;
+
+        const LENGTHS = ['2K', '4K', '8K', '16K'];
+
+        const SERIES = [
+            {
+                label: 'Madhuram-v0.6',
+                data: [87.5, 79.9, 66.3, 52.3],
+                borderColor: '#0891b2',
+                backgroundColor: '#0891b2',
+                borderWidth: 3,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                order: 1
+            },
+            {
+                label: 'LFM2.5-230M',
+                data: [96.9, 97.6, 97.1, 90.5],
+                borderColor: '#8a8a80',
+                backgroundColor: '#8a8a80',
+                borderWidth: 2,
+                borderDash: [7, 4],
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                order: 2
+            },
+            {
+                label: 'Gemma-3-270M-IT',
+                data: [71.5, 67.0, 55.4, 47.1],
+                borderColor: '#c8c6bb',
+                backgroundColor: '#c8c6bb',
+                borderWidth: 2,
+                borderDash: [7, 4],
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                order: 3
+            },
+            {
+                label: 'SmolLM2-135M-Instruct',
+                data: [68.9, 60.8, 49.6, null],   // 8K is its maximum context
+                borderColor: '#adaba2',
+                backgroundColor: '#adaba2',
+                borderWidth: 2,
+                borderDash: [2, 3],
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                order: 4
+            }
+        ];
+
+        const chart = new Chart(el, {
+            type: 'line',
+            data: { labels: LENGTHS, datasets: SERIES },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                layout: { padding: { top: 8, right: 8 } },
+                scales: {
+                    y: {
+                        min: 40,
+                        max: 100,
+                        // keep the first data point off the axis line
+                        afterFit: (a) => { a.paddingRight = 4; },
+                        title: {
+                            display: true,
+                            text: 'Avg NIAH recall (%)',
+                            color: '#6b7280',
+                            font: { size: 11, family: 'Inter', weight: '500' }
+                        },
+                        ticks: {
+                            color: '#9ca3af',
+                            font: { size: 11, family: 'Inter' },
+                            callback: v => v
+                        },
+                        grid: { color: '#f3f4f6', drawTicks: false },
+                        border: { display: false }
+                    },
+                    x: {
+                        // breathing room so the 2K and 16K points are not on the frame
+                        offset: true,
+                        title: {
+                            display: true,
+                            text: 'Context length',
+                            color: '#6b7280',
+                            font: { size: 11, family: 'Inter', weight: '500' }
+                        },
+                        ticks: { color: '#6b7280', font: { size: 12, family: 'Inter' } },
+                        grid: { display: false },
+                        border: { color: '#e5e7eb' }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        align: 'start',
+                        labels: {
+                            boxWidth: 12,
+                            boxHeight: 3,
+                            usePointStyle: false,
+                            color: '#374151',
+                            font: { size: 12, family: 'Inter', weight: '500' },
+                            padding: 16
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#111827',
+                        titleFont: { size: 12, family: 'Inter', weight: '600' },
+                        bodyFont: { size: 12, family: 'Inter' },
+                        padding: 10,
+                        cornerRadius: 8,
+                        displayColors: true,
+                        boxWidth: 8,
+                        boxHeight: 8,
+                        callbacks: {
+                            title: items => 'Context: ' + items[0].label,
+                            label: c => c.parsed.y === null
+                                ? c.dataset.label + ': not supported'
+                                : c.dataset.label + ': ' + c.parsed.y.toFixed(1) + '%'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Linear (0-100) vs zoomed (40-100) y-axis
+        document.querySelectorAll('.ctx-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.ctx-toggle').forEach(b => b.classList.remove('on'));
+                btn.classList.add('on');
+                chart.options.scales.y.min = btn.dataset.scale === 'zoom' ? 40 : 0;
+                chart.update();
+            });
+        });
+        // default to the zoomed view, which is what the toggle labels imply
+        document.querySelector('[data-scale="zoom"]').click();
+    })();
+    </script>
+
+    <script src="static/script.js"></script>
+</body>
+</html>

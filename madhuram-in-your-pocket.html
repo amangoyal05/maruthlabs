@@ -3,12 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Madhuram in Your Pocket: Real-World Mobile Performance That Delivers | MaruthLabs</title>
+    <title>Madhuram on Device: Mobile Inference Benchmarks | MaruthLabs</title>
+    <meta name="description" content="Madhuram-v0.6 measured on a Nothing Phone (3a) against SmolLM2-135M, LFM2.5-230M and Gemma 3 270M: prefill, decode and size on disk.">
     <link rel="icon" type="image/png" href="static/MaruthLabsLogo.png">
     <link rel="stylesheet" href="static/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .performance-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1.5rem 0; }
+        .performance-table th, .performance-table td {
+            padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e5e7eb;
+        }
+        .performance-table th {
+            background-color: #f9fafb; font-weight: 600; color: #374151;
+            font-size: 0.75rem; text-transform: uppercase;
+        }
+        .performance-table tr:hover { background-color: #f9fafb; }
+        .highlight-row { background-color: #ecfeff !important; font-weight: 600; }
+        .highlight-row td { color: #0891b2; }
+        .best-score { color: #059669; font-weight: 700; }
+        .highlight-row td.best-score { color: #047857; font-weight: 700; }
+        .chart-card { border: 1px solid #e5e7eb; border-radius: 1rem; padding: 1.5rem 1.25rem 1rem; background: #fff; }
+        .chart-wrap { position: relative; height: 340px; }
+        @media (max-width: 640px) { .chart-wrap { height: 300px; } }
+        .metric-btn {
+            font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+            padding: 0.35rem 0.8rem; border-radius: 999px; border: 1px solid #e5e7eb;
+            color: #6b7280; background: #fff; cursor: pointer; transition: all .15s;
+        }
+        .metric-btn:hover { border-color: #cbd5e1; color: #374151; }
+        .metric-btn.on { background: #0891b2; border-color: #0891b2; color: #fff; }
+    </style>
 </head>
 <body class="bg-white">
 
@@ -26,11 +53,13 @@
 	                <button class="hover:text-cyan-600 transition flex items-center gap-1">Research <i class="fas fa-chevron-down text-[10px]"></i></button>
 	                <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 	                    <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Perseus Architecture</a>
+	                    <a href="madhuram-v0-6.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.6</a>
 	                    <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.5</a>
 	                    <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Edge Performance</a>
 	                    <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50">Madhuram-Translate</a>
 	                </div>
 	            </div>
+	            <a href="api-docs.html" class="hover:text-cyan-600 transition">API</a>
 	            <a href="about.html" class="hover:text-cyan-600 transition">About</a>
 	            <a href="mailto:contact@maruthlabs.com" class="hover:text-cyan-600 transition">Partner</a>
 	        </div>
@@ -52,10 +81,12 @@
 	            <div class="flex flex-col gap-4">
 	                <span class="text-[10px] uppercase text-gray-400 font-black tracking-widest">Research Deep-Dives</span>
 	                <a href="perseus.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Perseus Architecture</a>
+					<a href="madhuram-v0-6.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.6</a>
 					<a href="madhuram-v0-5.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.5</a>
 					<a href="madhuram-in-your-pocket.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Edge Performance</a>
 					<a href="madhuram-translate.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-Translate</a>
 	            </div>
+	            <a href="api-docs.html" onclick="toggleMobileMenu()">API Documentation</a>
 	            <a href="about.html" onclick="toggleMobileMenu()">About Us</a>
 	            <a href="mailto:contact@maruthlabs.com" onclick="toggleMobileMenu()">Partner With Us</a>
 	        </div>
@@ -70,21 +101,21 @@
                 <i class="fas fa-chevron-right text-xs"></i>
                 <a href="index.html#blogs" class="hover:text-cyan-600 transition">Blogs</a>
                 <i class="fas fa-chevron-right text-xs"></i>
-                <span class="text-gray-900">Madhuram in Your Pocket</span>
+                <span class="text-gray-900">On Device</span>
             </div>
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-                Madhuram in Your Pocket: Real-World Mobile Performance That Delivers
+                Madhuram on Device: Mobile Inference Benchmarks
             </h1>
             <div class="flex items-center justify-center gap-4 text-sm text-gray-600">
                 <span class="flex items-center gap-2">
                     <i class="far fa-calendar"></i>
-                    June 15, 2025
+                    July 2026
                 </span>
                 <span class="flex items-center gap-2">
                     <i class="far fa-clock"></i>
-                    8 min read
+                    3 min read
                 </span>
-                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-medium">Product</span>
+                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-medium">Benchmarks</span>
             </div>
         </div>
     </section>
@@ -92,154 +123,114 @@
     <!-- Article Content -->
     <section class="py-12 px-6 bg-white">
         <div class="max-w-4xl mx-auto">
-            <p class="text-xl text-gray-600 leading-relaxed mb-8">
-                At MaruthLabs, we've always believed that truly transformative AI shouldn't be confined to data centers or high-end workstations. Today, we're excited to share real-world performance data from <strong>Madhuram running directly on mobile devices</strong> — demonstrating that our 74M-parameter model doesn't just theoretically work on phones, it genuinely excels there.
+            <p class="text-xl text-gray-600 leading-relaxed mb-8 text-justify">
+                Madhuram-v0.6 was measured on a mid-range Android phone against the three closest open models, using the same device, the same llama.cpp build and the same quantisation for all four. It generates tokens faster than any of them, from the smallest file on disk.
             </p>
 
-            <!-- Video Section -->
-            <div class="video-wrapper shadow-2xl mb-4">
-                <iframe
-                    src="https://www.youtube.com/embed/Ka_Fd21EIiQ"
-                    title="Madhuram in Action - Realme 9"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                    loading="lazy">
-                </iframe>
+            <div class="grid grid-cols-3 gap-4 mb-10">
+                <div class="bg-gray-50 rounded-2xl p-6 text-center">
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">119</h3>
+                    <p class="text-gray-600 text-sm">Decode tok/s</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 text-center">
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">452</h3>
+                    <p class="text-gray-600 text-sm">Prefill tok/s</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-6 text-center">
+                    <h3 class="font-bold text-gray-900 text-2xl mb-1">100 MB</h3>
+                    <p class="text-gray-600 text-sm">On disk</p>
+                </div>
             </div>
-            <p class="text-center text-sm text-gray-500 mb-8 italic">
-                Performance simulation tested on Realme 9 with 6 GB RAM
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">The Numbers</h2>
+            <p class="text-gray-600 leading-relaxed mb-4 text-justify">
+                Decode speed is what a user actually feels: it sets how fast words appear once the model starts replying. Prefill is how quickly the prompt is read before generation begins, and matters most with long inputs. Size on disk decides whether the model can ship inside an app at all.
             </p>
 
-            <p class="text-gray-600 leading-relaxed mb-4">
-                This performance proves that sophisticated AI can run seamlessly in your pocket, delivering the kind of responsive, intelligent interactions users expect from modern AI assistants.
-            </p>
+            <div class="chart-card my-8">
+                <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+                    <div>
+                        <p class="font-bold text-gray-900 text-sm">On-device inference</p>
+                        <p class="text-xs text-gray-500 mt-0.5">Nothing Phone (3a) &middot; Snapdragon 7s Gen 3 &middot; 4-bit &middot; 4 threads</p>
+                    </div>
+                    <div class="flex gap-1.5 shrink-0">
+                        <button class="metric-btn on" data-metric="decode">Decode</button>
+                        <button class="metric-btn" data-metric="prefill">Prefill</button>
+                        <button class="metric-btn" data-metric="size">Size</button>
+                    </div>
+                </div>
+                <div class="chart-wrap"><canvas id="deviceChart"></canvas></div>
+                <p class="text-xs text-gray-400 mt-3" id="chartNote">
+                    Higher is better. Hover a bar for the exact figure.
+                </p>
+            </div>
 
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Mobile-First AI: More Than Just Buzzwords</h2>
-            <p class="text-gray-600 leading-relaxed mb-4">
-                While the industry talks about "edge deployment" and "mobile-ready models", we've actually built one that works. Madhuram's performance on mobile devices isn't just functional — it's genuinely impressive, delivering comprehensive responses that feel natural and responsive.
-            </p>
-
-            <p class="text-gray-600 leading-relaxed mb-4">Here's what makes Madhuram's mobile performance stand out:</p>
-            <ul class="list-disc pl-6 mb-4 text-gray-600">
-                <li class="mb-2"><strong>Memory Efficiency That Matters:</strong> At peak usage, Madhuram consumes <strong>less than 1 GB of device memory</strong> — well within the capabilities of mid-range smartphones from the past few years. Unlike models that require aggressive quantization or pruning to fit on mobile devices (often degrading quality), Madhuram runs at full precision while maintaining this compact footprint.</li>
-                <li class="mb-2"><strong>Real-Time Generation Speeds:</strong> Our testing shows consistent token generation at <strong>3.99 tokens per second</strong> with an average time per token of just 250.5 milliseconds. This translates to smooth, readable text generation that feels natural and responsive — no more waiting for choppy, delayed responses that break the conversation flow.</li>
-                <li class="mb-2"><strong>Sustainable Performance:</strong> Perhaps most importantly, Madhuram maintains these performance characteristics consistently throughout extended usage sessions. The model doesn't suffer from the memory leaks or performance degradation that plague many mobile AI implementations.</li>
-            </ul>
-
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Beyond the Benchmarks: Real-World Applications</h2>
-            <p class="text-gray-600 leading-relaxed mb-4">
-                Our testing demonstrates Madhuram handling complex, nuanced queries about anxiety management. The model doesn't just provide generic responses — it offers structured, thoughtful advice covering multiple approaches from relaxation techniques to professional resources. This kind of sophisticated reasoning, happening entirely on-device, opens up entirely new possibilities for mobile AI applications.
-            </p>
-
-            <ul class="list-disc pl-6 mb-4 text-gray-600">
-                <li class="mb-2"><strong>Privacy-First AI Conversations:</strong> Since Madhuram runs entirely on-device, sensitive conversations about health, personal challenges, or private matters never leave the user's phone. There are no server round-trips, no data logging, and no privacy concerns — just intelligent, helpful responses generated locally.</li>
-                <li class="mb-2"><strong>Always-Available Intelligence:</strong> Mobile connectivity isn't universal or consistent. Madhuram works perfectly in airplane mode, in areas with poor cellular coverage, or anywhere users need AI assistance without depending on internet connectivity. This reliability makes it ideal for travel, remote work, or simply reducing dependence on cloud services.</li>
-                <li class="mb-2"><strong>Responsive User Experience:</strong> The generation statistics tell the story: <strong>58.8 seconds to generate 235 tokens</strong> of helpful, detailed content. That's fast enough for real-time conversation while comprehensive enough to provide genuinely useful responses. Users don't have to choose between speed and quality.</li>
-            </ul>
-
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Technical Deep Dive: How We Achieved This Performance</h2>
-            <p class="text-gray-600 leading-relaxed mb-4">
-                Madhuram's mobile success stems from architectural decisions made during the design phase, not post-hoc optimizations:
-            </p>
-
-            <ul class="list-disc pl-6 mb-4 text-gray-600">
-                <li class="mb-2"><strong>Optimized Memory Layout:</strong> Our architecture's advanced positional embeddings aren't just mathematically elegant — they're designed for efficient memory access patterns on mobile hardware. This reduces cache misses and improves inference speed on ARM processors commonly found in smartphones.</li>
-                <li class="mb-2"><strong>Balanced Compute Distribution:</strong> Rather than concentrating computational complexity in a few heavy layers, Madhuram distributes processing more evenly throughout the network. This approach better matches mobile hardware capabilities, avoiding thermal throttling and maintaining consistent performance.</li>
-                <li class="mb-2"><strong>Native Mobile Integration:</strong> The model loads quickly (81.36 MB initial memory usage) and scales gracefully as context grows. Unlike models that require specialized inference engines or extensive preprocessing, Madhuram runs efficiently with standard mobile ML frameworks.</li>
-            </ul>
-
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Real-World Impact: What This Means for Users</h2>
-            <p class="text-gray-600 leading-relaxed mb-4">
-                The implications extend far beyond technical achievements. Madhuram's mobile performance enables applications that simply weren't possible before:
-            </p>
-
-            <ul class="list-disc pl-6 mb-4 text-gray-600">
-                <li class="mb-2"><strong>Educational Assistance Anywhere</strong> — Students can access sophisticated AI tutoring during commutes, in study groups, or anywhere learning happens — without needing WiFi or consuming mobile data.</li>
-                <li class="mb-2"><strong>Healthcare Support</strong> — The anxiety management example represents just one use case. Madhuram can provide mental health resources, medication reminders, or health information access in privacy-sensitive contexts where cloud-based AI might not be appropriate.</li>
-                <li class="mb-2"><strong>Professional Productivity</strong> — Writers, researchers, and knowledge workers can access AI assistance for brainstorming, editing, or information synthesis regardless of their connectivity situation or workplace privacy policies.</li>
-            </ul>
-
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Performance in Context: Comparing Mobile Efficiency</h2>
-            <p class="text-gray-600 leading-relaxed mb-4">
-                When we compare Madhuram's mobile performance to other approaches, the advantages become clear:
-            </p>
-
-            <div class="overflow-x-auto mb-6">
-                <table class="w-full text-sm text-left text-gray-600 border-collapse">
-                    <thead class="bg-gray-50 text-gray-900 uppercase text-xs">
+            <div class="overflow-x-auto">
+                <table class="performance-table">
+                    <thead>
                         <tr>
-                            <th class="px-4 py-3 rounded-tl-lg">Approach</th>
-                            <th class="px-4 py-3">Network Latency</th>
-                            <th class="px-4 py-3">Data Usage</th>
-                            <th class="px-4 py-3">Privacy</th>
-                            <th class="px-4 py-3 rounded-tr-lg">Availability</th>
+                            <th>Model</th>
+                            <th>Decode (tok/s)</th>
+                            <th>Prefill (tok/s)</th>
+                            <th>Size on disk</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-cyan-50 font-semibold">
-                            <td class="px-4 py-3 text-cyan-700">Madhuram</td>
-                            <td class="px-4 py-3 text-cyan-700">0ms</td>
-                            <td class="px-4 py-3 text-cyan-700">None</td>
-                            <td class="px-4 py-3 text-cyan-700">Perfect</td>
-                            <td class="px-4 py-3 text-cyan-700">100%</td>
+                        <tr class="highlight-row">
+                            <td>Madhuram-v0.6 (151M)</td>
+                            <td class="best-score">119</td>
+                            <td>452</td>
+                            <td class="best-score">100 MB</td>
                         </tr>
-                        <tr class="bg-white border-b">
-                            <td class="px-4 py-3">Cloud-Based Models</td>
-                            <td class="px-4 py-3">200-500ms</td>
-                            <td class="px-4 py-3">High</td>
-                            <td class="px-4 py-3">Compromised</td>
-                            <td class="px-4 py-3">Network Dependent</td>
+                        <tr>
+                            <td>SmolLM2-135M</td>
+                            <td>117</td><td>230</td><td>104 MB</td>
                         </tr>
-                        <tr class="bg-gray-50">
-                            <td class="px-4 py-3 rounded-bl-lg">Other Edge Models</td>
-                            <td class="px-4 py-3">0ms</td>
-                            <td class="px-4 py-3">None</td>
-                            <td class="px-4 py-3">Good</td>
-                            <td class="px-4 py-3 rounded-br-lg">Resource Limited</td>
+                        <tr>
+                            <td>LFM2.5-230M</td>
+                            <td>86</td><td class="best-score">645</td><td>151 MB</td>
+                        </tr>
+                        <tr>
+                            <td>Gemma-3-270M</td>
+                            <td>54</td><td>293</td><td>247 MB</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <p class="text-sm text-gray-500 mt-2 italic">
+                Medians of six runs. Prefill measured on a 2048-token prompt. Same device, build and quantisation for all four models. Best figure in each column in green.
+            </p>
 
-            <div class="overflow-x-auto mb-6">
-                <table class="w-full text-sm text-left text-gray-600 border-collapse">
-                    <thead class="bg-gray-50 text-gray-900 uppercase text-xs">
-                        <tr>
-                            <th class="px-4 py-3 rounded-tl-lg">Model Comparison</th>
-                            <th class="px-4 py-3">Memory Usage</th>
-                            <th class="px-4 py-3">Generation Speed</th>
-                            <th class="px-4 py-3 rounded-tr-lg">Response Quality</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="bg-cyan-50 font-semibold">
-                            <td class="px-4 py-3 text-cyan-700">Madhuram</td>
-                            <td class="px-4 py-3 text-cyan-700">919MB peak</td>
-                            <td class="px-4 py-3 text-cyan-700">3.99 tokens/sec</td>
-                            <td class="px-4 py-3 text-cyan-700">High</td>
-                        </tr>
-                        <tr class="bg-gray-50">
-                            <td class="px-4 py-3 rounded-bl-lg">Typical Edge Models</td>
-                            <td class="px-4 py-3">1.2GB+ typical</td>
-                            <td class="px-4 py-3">2-3 tokens/sec</td>
-                            <td class="px-4 py-3 rounded-br-lg">Degraded from quantization</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">What Stands Out</h2>
+            <p class="text-gray-600 leading-relaxed mb-4 text-justify">
+                Madhuram leads decode at 119 tokens per second, ahead of a model with fewer parameters and more than twice the rate of Gemma&nbsp;3&nbsp;270M. It does so from a 100 MB file, the smallest of the four, which is what makes bundling it inside an app realistic.
+            </p>
+            <p class="text-gray-600 leading-relaxed mb-4 text-justify">
+                LFM2.5 leads prefill by a wide margin. That is a genuine advantage on long
+                inputs, and worth knowing if your workload is dominated by reading rather than
+                writing. For interactive use, where the model produces more text than it
+                consumes, decode is the number that governs how responsive it feels.
+            </p>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Why It Matters</h2>
+            <ul class="list-disc pl-6 mb-4 text-gray-600">
+                <li class="mb-2"><strong>Nothing leaves the device.</strong> No network round trip, no server logs, no data in transit.</li>
+                <li class="mb-2"><strong>It works offline.</strong> Aeroplane mode, weak coverage, or an air-gapped deployment all behave the same.</li>
+                <li class="mb-2"><strong>No inference bill.</strong> Compute belongs to the device, so cost does not scale with usage.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Getting It On Your Hardware</h2>
+            <p class="text-gray-600 leading-relaxed mb-4 text-justify">
+                On-device builds are delivered as a custom engagement. We handle the conversion, quantisation, and integration for your target hardware, and tune the trade-off between size and quality to suit the device. If you want to evaluate the model first, the hosted API is free.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                <a href="mailto:contact@maruthlabs.com?subject=On-device%20Madhuram%20deployment&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%27d%20like%20to%20discuss%20an%20on-device%20Madhuram%20deployment.%0A%0AName%3A%20%0AOrganization%3A%20%0ATarget%20hardware%3A%20%0AUse%20case%3A%20%0A%0AMessage%3A%0A%0A" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition inline-flex items-center gap-2 justify-center">
+                    Talk to us <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+                <a href="api-docs.html" class="border-2 border-gray-900 text-gray-900 px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-900 hover:text-white transition inline-flex items-center gap-2 justify-center">
+                    Try the API <i class="fas fa-code text-xs"></i>
+                </a>
             </div>
-
-            <h2 class="text-2xl font-bold text-gray-900 mt-8 mb-4">Looking Forward: The Mobile AI Revolution</h2>
-            <p class="text-gray-600 leading-relaxed mb-4">
-                Madhuram's mobile performance represents more than just an engineering achievement — it's a glimpse into a future where sophisticated AI is truly ubiquitous. When powerful language models can run efficiently on devices people already own, we move from AI being a special-purpose tool to being a natural part of how people interact with information and technology.
-            </p>
-
-            <p class="text-gray-600 leading-relaxed mb-4">
-                We're continuing to optimize Madhuram for even better mobile performance, exploring specialized variants for different device categories, and building tools that make it easier for developers to integrate truly capable on-device AI into their applications.
-            </p>
-
-            <p class="text-gray-600 leading-relaxed mb-4">
-                The future of AI isn't just bigger models running in distant data centers — it's smarter models running wherever people need them. Madhuram proves that future is already here, ready to fit in your pocket and work wherever you do.
-            </p>
         </div>
     </section>
 
@@ -247,7 +238,7 @@
     <section class="gradient-cta py-20 px-6">
         <div class="max-w-4xl mx-auto text-center">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-                Join the AI Flexibility<br>Revolution
+                Join the AI Flexibility Revolution
             </h2>
             <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20am%20interested%20in%20exploring%20a%20partnership%20with%20you.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AWe%20are%20interested%20in%3A%0A-%20%5B%20%5D%20Edge%20Deployment%20(Madhuram)%0A-%20%5B%20%5D%20Research%20Collaboration%0A-%20%5B%20%5D%20API%20Access%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2 mx-auto inline-flex">
                 Partner with us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
@@ -276,7 +267,8 @@
                 <div>
                     <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="https://chat.maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Madhuram v0.5</a></li>
+                        <li><a href="https://chat.maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Madhuram v0.6</a></li>
+                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Access</a></li>
                     </ul>
                 </div>
 
@@ -284,10 +276,12 @@
                 <div>
                     <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
                     <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-6.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.6</a></li>
                         <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
                         <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
                         <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
-			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+			            <li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Documentation</a></li>
                         <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
                     </ul>
                 </div>
@@ -323,6 +317,84 @@
             </div>
         </div>
     </footer>
+    
+    <!-- Chart logic appended here -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('deviceChart').getContext('2d');
+            const labels = ['Madhuram-v0.6 (151M)', 'SmolLM2-135M', 'LFM2.5-230M', 'Gemma-3-270M'];
+            
+            // Define custom background colors for the models
+            const barColors = [
+                '#0891b2',                 // Madhuram (Cyan)
+                'rgba(139, 92, 246, 0.4)', // SmolLM2 (Violet)
+                'rgba(16, 185, 129, 0.4)', // LFM2.5 (Emerald)
+                'rgba(245, 158, 11, 0.4)'  // Gemma-3 (Amber)
+            ];
+
+            // Define the benchmark data sets based on the table
+            const datasets = {
+                decode: {
+                    label: 'Decode (tok/s)',
+                    data: [119, 117, 86, 54],
+                    backgroundColor: barColors,
+                    borderRadius: 4
+                },
+                prefill: {
+                    label: 'Prefill (tok/s)',
+                    data: [452, 230, 645, 293],
+                    backgroundColor: barColors,
+                    borderRadius: 4
+                },
+                size: {
+                    label: 'Size on disk (MB)',
+                    data: [100, 104, 151, 247],
+                    backgroundColor: barColors,
+                    borderRadius: 4
+                }
+            };
+    
+            let currentMetric = 'decode';
+            let chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [datasets[currentMetric]]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+    
+            const buttons = document.querySelectorAll('.metric-btn');
+            const note = document.getElementById('chartNote');
+    
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    buttons.forEach(b => b.classList.remove('on'));
+                    this.classList.add('on');
+                    
+                    const metric = this.getAttribute('data-metric');
+                    chart.data.datasets[0] = datasets[metric];
+                    
+                    if (metric === 'size') {
+                        note.textContent = 'Lower is better. Hover a bar for the exact figure.';
+                    } else {
+                        note.textContent = 'Higher is better. Hover a bar for the exact figure.';
+                    }
+                    
+                    chart.update();
+                });
+            });
+        });
+    </script>
 	<script src="static/script.js"></script>
 </body>
 </html>

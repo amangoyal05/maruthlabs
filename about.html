@@ -67,6 +67,9 @@
             margin-bottom: 1.5rem;
             font-size: 1.125rem;
         }
+        @media (min-width: 768px) {
+            .about-content p { text-align: justify; text-justify: inter-word; hyphens: auto; }
+        }
         .lead-text {
             font-size: 1.5rem;
             color: #374151;
@@ -94,11 +97,13 @@
 	                <button class="hover:text-cyan-600 transition flex items-center gap-1">Research <i class="fas fa-chevron-down text-[10px]"></i></button>
 	                <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 	                    <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Perseus Architecture</a>
+	                    <a href="madhuram-v0-6.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.6</a>
 	                    <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.5</a>
 	                    <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Edge Performance</a>
 	                    <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50">Madhuram-Translate</a>
 	                </div>
 	            </div>
+	            <a href="api-docs.html" class="hover:text-cyan-600 transition">API</a>
 	            <a href="about.html" class="hover:text-cyan-600 transition">About</a>
 	            <a href="mailto:contact@maruthlabs.com" class="hover:text-cyan-600 transition">Partner</a>
 	        </div>
@@ -120,10 +125,12 @@
 	            <div class="flex flex-col gap-4">
 	                <span class="text-[10px] uppercase text-gray-400 font-black tracking-widest">Research Deep-Dives</span>
 	                <a href="perseus.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Perseus Architecture</a>
+					<a href="madhuram-v0-6.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.6</a>
 					<a href="madhuram-v0-5.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.5</a>
 					<a href="madhuram-in-your-pocket.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Edge Performance</a>
 					<a href="madhuram-translate.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-Translate</a>
 	            </div>
+	            <a href="api-docs.html" onclick="toggleMobileMenu()">API Documentation</a>
 	            <a href="about.html" onclick="toggleMobileMenu()">About Us</a>
 	            <a href="mailto:contact@maruthlabs.com" onclick="toggleMobileMenu()">Partner With Us</a>
 	        </div>
@@ -156,7 +163,7 @@
                 For the last decade, the AI industry has been obsessed with scale. The prevailing logic was simple: more parameters, more data, more GPUs. While this created impressive capabilities, it also created a centralization of power.
             </p>
             <p>
-                At Maruth Labs, we take the inverse approach. We ask: <strong>"What is the minimum architectural complexity required to achieve reasoning?"</strong>
+                At MaruthLabs, we take the inverse approach. We ask: <strong>"What is the minimum architectural complexity required to achieve reasoning?"</strong>
             </p>
             <p>
                 We build Small Language Models (SLMs) that punch above their weight class. By optimizing the fundamental mathematics of attention and positional embeddings (Project Perseus), we bring server-grade intelligence to edge devices.
@@ -243,7 +250,8 @@
                 <div>
                     <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="https://chat.maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="https://chat.maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Madhuram v0.6</a></li>
+                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Access</a></li>
                     </ul>
                 </div>
 
@@ -251,10 +259,12 @@
                 <div>
                     <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
                     <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-6.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.6</a></li>
                         <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
                         <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
                         <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
 			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Documentation</a></li>
                         <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
                     </ul>
                 </div>

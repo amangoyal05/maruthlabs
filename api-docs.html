@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | MaruthLabs</title>
+    <meta name="description" content="OpenAI-compatible API for Madhuram. Free during preview.">
+    <link rel="icon" type="image/png" href="static/MaruthLabsLogo.png">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-hero { background: linear-gradient(180deg, #e0f7fa 0%, #b2ebf2 50%, #80deea 100%); }
+        .gradient-cta { background: linear-gradient(180deg, #81d4fa 0%, #4fc3f7 100%); }
+        .feature-icon { background: linear-gradient(135deg, #26c6da 0%, #29b6f6 100%); }
+
+        .doc-content h2 {
+            font-size: 1.5rem; font-weight: 700; color: #111827;
+            margin-top: 3.5rem; margin-bottom: 1rem;
+            padding-bottom: 0.5rem; border-bottom: 2px solid #e5e7eb;
+            scroll-margin-top: 6rem;
+        }
+        .doc-content h3 {
+            font-size: 1.0625rem; font-weight: 700; color: #111827;
+            margin-top: 2rem; margin-bottom: 0.75rem; scroll-margin-top: 6rem;
+        }
+        .doc-content p {
+            color: #4b5563; line-height: 1.8; margin-bottom: 1rem;
+            text-align: justify; text-justify: inter-word; hyphens: auto;
+        }
+        .doc-content ul { list-style: disc; padding-left: 1.5rem; color: #4b5563; line-height: 1.8; }
+        .doc-content li { margin-bottom: 0.5rem; text-align: justify; hyphens: auto; }
+        /* captions and short notes read better ragged-right */
+        .doc-content p.italic,
+        .doc-content p.text-sm { text-align: left; hyphens: manual; }
+        /* justification opens ugly rivers on narrow columns */
+        @media (max-width: 640px) {
+            .doc-content p,
+            .doc-content li { text-align: left; }
+        }
+        .doc-content strong { color: #111827; }
+        .doc-content a { color: #0891b2; }
+        .doc-content a:hover { text-decoration: underline; }
+
+        code.inline {
+            background: #f1f5f9; color: #0f172a; padding: 0.15rem 0.4rem;
+            border-radius: 0.3rem; font-size: 0.8125rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+        .code-block {
+            background: #0f172a; color: #e2e8f0; border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem; overflow-x: auto; font-size: 0.8125rem;
+            line-height: 1.75; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            margin: 1rem 0 1.5rem;
+        }
+        .code-block .c  { color: #64748b; }
+        .code-block .s  { color: #86efac; }
+        .code-block .k  { color: #7dd3fc; }
+        .code-block .f  { color: #fcd34d; }
+
+        .code-header {
+            background: #1e293b; color: #94a3b8; font-size: 0.6875rem;
+            text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;
+            padding: 0.6rem 1.5rem; border-radius: 0.75rem 0.75rem 0 0;
+            margin: 1.5rem 0 0; font-family: 'Inter', sans-serif;
+        }
+        .code-header + .code-block { border-radius: 0 0 0.75rem 0.75rem; margin-top: 0; }
+
+        .param-table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1.25rem 0; }
+        .param-table th, .param-table td {
+            padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        .param-table th {
+            background-color: #f9fafb; font-weight: 600; color: #374151;
+            font-size: 0.75rem; text-transform: uppercase;
+        }
+        .param-table tr:hover { background-color: #f9fafb; }
+        .param-table code {
+            font-family: ui-monospace, monospace; font-size: 0.8125rem;
+            color: #0f172a; font-weight: 600;
+        }
+        .param-type { color: #6b7280; font-size: 0.75rem; font-family: ui-monospace, monospace; }
+
+        .method {
+            display: inline-block; font-family: ui-monospace, monospace; font-weight: 700;
+            font-size: 0.6875rem; padding: 0.2rem 0.5rem; border-radius: 0.3rem;
+            letter-spacing: 0.04em; margin-right: 0.6rem; vertical-align: middle;
+        }
+        .method-post { background: #dbeafe; color: #1d4ed8; }
+        .method-get  { background: #dcfce7; color: #15803d; }
+        .endpoint-path {
+            font-family: ui-monospace, monospace; font-size: 0.9375rem;
+            color: #0f172a; font-weight: 600;
+        }
+
+        .note {
+            background: #ecfeff; border-left: 3px solid #06b6d4;
+            padding: 1rem 1.25rem; border-radius: 0.5rem; margin: 1.5rem 0;
+            color: #164e63; font-size: 0.875rem; line-height: 1.7;
+        }
+        .warn {
+            background: #fffbeb; border-left: 3px solid #f59e0b;
+            padding: 1rem 1.25rem; border-radius: 0.5rem; margin: 1.5rem 0;
+            color: #78350f; font-size: 0.875rem; line-height: 1.7;
+        }
+        .toc a { display: block; padding: 0.3rem 0; color: #6b7280; font-size: 0.8125rem; }
+        .toc a:hover { color: #0891b2; }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100 sticky top-0 z-[60] shadow-sm">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 shrink-0">
+                <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+            </a>
+
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+                <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
+                <div class="relative group">
+                    <button class="hover:text-cyan-600 transition flex items-center gap-1">Research <i class="fas fa-chevron-down text-[10px]"></i></button>
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Perseus Architecture</a>
+                        <a href="madhuram-v0-6.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.6</a>
+                        <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.5</a>
+                        <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Edge Performance</a>
+                        <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50">Madhuram-Translate</a>
+                    </div>
+                </div>
+                <a href="api-docs.html" class="hover:text-cyan-600 transition">API</a>
+                <a href="about.html" class="hover:text-cyan-600 transition">About</a>
+                <a href="mailto:contact@maruthlabs.com" class="hover:text-cyan-600 transition">Partner</a>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-4">
+                <a href="https://chat.maruthlabs.com" target="_blank" class="bg-gray-900 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2">
+                    <span class="hidden sm:inline">Try Madhuram</span>
+                    <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-900 p-2 hover:bg-gray-50 rounded-lg transition">
+                    <i id="menuIcon" class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobileMenu" class="md:hidden bg-white overflow-hidden">
+            <div class="flex flex-col p-6 gap-6 font-semibold text-gray-800">
+                <a href="index.html#product" onclick="toggleMobileMenu()">Models</a>
+                <div class="flex flex-col gap-4">
+                    <span class="text-[10px] uppercase text-gray-400 font-black tracking-widest">Research Deep-Dives</span>
+                    <a href="perseus.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Perseus Architecture</a>
+                    <a href="madhuram-v0-6.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.6</a>
+                    <a href="madhuram-v0-5.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.5</a>
+                    <a href="madhuram-in-your-pocket.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Edge Performance</a>
+                    <a href="madhuram-translate.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-Translate</a>
+                </div>
+                <a href="api-docs.html" onclick="toggleMobileMenu()">API Documentation</a>
+                <a href="about.html" onclick="toggleMobileMenu()">About Us</a>
+                <a href="mailto:contact@maruthlabs.com" onclick="toggleMobileMenu()">Partner With Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="gradient-hero pt-16 pb-12 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 text-sm text-gray-600 mb-4">
+                <a href="index.html" class="hover:text-cyan-600 transition">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900">API</span>
+            </div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                Madhuram API
+            </h1>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-6">
+                An OpenAI-compatible endpoint for Madhuram-v0.6. If your code already
+                talks to OpenAI, changing two lines is enough.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                <span class="bg-cyan-100 text-cyan-700 px-3 py-1 rounded-full text-xs font-medium">Documentation</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-6 bg-white">
+        <div class="max-w-5xl mx-auto flex gap-12">
+
+            <!-- Sidebar TOC -->
+            <aside class="hidden lg:block w-52 shrink-0">
+                <div class="sticky top-28 toc">
+                    <p class="text-[10px] uppercase tracking-widest font-black text-gray-400 mb-3">On this page</p>
+                    <a href="#quickstart">Quickstart</a>
+                    <a href="#authentication">Authentication</a>
+                    <a href="#endpoints">Endpoints</a>
+                    <a href="#parameters">Parameters</a>
+                    <a href="#streaming">Streaming</a>
+                    <a href="#limits">Rate limits</a>
+                    <a href="#errors">Errors</a>
+                    <a href="#privacy">Data &amp; privacy</a>
+                </div>
+            </aside>
+
+            <div class="doc-content flex-1 min-w-0">
+
+                <h2 id="quickstart">Quickstart</h2>
+                <p>
+                    Create an API key from the <a href="https://chat.maruthlabs.com" target="_blank">chat interface</a>, sign in, open <strong>Settings &rarr; API</strong>, and select <strong>Create API key</strong>. The key is shown once and cannot be retrieved afterwards, so store it somewhere safe.
+                </p>
+
+                <div class="code-header">Python , OpenAI SDK</div>
+                <pre class="code-block"><span class="k">from</span> openai <span class="k">import</span> OpenAI
+
+client = <span class="f">OpenAI</span>(
+    api_key=<span class="s">"YOUR_KEY"</span>,
+    base_url=<span class="s">"https://api.maruthlabs.com/v1"</span>
+)
+
+response = client.chat.completions.<span class="f">create</span>(
+    model=<span class="s">"madhuram"</span>,
+    messages=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"Explain gradient descent in two sentences."</span>}]
+)
+
+<span class="f">print</span>(response.choices[<span class="k">0</span>].message.content)</pre>
+
+                <div class="code-header">cURL</div>
+                <pre class="code-block">curl https://api.maruthlabs.com/v1/chat/completions \
+  -H <span class="s">"Authorization: Bearer YOUR_KEY"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{
+    "model": "madhuram",
+    "messages": [{"role": "user", "content": "Hello"}]
+  }'</span></pre>
+
+                <div class="code-header">JavaScript , OpenAI SDK</div>
+                <pre class="code-block"><span class="k">import</span> OpenAI <span class="k">from</span> <span class="s">"openai"</span>;
+
+<span class="k">const</span> client = <span class="k">new</span> <span class="f">OpenAI</span>({
+  apiKey: <span class="s">"YOUR_KEY"</span>,
+  baseURL: <span class="s">"https://api.maruthlabs.com/v1"</span>
+});
+
+<span class="k">const</span> r = <span class="k">await</span> client.chat.completions.<span class="f">create</span>({
+  model: <span class="s">"madhuram"</span>,
+  messages: [{ role: <span class="s">"user"</span>, content: <span class="s">"Hello"</span> }]
+});
+
+console.<span class="f">log</span>(r.choices[<span class="k">0</span>].message.content);</pre>
+
+                <h2 id="authentication">Authentication</h2>
+                <p>
+                    Every request requires a bearer token in the <code class="inline">Authorization</code> header:
+                </p>
+                <pre class="code-block">Authorization: Bearer sk-mrth-...</pre>
+                <p>
+                    Keys are issued per account, one active key at a time. Regenerating a key revokes the previous one immediately. Only a hash of your key is stored on our side, which means we cannot recover it for you, if it is lost, generate a new one.
+                </p>
+                <div class="warn">
+                    <strong>Keep keys server-side.</strong> A key in browser JavaScript or a mobile app bundle is publicly readable. Route requests through your own backend.
+                </div>
+
+                <h2 id="endpoints">Endpoints</h2>
+                <p>Base URL: <code class="inline">https://api.maruthlabs.com/v1</code></p>
+
+                <h3><span class="method method-post">POST</span><span class="endpoint-path">/v1/chat/completions</span></h3>
+                <p>
+                    Generates a completion for a conversation. Accepts and returns the standard OpenAI chat-completions shape, with or without streaming.
+                </p>
+
+                <div class="code-header">Response</div>
+                <pre class="code-block">{
+  <span class="s">"id"</span>: <span class="s">"chatcmpl-..."</span>,
+  <span class="s">"object"</span>: <span class="s">"chat.completion"</span>,
+  <span class="s">"created"</span>: <span class="k">1785312496</span>,
+  <span class="s">"model"</span>: <span class="s">"madhuram"</span>,
+  <span class="s">"choices"</span>: [{
+    <span class="s">"index"</span>: <span class="k">0</span>,
+    <span class="s">"message"</span>: { <span class="s">"role"</span>: <span class="s">"assistant"</span>, <span class="s">"content"</span>: <span class="s">"..."</span> },
+    <span class="s">"finish_reason"</span>: <span class="s">"stop"</span>
+  }],
+  <span class="s">"usage"</span>: {
+    <span class="s">"prompt_tokens"</span>: <span class="k">57</span>,
+    <span class="s">"completion_tokens"</span>: <span class="k">10</span>,
+    <span class="s">"total_tokens"</span>: <span class="k">67</span>
+  }
+}</pre>
+
+                <h3><span class="method method-get">GET</span><span class="endpoint-path">/v1/models</span></h3>
+                <p>Lists available models.</p>
+                <pre class="code-block">{
+  <span class="s">"object"</span>: <span class="s">"list"</span>,
+  <span class="s">"data"</span>: [{ <span class="s">"id"</span>: <span class="s">"madhuram"</span>, <span class="s">"object"</span>: <span class="s">"model"</span>, <span class="s">"owned_by"</span>: <span class="s">"maruthlabs"</span> }]
+}</pre>
+
+                <h3><span class="method method-get">GET</span><span class="endpoint-path">/v1/usage</span></h3>
+                <p>Returns your consumption against the current day's quota.</p>
+                <pre class="code-block">{
+  <span class="s">"tier"</span>: <span class="s">"free"</span>,
+  <span class="s">"day"</span>: <span class="s">"2026-07-29"</span>,
+  <span class="s">"requests_used"</span>: <span class="k">12</span>,
+  <span class="s">"requests_limit"</span>: <span class="k">1000</span>,
+  <span class="s">"tokens_used"</span>: <span class="k">4820</span>,
+  <span class="s">"tokens_limit"</span>: <span class="k">200000</span>,
+  <span class="s">"resets"</span>: <span class="s">"00:00 UTC"</span>
+}</pre>
+
+                <h2 id="parameters">Parameters</h2>
+                <table class="param-table">
+                    <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>messages</code></td>
+                            <td class="param-type">array</td>
+                            <td><strong>Required.</strong> Conversation history. Each entry has a <code>role</code> (<code>system</code>, <code>user</code>, or <code>assistant</code>) and <code>content</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>model</code></td>
+                            <td class="param-type">string</td>
+                            <td>Use <code>"madhuram"</code>. Other values are ignored.</td>
+                        </tr>
+                        <tr>
+                            <td><code>max_tokens</code></td>
+                            <td class="param-type">integer</td>
+                            <td>Maximum tokens to generate. Capped at 4096. Values of <code>-1</code> or <code>0</code> are treated as "use the maximum".</td>
+                        </tr>
+                        <tr>
+                            <td><code>temperature</code></td>
+                            <td class="param-type">number</td>
+                            <td>Sampling temperature. Lower is more deterministic; higher is more varied.</td>
+                        </tr>
+                        <tr>
+                            <td><code>top_p</code></td>
+                            <td class="param-type">number</td>
+                            <td>Nucleus sampling threshold.</td>
+                        </tr>
+                        <tr>
+                            <td><code>top_k</code></td>
+                            <td class="param-type">integer</td>
+                            <td>Restricts sampling to the k most likely tokens.</td>
+                        </tr>
+                        <tr>
+                            <td><code>repetition_penalty</code></td>
+                            <td class="param-type">number</td>
+                            <td>Multiplicative penalty on repeated tokens. <code>1.0</code> is neutral; useful range is roughly 1.0 to 1.3.</td>
+                        </tr>
+                        <tr>
+                            <td><code>presence_penalty</code><br><code>frequency_penalty</code></td>
+                            <td class="param-type">number</td>
+                            <td>Additive OpenAI-style penalties. Do not stack these with <code>repetition_penalty</code> or output degrades.</td>
+                        </tr>
+                        <tr>
+                            <td><code>stop</code></td>
+                            <td class="param-type">string / array</td>
+                            <td>Sequences that halt generation. A bare string is accepted and normalised.</td>
+                        </tr>
+                        <tr>
+                            <td><code>seed</code></td>
+                            <td class="param-type">integer</td>
+                            <td>Seeds sampling for reproducible output.</td>
+                        </tr>
+                        <tr>
+                            <td><code>stream</code></td>
+                            <td class="param-type">boolean</td>
+                            <td>Streams tokens as server-sent events. Defaults to <code>false</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="note">
+                    Parameters outside this list are ignored rather than passed through, so an unknown field from your client library will not cause a request to fail.
+                </div>
+
+                <h2 id="streaming">Streaming</h2>
+                <p>
+                    Set <code class="inline">stream: true</code> to receive tokens as they are generated, in the standard OpenAI server-sent-event format terminated by <code class="inline">data: [DONE]</code>.
+                </p>
+                <div class="code-header">Python</div>
+                <pre class="code-block">stream = client.chat.completions.<span class="f">create</span>(
+    model=<span class="s">"madhuram"</span>,
+    messages=[{<span class="s">"role"</span>: <span class="s">"user"</span>, <span class="s">"content"</span>: <span class="s">"Write a haiku about servers."</span>}],
+    stream=<span class="k">True</span>
+)
+
+<span class="k">for</span> chunk <span class="k">in</span> stream:
+    delta = chunk.choices[<span class="k">0</span>].delta.content
+    <span class="k">if</span> delta:
+        <span class="f">print</span>(delta, end=<span class="s">""</span>, flush=<span class="k">True</span>)</pre>
+
+                <h2 id="limits">Rate limits</h2>
+                <p>Free-tier limits, applied per account:</p>
+                <table class="param-table">
+                    <thead>
+                        <tr><th>Limit</th><th>Value</th><th>Window</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>Requests per minute</code></td><td>60</td><td>Rolling</td></tr>
+                        <tr><td><code>Requests per day</code></td><td>1,000</td><td>Resets 00:00 UTC</td></tr>
+                        <tr><td><code>Tokens per day</code></td><td>200,000</td><td>Resets 00:00 UTC</td></tr>
+                        <tr><td><code>Max tokens per request</code></td><td>4,096</td><td>Per request</td></tr>
+                        <tr><td><code>Context window</code></td><td>16,384</td><td>Prompt + completion</td></tr>
+                    </tbody>
+                </table>
+                <p>
+                    Responses carry <code class="inline">X-RateLimit-Remaining-Requests</code> and <code class="inline">X-RateLimit-Remaining-Tokens</code> headers so clients can self-throttle. Building something that needs more? <a href="mailto:contact@maruthlabs.com?subject=API%20rate%20limit%20increase">Get in touch</a>, higher limits are available on request.
+                </p>
+
+                <h2 id="errors">Errors</h2>
+                <table class="param-table">
+                    <thead>
+                        <tr><th>Status</th><th>Meaning</th><th>What to do</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>400</code></td>
+                            <td>Malformed request</td>
+                            <td>Check that <code>messages</code> is present and well-formed, and that the prompt fits the context window.</td>
+                        </tr>
+                        <tr>
+                            <td><code>401</code></td>
+                            <td>Missing, invalid, or revoked key</td>
+                            <td>Verify the <code>Authorization</code> header. If the key was regenerated, update it.</td>
+                        </tr>
+                        <tr>
+                            <td><code>429</code></td>
+                            <td>Rate limit or daily quota exceeded</td>
+                            <td>Back off and retry. The <code>Retry-After</code> header gives the wait in seconds.</td>
+                        </tr>
+                        <tr>
+                            <td><code>503</code></td>
+                            <td>Inference backend unavailable</td>
+                            <td>Transient. Retry with exponential backoff.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 id="privacy">Data &amp; privacy</h2>
+                <p>
+                    Requests and responses are recorded for usage metering, debugging, and abuse investigation. They are used to train future models <strong>only if you opt in</strong>, the setting is off by default and can be changed at any time under <strong>Settings &rarr; API</strong> in the chat interface.
+                </p>
+                <p>
+                    The API is free for Madhuram-v0.6. We will give notice before introducing pricing.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="gradient-cta py-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Start building
+            </h2>
+            <p class="text-gray-700 mb-8">Create a key in under a minute. No card, no waitlist.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://chat.maruthlabs.com" target="_blank" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2 justify-center">
+                    Get an API key <i class="fas fa-key text-xs"></i>
+                </a>
+                <a href="madhuram-v0-6.html" class="border-2 border-gray-900 text-gray-900 px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-900 hover:text-white transition flex items-center gap-2 justify-center">
+                    Model details <i class="fas fa-book text-xs"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div class="col-span-2 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
+                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
+                        Built in India.<br>
+                        Powering the next generation of distributed intelligence.
+                    </p>
+                    <p class="text-gray-500 text-sm">Delhi, India</p>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="https://chat.maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.6</a></li>
+                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Access</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="madhuram-v0-6.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.6</a></li>
+                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
+                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
+                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
+                        <li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
+                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
+                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.</p>
+                <div class="flex items-center gap-4">
+                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="static/script.js"></script>
+</body>
+</html>

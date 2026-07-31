@@ -92,6 +92,7 @@ body { font-family: 'Inter', sans-serif; }
 .blog-card-perseus { background: linear-gradient(135deg, #26c6da 0%, #29b6f6 50%, #03a9f4 100%); }
 .blog-card-pocket { background: linear-gradient(135deg, #29b6f6 0%, #0288d1 50%, #0277bd 100%); }
 .blog-card-v05 { background: linear-gradient(135deg, #00acc1 0%, #26c6da 50%, #4dd0e1 100%); }
+.blog-card-v06 { background: linear-gradient(135deg, #00838f 0%, #0097a7 50%, #00acc1 100%); }
 
 /* Dropdown menu styles */
 .dropdown-menu {
@@ -126,4 +127,20 @@ html { scroll-behavior: smooth; }
     max-height: 0px;
     opacity: 0;
     overflow: hidden;
+}
+
+/* Justified body copy. Only worth it in wide columns: below ~48rem, and in
+   narrow cards, justification opens visible rivers and hyphenation breaks
+   words badly, so it is left ragged-right instead. */
+.justify-block {
+    text-align: left;
+    hyphens: manual;
+}
+
+@media (min-width: 768px) {
+    .justify-block {
+        text-align: justify;
+        text-justify: inter-word;
+        hyphens: auto;
+    }
 }
