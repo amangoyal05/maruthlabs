@@ -1,7 +1,7 @@
 // Playground and API notice
 (function () {
     var KEY = 'ml-notice-playground-2026';
-    var NOTE_URL = '';
+    var NOTE_URL = 'https://x.com/maruthlabs/status/2116055074200015148?a=ur-30tjBTyp6kEKJv-w&s=20';
     var CUTOFF = new Date(2026, 10, 1);
 
     try { if (localStorage.getItem(KEY)) return; } catch (e) {}
