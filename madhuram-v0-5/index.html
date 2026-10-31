@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madhuram: Technical Guide | MaruthLabs</title>
+    <meta name="description" content="Madhuram-v0.5: architecture, context window and benchmark results for our 150M-parameter model.">
+    <meta property="og:title" content="Madhuram: Technical Guide">
+    <meta property="og:description" content="Madhuram-v0.5: architecture, context window and benchmark results for our 150M-parameter model.">
+    <meta name="theme-color" content="#F3F6F7">
+    <link rel="icon" type="image/png" href="/static/logo-mark.png">
+    <link rel="preload" href="/static/fonts/anek-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/static/site.css">
+    <script src="/static/notice.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header wrap">
+        <a class="wordmark" href="/"><img src="/static/logo-mark.png" alt="" width="32" height="32">MaruthLabs</a>
+        <nav aria-label="Primary">
+            <a href="/#research">Research</a>
+            <a href="/about/">About</a>
+            <a href="/#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div class="post-head wrap">
+            <h1 class="long">Madhuram: Technical Overview</h1>
+            <p class="lede">Building Madhuram was centered on achieving the minimum architectural complexity required for high-fidelity reasoning. This guide details the foundational choices that allow the model to operate efficiently across diverse environments.</p>
+            <dl class="facts">
+                <div><dt>Published</dt><dd>January 2026</dd></div>
+                <div><dt>Parameters</dt><dd>150 million</dd></div>
+                <div><dt>Context window</dt><dd>4,096 tokens</dd></div>
+                <div><dt>Training data</dt><dd>275B tokens</dd></div>
+                <div><dt>Architecture</dt><dd>Perseus</dd></div>
+            </dl>
+        </div>
+
+        <section class="section post-section wrap" aria-labelledby="core-specifications">
+            <h2 id="core-specifications">Core Specifications</h2>
+            <div class="section-body prose">
+                <p>Madhuram-v0.5 is optimized to maintain a minimal memory footprint while delivering competitive performance. With 150 million parameters trained on 275 billion tokens, the model is architected to run natively on edge devices without the traditional reliance on significant hardware quantization.</p>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="context-reasoning">
+            <h2 id="context-reasoning">Context &amp; Reasoning</h2>
+            <div class="section-body prose">
+                <p>A primary feature of Madhuram is its 4096-token context window. This is supported by the Perseus architecture, which utilizes dense structural information within positional embeddings to capture long-range dependencies efficiently. The architecture enables precise retrieval across the full context length, allowing the model to maintain coherence and reference accuracy even in extended sequences.</p>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="benchmark-performance">
+            <h2 id="benchmark-performance">Benchmark Performance</h2>
+            <div class="section-body prose">
+                <p>Evaluated on standard NLP benchmarks, Madhuram-v0.5 demonstrates competitive performance against larger models in the same class. The following results reflect zero-shot performance across commonsense reasoning and language understanding tasks.</p>
+                <div class="table-scroll">
+                    <table class="results data">
+                        <thead>
+                            <tr><th scope="col">Model</th><th scope="col">ARC-C</th><th scope="col">ARC-E</th><th scope="col">HellaSwag</th><th scope="col">OBQA</th><th scope="col">PIQA</th><th scope="col">WinoGrande</th><th scope="col">BoolQ</th><th scope="col">SIQA</th><th scope="col">Average</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="is-ours"><th scope="row">Madhuram-v0.5</th><td>31.40</td><td class="best">58.96</td><td class="best">45.94</td><td>34.00</td><td class="best">70.84</td><td>52.17</td><td>56.57</td><td>38.54</td><td class="best">48.55</td></tr>
+                            <tr><th scope="row">SmolLM2-135M</th><td class="best">34.50</td><td>58.90</td><td>43.60</td><td class="best">41.10</td><td>68.90</td><td class="best">52.80</td><td class="best">60.50</td><td class="best">43.50</td><td>50.48</td></tr>
+                            <tr><th scope="row">Gemma-3-270M-pt</th><td>31.50</td><td>57.50</td><td>41.40</td><td>34.60</td><td>68.50</td><td>53.90</td><td>56.50</td><td>43.10</td><td>48.38</td></tr>
+                            <tr><th scope="row">MobileLLM125M-LS</th><td>28.70</td><td>45.80</td><td>39.50</td><td class="best">41.10</td><td>65.70</td><td>52.10</td><td>60.40</td><td>42.90</td><td>47.03</td></tr>
+                            <tr><th scope="row">MobileLLM-R1-140M</th><td>32.50</td><td>47.30</td><td>32.90</td><td>31.50</td><td>62.50</td><td>51.00</td><td>57.20</td><td>42.60</td><td>44.69</td></tr>
+                        </tbody>
+                        </table>
+                </div>
+                <p class="note">Benchmarks evaluated using lm-evaluation-harness. Best scores in each category are set in bold.</p>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="deployment-philosophy">
+            <h2 id="deployment-philosophy">Deployment Philosophy</h2>
+            <div class="section-body prose">
+                <p>The model serves as a versatile baseline for distributed intelligence, targeting environments where low latency and privacy are paramount:</p>
+                <ul>
+                    <li><strong>On-Device:</strong> Optimized for smartphones and wearables through efficient inference engines.</li>
+                    <li><strong>Embedded Systems:</strong> Functional on resource-constrained IoT hardware like the Jetson Nano and Raspberry Pi 5.</li>
+                    <li><strong>Private Cloud:</strong> Deployable as a high-speed agent within secure enterprise firewalls.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="next-steps">
+            <h2 id="next-steps">Next Steps</h2>
+            <div class="section-body prose">
+                <p>We continue to evaluate the model's performance on specialized benchmarks and expert reasoning tasks. For inquiries regarding specific evaluation results or research collaborations, please <a href="mailto:contact@maruthlabs.com">contact the lab</a>.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer wrap">
+        <div class="footer-id">
+            <span class="wordmark"><img src="/static/logo-mark.png" alt="" width="28" height="28">MaruthLabs</span>
+            <span>Delhi, India</span>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms and conditions</a>
+            <a href="/privacy/">Privacy policy</a>
+            <a href="https://x.com/maruthlabs" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/maruthlabs" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+        <p class="legal">&copy; 2026 MaruthLabs. MaruthLabs is a brand of Jobsphere Tech Private Limited.</p>
+    </footer>
+</body>
+</html>

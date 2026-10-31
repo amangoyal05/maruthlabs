@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perseus: Efficient Language Modeling | MaruthLabs</title>
+    <meta name="description" content="Perseus rethinks positional embeddings to get more out of a small language model: a 73M-parameter model trained for $755.">
+    <meta property="og:title" content="Perseus: Efficient Language Modeling">
+    <meta property="og:description" content="Perseus rethinks positional embeddings to get more out of a small language model: a 73M-parameter model trained for $755.">
+    <meta name="theme-color" content="#F3F6F7">
+    <link rel="icon" type="image/png" href="/static/logo-mark.png">
+    <link rel="preload" href="/static/fonts/anek-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/static/site.css">
+    <script src="/static/notice.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header wrap">
+        <a class="wordmark" href="/"><img src="/static/logo-mark.png" alt="" width="32" height="32">MaruthLabs</a>
+        <nav aria-label="Primary">
+            <a href="/#research">Research</a>
+            <a href="/about/">About</a>
+            <a href="/#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div class="post-head wrap">
+            <h1 class="long">Perseus: Efficient Language Modeling</h1>
+            <p class="lede">In an era where language models grow exponentially in size and computational requirements, <strong>Perseus</strong> introduces a paradigm shift: <strong>mathematical innovation over brute-force scaling.</strong> Our <strong>73M-parameter</strong> model, <em>Madhuram</em>, matches the performance of significantly larger models while requiring up to <strong>45% fewer parameters</strong>.</p>
+            <dl class="facts">
+                <div><dt>Published</dt><dd>30 June 2025</dd></div>
+                <div><dt>Parameters</dt><dd>73 million</dd></div>
+                <div><dt>Training data</dt><dd>130B tokens</dd></div>
+                <div><dt>Training cost</dt><dd>$755</dd></div>
+            </dl>
+        </div>
+
+        <section class="section post-section wrap" aria-labelledby="key-results">
+            <h2 id="key-results">Key Results</h2>
+            <div class="section-body prose">
+                <ul>
+                    <li>43.82% average accuracy across standard NLP benchmarks.</li>
+                    <li>$755 total training cost (160 GPU hours).</li>
+                    <li>Direct edge deployment without quantization.</li>
+                    <li>Competitive with models 2-5× larger.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="the-efficiency-crisis-in-language-models">
+            <h2 id="the-efficiency-crisis-in-language-models">The Efficiency Crisis in Language Models</h2>
+            <div class="section-body prose">
+                <p>Current language model development follows the "bigger is better" formula, i.e., more parameters + more data = better performance. This approach has led to:</p>
+                <ul>
+                    <li><strong>Exponential cost increases</strong>: Training costs now exceed millions of dollars.</li>
+                    <li><strong>Deployment barriers due to hardware needs</strong>: Most models require specialized hardware and quantization.</li>
+                    <li><strong>High environmental impact</strong>: Massive carbon footprints from training and inference.</li>
+                    <li><strong>Access inequality</strong>: Only well-funded organizations can afford state-of-the-art models.</li>
+                </ul>
+                <p>Perseus challenges this paradigm by demonstrating that <strong>innovation can achieve similar results with dramatically fewer resources.</strong></p>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="perseus-architecture-the-core-innovation">
+            <h2 id="perseus-architecture-the-core-innovation">Perseus Architecture: The Core Innovation</h2>
+            <div class="section-body prose">
+                <h3>Advanced Positional Embeddings</h3>
+                <p>Traditional language models use simple sinusoidal patterns to encode token positions. <strong>Perseus</strong> replaces this with a sophisticated mathematical framework that captures richer structural information about token relationships.</p>
+                <h3>Key Technical Advantages:</h3>
+                <ul>
+                    <li><strong>Enhanced Semantic Relationships</strong>: Captures complex interdependencies between tokens at different positions, enabling better understanding of long-range dependencies.</li>
+                    <li><strong>Mathematically Optimized Representations</strong>: Uses advanced geometric transformations to maximize information density while maintaining computational efficiency.</li>
+                    <li><strong>Adaptive Position Encoding</strong>: Dynamically adjusts positional representations based on specific token configurations.</li>
+                </ul>
+                <h3>Architectural Components</h3>
+                <p>Perseus integrates several specialized components:</p>
+                <ul>
+                    <li><strong>Enhanced Token Embeddings</strong>: Modified embedding space prioritizing semantic richness and parameter efficiency</li>
+                    <li><strong>Optimized Attention Mechanism</strong>: Redesigned attention layers leveraging embedding structure.</li>
+                    <li><strong>Grouped-Query Attention</strong>: Streamlined multi-head attention reducing overhead while retaining representational power. [<a href="https://arxiv.org/pdf/2305.13245">Paper link</a>]</li>
+                    <li><strong>QK Normalization</strong>: Custom normalization preserving numerical stability through deep layers. [<a href="https://arxiv.org/pdf/2010.04245">Paper link</a>]</li>
+                    <li><strong>Geometric Transformation Layers</strong>: Specialized mathematical operations preserving structural properties.</li>
+                </ul>
+                <h3>Training Methodology</h3>
+                <p><strong>Dataset Composition (130B tokens)</strong></p>
+                <ul>
+                    <li><strong>FineWeb-Edu (100B tokens):</strong> High-quality educational web content. [<a href="https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu">Dataset link</a>]</li>
+                    <li><strong>Cosmopedia (30B tokens):</strong> Synthetic educational content for enhanced reasoning. [<a href="https://huggingface.co/datasets/HuggingFaceTB/smollm-corpus">Dataset link</a>]</li>
+                </ul>
+                <p><strong>Training Configuration</strong></p>
+                <ul>
+                    <li><strong>Context Length:</strong> 2048 Tokens</li>
+                    <li><strong>Optimizer:</strong> AdamW with tuned hyperparameters</li>
+                    <li><strong>Learning Rate:</strong> Cosine decay with warmup</li>
+                    <li><strong>Hardware:</strong> 8xH100 GPUs for 20 hours</li>
+                    <li><strong>Total Cost:</strong> $755</li>
+                </ul>
+                <h3>Technical Implementation Challenges</h3>
+                <p>Developing Perseus wasn't without challenges. Some of the most significant technical hurdles included:</p>
+                <ul>
+                    <li><strong>Numerical Stability:</strong> The advanced positional embedding approach required careful implementation to maintain numerical stability across various sequence lengths. We developed custom numerical precision techniques and gradient clipping strategies.</li>
+                    <li><strong>Optimization Complexity:</strong> Standard optimizers needed significant tuning to work effectively with the novel embedding space. We implemented adaptive learning rate schedules and custom momentum parameters.</li>
+                    <li><strong>Hardware Efficiency:</strong> Making computations efficient on modern hardware required specialized tensor operations and memory management strategies.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="benchmark-performance">
+            <h2 id="benchmark-performance">Benchmark Performance</h2>
+            <div class="section-body prose">
+                <p>We evaluated Madhuram using <a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-eval</a> on standard NLP benchmarks, achieving an overall average accuracy of 43.82% across diverse commonsense reasoning and language understanding tasks. The results demonstrate that our 73M parameter model delivers competitive performance against larger models.</p>
+                <div class="table-scroll">
+                    <table class="results data">
+                        <thead>
+                            <tr><th scope="col">Task Type</th><th scope="col">Madhuram</th><th scope="col">SmolLM2-135M</th><th scope="col">MobileLLM-125M</th><th scope="col">OPT-350M</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope="row">ARC (Average)</th><td>36.66%</td><td>43.90%</td><td>37.25%</td><td>33.80%</td></tr>
+                            <tr><th scope="row">HellaSwag</th><td>34.62%</td><td>42.10%</td><td>39.50%</td><td>40.10%</td></tr>
+                            <tr><th scope="row">OBQA</th><td>33%</td><td>34.60%</td><td>41.10%</td><td>33.30%</td></tr>
+                            <tr><th scope="row">PIQA</th><td>63.76%</td><td>68.40%</td><td>65.70%</td><td>64.80%</td></tr>
+                            <tr><th scope="row">SIQA</th><td>38.43%</td><td>-</td><td>42.90%</td><td>42.60%</td></tr>
+                            <tr><th scope="row">WinoGrande</th><td>51.30%</td><td>51.30%</td><td>52.10%</td><td>52.40%</td></tr>
+                            <tr><th scope="row">BoolQ</th><td>56.12%</td><td>-</td><td>60.40%</td><td>54.00%</td></tr>
+                            <tr><th scope="row">Average</th><td class="best">43.82%</td><td>-</td><td class="best">47.03%</td><td class="best">43.90%</td></tr>
+                        </tbody>
+                        </table>
+                </div>
+                <p class="note">Table 1: Performance comparison of Madhuram with MobileLLM, OPT-350M [<a href="https://arxiv.org/pdf/2402.14905">Refer here</a>], and SmolLM2 [<a href="https://arxiv.org/pdf/2502.02737">Refer here</a>] across different NLP tasks.</p>
+                <h3>Madhuram vs. GPT3-Small</h3>
+                <div class="table-scroll">
+                    <table class="results data">
+                        <thead>
+                            <tr><th scope="col">Benchmark</th><th scope="col">Madhuram (Zero-shot)</th><th scope="col">GPT3-Small (Zero-shot)</th><th scope="col">GPT3-Small (Few-shot)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope="row">ARC-Easy</th><td class="best">47.47%</td><td>43.60%</td><td>42.70%</td></tr>
+                            <tr><th scope="row">ARC-Challenge</th><td>25.85%</td><td class="best">26.60%</td><td>25.50%</td></tr>
+                            <tr><th scope="row">HellaSwag</th><td>34.62%</td><td>33.70%</td><td class="best">35.50%</td></tr>
+                            <tr><th scope="row">OBQA</th><td>33%</td><td>35.60%</td><td class="best">37.00%</td></tr>
+                            <tr><th scope="row">PIQA</th><td>63.76%</td><td>64.60%</td><td class="best">64.30%</td></tr>
+                            <tr><th scope="row">WinoGrande</th><td>51.30%</td><td class="best">52.00%</td><td>51.30%</td></tr>
+                            <tr><th scope="row">BoolQ</th><td class="best">56.12%</td><td>49.70%</td><td>43.10%</td></tr>
+                            <tr><th scope="row">Average</th><td class="best">44.59%</td><td>43.69%</td><td>42.77%</td></tr>
+                        </tbody>
+                        </table>
+                </div>
+                <p class="note">Table 2: Zero-shot and few-shot performance against GPT3-Small [<a href="https://arxiv.org/pdf/2005.14165">Refer here</a>]</p>
+                <h3>Knowledge-Intensive Tasks: Madhuram vs. STAR-5/Quality</h3>
+                <div class="table-scroll">
+                    <table class="results data">
+                        <thead>
+                            <tr><th scope="col">Task</th><th scope="col">Madhuram</th><th scope="col">STAR-5/Quality</th><th scope="col">Difference</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope="row">ARC (Easy)</th><td class="best">47.47%</td><td>39.10%</td><td>+8.37%</td></tr>
+                            <tr><th scope="row">HellaSwag</th><td class="best">34.62%</td><td>29.20%</td><td>+5.42%</td></tr>
+                            <tr><th scope="row">WinoGrande</th><td>51.30%</td><td class="best">52.10%</td><td>-0.80%</td></tr>
+                            <tr><th scope="row">PIQA</th><td class="best">63.76%</td><td>62.10%</td><td>+1.66%</td></tr>
+                            <tr><th scope="row">SciQ</th><td>70.20%</td><td class="best">72.70%</td><td>-2.50%</td></tr>
+                            <tr><th scope="row">Average</th><td class="best">53.47%</td><td>51.00%</td><td>+2.47%</td></tr>
+                        </tbody>
+                        </table>
+                </div>
+                <p class="note">Table 3: Performance against Liquid AI's STAR-5/Quality model [<a href="https://openreview.net/pdf?id=HsHxSN23rM">Refer here</a>] demonstrates Madhuram's edge in knowledge-intensive tasks.</p>
+                <h3>Overall Efficiency Comparison</h3>
+                <div class="table-scroll">
+                    <table class="results data">
+                        <thead>
+                            <tr><th scope="col">Model</th><th scope="col">Parameters</th><th scope="col">Training Tokens</th><th scope="col">Parameter Efficiency</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope="row">Madhuram (Perseus)</th><td>73M</td><td>130B</td><td>1.00x</td></tr>
+                            <tr><th scope="row">SmolLM2-135M</th><td>135M</td><td>2T</td><td>0.55x</td></tr>
+                            <tr><th scope="row">MobileLLM-125M</th><td>125M</td><td>1T</td><td>0.59x</td></tr>
+                            <tr><th scope="row">GPT3-Small</th><td>125M</td><td>300B</td><td>0.59x</td></tr>
+                        </tbody>
+                        </table>
+                </div>
+                <p class="note"><em>Parameter Efficiency = (Madhuram Parameters / Comparison Model Parameters).</em></p>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="real-world-impact-applications">
+            <h2 id="real-world-impact-applications">Real-World Impact &amp; Applications</h2>
+            <div class="section-body prose">
+                <ul>
+                    <li><strong>Edge Deployment Ready</strong>: With only 73M parameters, Perseus can run on mobile devices, IoT, edge servers, and embedded systems without quantization.</li>
+                    <li><strong>Cost-Effective Training</strong>: At $755 training cost, advanced NLP models become accessible to small teams, academics, and emerging markets.</li>
+                    <li><strong>Environmental Benefits</strong>: 45% fewer parameters and lower compute reduce the carbon footprint significantly.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="limitations-future-work">
+            <h2 id="limitations-future-work">Limitations &amp; Future Work</h2>
+            <div class="section-body prose">
+                <h3>Current Limitations</h3>
+                <ul>
+                    <li>Performance gaps remain on some benchmarks.</li>
+                    <li>Requires validation on long-context tasks.</li>
+                    <li>Needs domain-specific fine-tuning.</li>
+                </ul>
+                <h3>Future Directions</h3>
+                <ul>
+                    <li><strong>Scaling Studies</strong>: Investigate efficiency gains at 1B+ parameters.</li>
+                    <li><strong>Extended Context</strong>: Evaluate performance on longer sequences.</li>
+                    <li><strong>Multimodal Extensions</strong>: Adapt Perseus embeddings for vision and audio.</li>
+                    <li><strong>Domain Specialization</strong>: Fine-tune for specific verticals (healthcare, education, finance).</li>
+                    <li><strong>Training Data</strong>: Scale training on bigger dataset.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="seeking-collaborators">
+            <h2 id="seeking-collaborators">Seeking Collaborators</h2>
+            <div class="section-body prose">
+                <p>We're actively seeking partnerships for:</p>
+                <ul>
+                    <li><strong>GPU resources:</strong> For scaling experiments.</li>
+                    <li><strong>Dataset contributions:</strong> Domain-specific training data.</li>
+                    <li><strong>Integration:</strong> Deploying Perseus in real-world applications.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="conclusion">
+            <h2 id="conclusion">Conclusion</h2>
+            <div class="section-body prose">
+                <p>Perseus demonstrates that the future of language models lies not in endless scaling, but <strong>in mathematical innovation and architectural efficiency.</strong> By rethinking fundamental components like positional embeddings, we can create models that are:</p>
+                <ul>
+                    <li><strong>More accessible:</strong> Lower training and deployment costs.</li>
+                    <li><strong>More sustainable:</strong> Reduced environmental impact.</li>
+                    <li><strong>More practical:</strong> Direct edge deployment without optimization.</li>
+                </ul>
+                <p>The implications extend beyond academic research to practical applications that can benefit from efficient, high-performance language understanding. As we continue developing Perseus, we invite the community to join us in building a more accessible and sustainable future for AI.</p>
+                <p><em>For collaboration opportunities, or technical questions, please reach out to our team. Together, we can make lightweight, accessible language models a reality for everyone. Contact us at <a href="mailto:contact@maruthlabs.com">contact@maruthlabs.com</a>.</em></p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer wrap">
+        <div class="footer-id">
+            <span class="wordmark"><img src="/static/logo-mark.png" alt="" width="28" height="28">MaruthLabs</span>
+            <span>Delhi, India</span>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms and conditions</a>
+            <a href="/privacy/">Privacy policy</a>
+            <a href="https://x.com/maruthlabs" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/maruthlabs" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+        <p class="legal">&copy; 2026 MaruthLabs. MaruthLabs is a brand of Jobsphere Tech Private Limited.</p>
+    </footer>
+</body>
+</html>

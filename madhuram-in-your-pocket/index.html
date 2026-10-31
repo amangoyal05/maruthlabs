@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madhuram on Device: Mobile Inference Benchmarks | MaruthLabs</title>
+    <meta name="description" content="Madhuram-v0.6 measured on a mid-range Android phone against SmolLM2, LFM2.5 and Gemma 3: decode, prefill and size on disk.">
+    <meta property="og:title" content="Madhuram on Device: Mobile Inference Benchmarks">
+    <meta property="og:description" content="Madhuram-v0.6 measured on a mid-range Android phone against SmolLM2, LFM2.5 and Gemma 3: decode, prefill and size on disk.">
+    <meta name="theme-color" content="#F3F6F7">
+    <link rel="icon" type="image/png" href="/static/logo-mark.png">
+    <link rel="preload" href="/static/fonts/anek-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/static/site.css">
+    <script src="/static/notice.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header wrap">
+        <a class="wordmark" href="/"><img src="/static/logo-mark.png" alt="" width="32" height="32">MaruthLabs</a>
+        <nav aria-label="Primary">
+            <a href="/#research">Research</a>
+            <a href="/about/">About</a>
+            <a href="/#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div class="post-head wrap">
+            <h1 class="long">Madhuram on Device: Mobile Inference Benchmarks</h1>
+            <p class="lede">Madhuram-v0.6 was measured on a mid-range Android phone against the three closest open models, using the same device, the same llama.cpp build and the same quantisation for all four. It generates tokens faster than any of them, from the smallest file on disk.</p>
+            <dl class="facts">
+                <div><dt>Published</dt><dd>July 2026</dd></div>
+                <div><dt>Decode</dt><dd>119 tokens per second</dd></div>
+                <div><dt>Prefill</dt><dd>452 tokens per second</dd></div>
+                <div><dt>On disk</dt><dd>100 MB</dd></div>
+                <div><dt>Device</dt><dd>Nothing Phone (3a)</dd></div>
+            </dl>
+        </div>
+
+        <section class="section post-section wrap" aria-labelledby="the-numbers">
+            <h2 id="the-numbers">The Numbers</h2>
+            <div class="section-body prose">
+                <p>Decode speed is what a user actually feels: it sets how fast words appear once the model starts replying. Prefill is how quickly the prompt is read before generation begins, and matters most with long inputs. Size on disk decides whether the model can ship inside an app at all.</p>
+                                <figure class="tokens bars-group">
+                    <figcaption>Decode, tokens per second. Higher is better.</figcaption>
+                    <div class="bar-row is-ours">
+                        <span class="bar-name">Madhuram-v0.6 <span class="bar-size">151M</span></span>
+                        <span class="bar" style="--w: 100.000%"><span></span></span>
+                        <span class="bar-val">119</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">SmolLM2 <span class="bar-size">135M</span></span>
+                        <span class="bar" style="--w: 98.319%"><span></span></span>
+                        <span class="bar-val">117</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">LFM2.5 <span class="bar-size">230M</span></span>
+                        <span class="bar" style="--w: 72.269%"><span></span></span>
+                        <span class="bar-val">86</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">Gemma 3 <span class="bar-size">270M</span></span>
+                        <span class="bar" style="--w: 45.378%"><span></span></span>
+                        <span class="bar-val">54</span>
+                    </div>
+                </figure>
+                <figure class="tokens bars-group">
+                    <figcaption>Prefill on a 2,048-token prompt, tokens per second. Higher is better.</figcaption>
+                    <div class="bar-row is-ours">
+                        <span class="bar-name">Madhuram-v0.6 <span class="bar-size">151M</span></span>
+                        <span class="bar" style="--w: 70.078%"><span></span></span>
+                        <span class="bar-val">452</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">SmolLM2 <span class="bar-size">135M</span></span>
+                        <span class="bar" style="--w: 35.659%"><span></span></span>
+                        <span class="bar-val">230</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">LFM2.5 <span class="bar-size">230M</span></span>
+                        <span class="bar" style="--w: 100.000%"><span></span></span>
+                        <span class="bar-val">645</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">Gemma 3 <span class="bar-size">270M</span></span>
+                        <span class="bar" style="--w: 45.426%"><span></span></span>
+                        <span class="bar-val">293</span>
+                    </div>
+                </figure>
+                <figure class="tokens bars-group">
+                    <figcaption>Size on disk, MB. Smaller is better.</figcaption>
+                    <div class="bar-row is-ours">
+                        <span class="bar-name">Madhuram-v0.6 <span class="bar-size">151M</span></span>
+                        <span class="bar" style="--w: 40.486%"><span></span></span>
+                        <span class="bar-val">100</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">SmolLM2 <span class="bar-size">135M</span></span>
+                        <span class="bar" style="--w: 42.105%"><span></span></span>
+                        <span class="bar-val">104</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">LFM2.5 <span class="bar-size">230M</span></span>
+                        <span class="bar" style="--w: 61.134%"><span></span></span>
+                        <span class="bar-val">151</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">Gemma 3 <span class="bar-size">270M</span></span>
+                        <span class="bar" style="--w: 100.000%"><span></span></span>
+                        <span class="bar-val">247</span>
+                    </div>
+                </figure>
+                <p class="note">Nothing Phone (3a), Snapdragon 7s Gen 3, 4-bit quantisation, 4 threads.</p>
+                <div class="table-scroll">
+                    <table class="results data">
+                        <thead>
+                            <tr><th scope="col">Model</th><th scope="col">Decode (tok/s)</th><th scope="col">Prefill (tok/s)</th><th scope="col">Size on disk</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr class="is-ours"><th scope="row">Madhuram-v0.6 (151M)</th><td class="best">119</td><td>452</td><td class="best">100 MB</td></tr>
+                            <tr><th scope="row">SmolLM2-135M</th><td>117</td><td>230</td><td>104 MB</td></tr>
+                            <tr><th scope="row">LFM2.5-230M</th><td>86</td><td class="best">645</td><td>151 MB</td></tr>
+                            <tr><th scope="row">Gemma-3-270M</th><td>54</td><td>293</td><td>247 MB</td></tr>
+                        </tbody>
+                        </table>
+                </div>
+                <p class="note">Medians of six runs. Prefill measured on a 2048-token prompt. Same device, build and quantisation for all four models. The best figure in each column is set in bold.</p>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="what-stands-out">
+            <h2 id="what-stands-out">What Stands Out</h2>
+            <div class="section-body prose">
+                <p>Madhuram leads decode at 119 tokens per second, ahead of a model with fewer parameters and more than twice the rate of Gemma 3 270M. It does so from a 100 MB file, the smallest of the four, which is what makes bundling it inside an app realistic.</p>
+                <p>LFM2.5 leads prefill by a wide margin. That is a genuine advantage on long inputs, and worth knowing if your workload is dominated by reading rather than writing. For interactive use, where the model produces more text than it consumes, decode is the number that governs how responsive it feels.</p>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="why-it-matters">
+            <h2 id="why-it-matters">Why It Matters</h2>
+            <div class="section-body prose">
+                <ul>
+                    <li><strong>Nothing leaves the device.</strong> No network round trip, no server logs, no data in transit.</li>
+                    <li><strong>It works offline.</strong> Aeroplane mode, weak coverage, or an air-gapped deployment all behave the same.</li>
+                    <li><strong>No inference bill.</strong> Compute belongs to the device, so cost does not scale with usage.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section post-section wrap" aria-labelledby="getting-it-on-your-hardware">
+            <h2 id="getting-it-on-your-hardware">Getting It On Your Hardware</h2>
+            <div class="section-body prose">
+                <p>On-device builds are delivered as a custom engagement. We handle the conversion, quantisation, and integration for your target hardware, and tune the trade-off between size and quality to suit the device.</p>
+                <p class="more"><a class="link" href="mailto:contact@maruthlabs.com?subject=On-device%20Madhuram%20deployment&amp;body=Hi%20MaruthLabs%20Team%2C%0A%0AI%27d%20like%20to%20discuss%20an%20on-device%20Madhuram%20deployment.%0A%0AName%3A%20%0AOrganization%3A%20%0ATarget%20hardware%3A%20%0AUse%20case%3A%20%0A%0AMessage%3A%0A%0A">Talk to us about on-device deployment</a></p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer wrap">
+        <div class="footer-id">
+            <span class="wordmark"><img src="/static/logo-mark.png" alt="" width="28" height="28">MaruthLabs</span>
+            <span>Delhi, India</span>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms and conditions</a>
+            <a href="/privacy/">Privacy policy</a>
+            <a href="https://x.com/maruthlabs" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/maruthlabs" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+        <p class="legal">&copy; 2026 MaruthLabs. MaruthLabs is a brand of Jobsphere Tech Private Limited.</p>
+    </footer>
+</body>
+</html>

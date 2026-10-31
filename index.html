@@ -3,476 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MaruthLabs</title>
-    <link rel="icon" type="image/png" href="static/MaruthLabsLogo.png">
-    <link rel="stylesheet" href="static/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>MaruthLabs: small language models, built from scratch</title>
+    <meta name="description" content="MaruthLabs builds small language models from scratch, made to run on the devices people already carry.">
+    <meta property="og:title" content="MaruthLabs">
+    <meta property="og:description" content="Small language models, built from scratch.">
+    <meta name="theme-color" content="#F3F6F7">
+    <link rel="icon" type="image/png" href="/static/logo-mark.png">
+    <link rel="preload" href="/static/fonts/anek-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/static/site.css">
+    <script src="/static/site.js" defer></script>
+    <script src="/static/notice.js" defer></script>
 </head>
-<body class="bg-white">
+<body>
+    <a class="skip" href="#main">Skip to content</a>
 
-    <!-- Navigation -->
-    <nav class="bg-white py-4 px-6 lg:px-12 border-b border-gray-100 sticky top-0 z-[60] shadow-sm">
-	    <div class="max-w-7xl mx-auto flex items-center justify-between">
-	        <a href="index.html" class="flex items-center gap-2 shrink-0">
-	            <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
-	            <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
-	        </a>
-	
-	        <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
-	            <a href="index.html#product" class="hover:text-cyan-600 transition">Models</a>
-	            <div class="relative group">
-	                <button class="hover:text-cyan-600 transition flex items-center gap-1">Research <i class="fas fa-chevron-down text-[10px]"></i></button>
-	                <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-	                    <a href="perseus.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Perseus Architecture</a>
-	                    <a href="madhuram-v0-6.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.6</a>
-	                    <a href="madhuram-v0-5.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Madhuram-v0.5</a>
-	                    <a href="madhuram-in-your-pocket.html" class="block px-4 py-3 hover:bg-gray-50 border-b border-gray-100">Edge Performance</a>
-	                    <a href="madhuram-translate.html" class="block px-4 py-3 hover:bg-gray-50">Madhuram-Translate</a>
-	                </div>
-	            </div>
-	            <a href="api-docs.html" class="hover:text-cyan-600 transition">API</a>
-	            <a href="about.html" class="hover:text-cyan-600 transition">About</a>
-	            <a href="mailto:contact@maruthlabs.com" class="hover:text-cyan-600 transition">Partner</a>
-	        </div>
-	
-	        <div class="flex items-center gap-2 sm:gap-4">
-	            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-900 p-2 hover:bg-gray-50 rounded-lg transition">
-	                <i id="menuIcon" class="fas fa-bars text-xl"></i>
-	            </button>
-	        </div>
-	    </div>
-	
-	    <div id="mobileMenu" class="md:hidden bg-white overflow-hidden">
-	        <div class="flex flex-col p-6 gap-6 font-semibold text-gray-800">
-	            <a href="index.html#product" onclick="toggleMobileMenu()">Models</a>
-	            <div class="flex flex-col gap-4">
-	                <span class="text-[10px] uppercase text-gray-400 font-black tracking-widest">Research Deep-Dives</span>
-	                <a href="perseus.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Perseus Architecture</a>
-					<a href="madhuram-v0-6.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.6</a>
-					<a href="madhuram-v0-5.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-v0.5</a>
-					<a href="madhuram-in-your-pocket.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Edge Performance</a>
-					<a href="madhuram-translate.html" onclick="toggleMobileMenu()" class="pl-4 border-l-2 border-gray-100 py-1 text-sm">Madhuram-Translate</a>
-	            </div>
-	            <a href="api-docs.html" onclick="toggleMobileMenu()">API Documentation</a>
-	            <a href="about.html" onclick="toggleMobileMenu()">About Us</a>
-	            <a href="mailto:contact@maruthlabs.com" onclick="toggleMobileMenu()">Partner With Us</a>
-	        </div>
-	    </div>
-	</nav>
-
-    <!-- Hero Section -->
-    <section id="about" class="gradient-hero pt-16 pb-32 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
-                Versatile Language Model<br>
-                for cloud & edge<br>
-                computing
-            </h1>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-                At MaruthLabs, we've created a versatile language model that delivers same performance across all computing environments. Whether deployed in the cloud or running directly on your device, Madhuram provides consistent, high-quality results.
-            </p>
-            <div class="flex items-center justify-center gap-4">
-                <a href="mailto:contact@maruthlabs.com?subject=Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20would%20like%20to%20know%20more%20about%20your%20products.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AI%20am%20interested%20in%3A%0A-%20%5B%20%5D%20Trying%20Madhuram%0A-%20%5B%20%5D%20Partnership%20Opportunities%0A-%20%5B%20%5D%20Technical%20Documentation%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-800 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-700 transition flex items-center gap-2">
-                    Contact Us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- AI Everywhere Section -->
-    <section class="py-20 px-6 bg-white">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Powerful AI everywhere<br>
-                you need it.
-            </h2>
-            <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed justify-block">
-                Our advanced optimization techniques ensure that Madhuram maintains powerful capabilities while adapting to available resources, making sophisticated AI accessible on virtually any platform - from powerful cloud servers to resource-constrained edge devices.
+    <section class="hero">
+        <canvas class="wind" aria-hidden="true"></canvas>
+        <header class="site-header wrap">
+            <a class="wordmark" href="/"><img src="/static/logo-mark.png" alt="" width="32" height="32">MaruthLabs</a>
+            <nav aria-label="Primary">
+                <a href="#research">Research</a>
+                <a href="/about/">About</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </header>
+        <div class="hero-foot wrap">
+            <h1>Intelligence shouldn&rsquo;t<br> be heavy.</h1>
+            <p class="lede">We build small language models from scratch, with our own architecture and pretraining, made to run on the devices people already carry.</p>
+            <p class="gloss">
+                <span class="gloss-deva" lang="sa">मरुत्</span>
+                <span class="gloss-head"><i>marut</i>, Sanskrit</span>
+                <span class="gloss-def">The wind. You feel it everywhere, but you never see the machinery.</span>
             </p>
         </div>
     </section>
 
-    <!-- Product Section -->
-    <section id="product" class="py-16 px-6 bg-gray-50">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <span class="text-cyan-600 font-semibold text-sm tracking-wide uppercase mb-2 block">Our Product</span>
-                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Madhuram</h2>
-                    <p class="text-gray-600 leading-relaxed mb-6 justify-block">
-                        An ultra-efficient language model with <span class="font-semibold text-gray-900">151 million parameters</span> and a <span class="font-semibold text-gray-900">16K context window</span>, delivering competitive performance while fully optimized for mobile and wearable devices.
-                    </p>
-                    <p class="text-gray-600 leading-relaxed mb-8 justify-block">
-                        Have an edge-device you really want to make smart? Look no further. Madhuram brings the power of large language models to devices with limited computational resources.
-                    </p>
-                    <div class="flex gap-4">
-                        <a href="madhuram-v0-6.html" class="border-2 border-gray-900 text-gray-900 px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-900 hover:text-white transition flex items-center gap-2">
-                            View Blog <i class="fas fa-book text-xs"></i>
-                        </a>
+    <main id="main">
+        <section class="section wrap" id="madhuram-v1" aria-labelledby="v1-title">
+            <h2 id="v1-title">Madhuram-v1</h2>
+            <div class="section-body">
+                <p class="intro">Our latest model has 151 million parameters and was pretrained on one trillion tokens. The models we compare it with are larger, and were trained on six to nineteen times more data.</p>
+
+                <figure class="tokens">
+                    <figcaption>Pretraining tokens, drawn to scale</figcaption>
+                    <div class="bar-row is-ours">
+                        <span class="bar-name">Madhuram-v1 <span class="bar-size">151M</span></span>
+                        <span class="bar" style="--w: 5.263%"><span></span></span>
+                        <span class="bar-val">1T</span>
                     </div>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white rounded-2xl p-6 card-shadow">
-                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-microchip text-white text-xl"></i>
-                        </div>
-                        <h3 class="font-bold text-gray-900 text-2xl mb-1">151M</h3>
-                        <p class="text-gray-600 text-sm">Parameters</p>
+                    <div class="bar-row">
+                        <span class="bar-name">Gemma 3 <span class="bar-size">270M</span></span>
+                        <span class="bar" style="--w: 31.579%"><span></span></span>
+                        <span class="bar-val">6T</span>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 card-shadow">
-                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-mobile-alt text-white text-xl"></i>
-                        </div>
-                        <h3 class="font-bold text-gray-900 text-2xl mb-1">Edge</h3>
-                        <p class="text-gray-600 text-sm">Optimized</p>
+                    <div class="bar-row">
+                        <span class="bar-name">LFM2.5 <span class="bar-size">230M</span></span>
+                        <span class="bar" style="--w: 100%"><span></span></span>
+                        <span class="bar-val">19T</span>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 card-shadow">
-                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-cloud text-white text-xl"></i>
-                        </div>
-                        <h3 class="font-bold text-gray-900 text-2xl mb-1">Hybrid</h3>
-                        <p class="text-gray-600 text-sm">Deployment</p>
+                </figure>
+
+                <p class="summary">After post-training, it scores above Gemma 3 270M on every benchmark except GPQA Diamond, where all three models are at chance. It leads LFM2.5-230M on BBH, MMLU Pro and GSM8K with chain of thought, and trails it on instruction following, code and GSM8K without chain of thought.</p>
+                <p class="more"><a class="link" href="/madhuram-v1/">See the full Madhuram-v1 results</a></p>
+            </div>
+        </section>
+
+        <section class="section wrap" id="research" aria-labelledby="research-title">
+            <h2 id="research-title">Research</h2>
+            <div class="section-body">
+                <p class="intro">We publish our benchmarks, our methods and our failures as we go.</p>
+                <ol class="posts">
+                    <li><a href="/madhuram-v1/"><time datetime="2026-10">Oct 2026</time><span class="post-title">Madhuram-v1</span><span class="post-desc">151M parameters and 1T tokens, with pretraining and post-training results against models trained on up to 19 times as much data.</span></a></li>
+                    <li><a href="/madhuram-v0-6/"><time datetime="2026-07">Jul 2026</time><span class="post-title">Madhuram-v0.6: technical guide</span><span class="post-desc">A 16K context window and full benchmark results against SmolLM2, Gemma 3 and LFM2.5.</span></a></li>
+                    <li><a href="/madhuram-in-your-pocket/"><time datetime="2026-07">Jul 2026</time><span class="post-title">Madhuram on device</span><span class="post-desc">Mobile inference benchmarks and comparisons, measured on a phone.</span></a></li>
+                    <li><a href="/madhuram-v0-5/"><time datetime="2026-01">Jan 2026</time><span class="post-title">Madhuram-v0.5: technical guide</span><span class="post-desc">Architecture details, benchmarks and performance comparisons.</span></a></li>
+                    <li><a href="/madhuram-translate/"><time datetime="2025-07">Jul 2025</time><span class="post-title">Building Madhuram-Translate</span><span class="post-desc">A translation model built on our Indic tokenizer, with minimal data and hardware.</span></a></li>
+                    <li><a href="/perseus/"><time datetime="2025-06">Jun 2025</time><span class="post-title">Perseus: efficient language modelling</span><span class="post-desc">Rethinking positional embeddings to get more out of a small model.</span></a></li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section wrap" id="work" aria-labelledby="work-title">
+            <h2 id="work-title">Work with us</h2>
+            <div class="section-body">
+                <p class="intro">Finetuning and on-device builds are custom engagements. Tell us about your case and we will tailor the work to it.</p>
+                <div class="offers">
+                    <div class="offer">
+                        <h3>Task-specific finetuning</h3>
+                        <p>At this size a model is cheap and quick to specialise. We finetune Madhuram on your labels for classification, extraction or routing, and hand back a model that fits your task rather than a general one that approximates it.</p>
+                        <a class="link" href="mailto:contact@maruthlabs.com?subject=Finetuning%20Madhuram">Email us about finetuning</a>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 card-shadow">
-                        <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-bolt text-white text-xl"></i>
-                        </div>
-                        <h3 class="font-bold text-gray-900 text-2xl mb-1">16K</h3>
-                        <p class="text-gray-600 text-sm">Context Window</p>
+                    <div class="offer">
+                        <h3>On-device deployment</h3>
+                        <p>Around 100&nbsp;MB quantised, fast enough for interactive use on a mid-range phone, with nothing leaving the device. We work with you on the build, quantisation and integration for your hardware.</p>
+                        <a class="link" href="mailto:contact@maruthlabs.com?subject=On-device%20Madhuram">Email us about on-device deployment</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Use Cases Carousel Section -->
-    <section id="usecases" class="py-16 px-6 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-gray-900 text-center mb-3">
-                How you can use<br>Madhuram?
-            </h2>
-            <p class="text-gray-600 text-sm text-center max-w-2xl mx-auto mb-12">
-                The API is open to everyone today. Finetuning and on-device builds are
-                delivered as custom engagements, so get in touch and we will tailor them to your case.
-            </p>
-            
-            <div class="carousel-container relative">
-                <div class="carousel-track" id="carouselTrack">
-                    <!-- Slide 1: Long-document understanding (self-serve) -->
-                    <div class="carousel-slide">
-                        <div class="bg-gray-50 rounded-2xl p-6 h-full flex flex-col">
-                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-file-lines text-white text-xl"></i>
-                            </div>
-                            <span class="self-start text-[10px] font-bold uppercase tracking-wide text-cyan-700 mb-2">Available via API</span>
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Long-document understanding</h3>
-                            <p class="text-gray-600 text-sm mb-4">A 16K context window takes a full paper, support thread, or meeting transcript in one pass, for summarising, extracting fields, and answering questions grounded in the source.</p>
-                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center mt-auto">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3Crect fill='%23f5f5f5' width='200' height='120'/%3E%3Crect x='55' y='18' width='60' height='84' rx='6' fill='%234fc3f7'/%3E%3Crect x='85' y='28' width='60' height='84' rx='6' fill='%2329b6f6'/%3E%3Crect x='94' y='42' width='42' height='4' rx='2' fill='white'/%3E%3Crect x='94' y='54' width='42' height='4' rx='2' fill='white'/%3E%3Crect x='94' y='66' width='30' height='4' rx='2' fill='white'/%3E%3Crect x='94' y='78' width='36' height='4' rx='2' fill='white'/%3E%3C/svg%3E" alt="Long context" class="max-h-full">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 2: Build on the API (self-serve) -->
-                    <div class="carousel-slide">
-                        <div class="bg-gray-50 rounded-2xl p-6 h-full flex flex-col">
-                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-code text-white text-xl"></i>
-                            </div>
-                            <span class="self-start text-[10px] font-bold uppercase tracking-wide text-cyan-700 mb-2">Available via API</span>
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Build on the API</h3>
-                            <p class="text-gray-600 text-sm mb-4">An OpenAI-compatible endpoint, so existing code works by changing a base URL and a key. Free while Madhuram-v0.6 is in preview, with streaming and the usual sampling controls.</p>
-                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center mt-auto">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3Crect fill='%23f5f5f5' width='200' height='120'/%3E%3Crect x='30' y='46' width='40' height='28' rx='5' fill='%234fc3f7'/%3E%3Crect x='130' y='46' width='40' height='28' rx='5' fill='%2303a9f4'/%3E%3Cpath d='M74 60 L126 60' stroke='%2329b6f6' stroke-width='3'/%3E%3Cpath d='M116 52 L126 60 L116 68' fill='none' stroke='%2329b6f6' stroke-width='3'/%3E%3C/svg%3E" alt="OpenAI-compatible API" class="max-h-full">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 3: Task-specific finetuning (engagement) -->
-                    <div class="carousel-slide">
-                        <div class="bg-gray-50 rounded-2xl p-6 h-full flex flex-col">
-                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-sliders text-white text-xl"></i>
-                            </div>
-                            <span class="self-start text-[10px] font-bold uppercase tracking-wide text-cyan-700 mb-2">Custom engagement</span>
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">Task-specific finetuning</h3>
-                            <p class="text-gray-600 text-sm mb-4">At this size a model is cheap and quick to specialise. We finetune Madhuram on your labels for classification, extraction, or routing, and hand back a model that fits your task rather than a general one that approximates it.</p>
-                            <a href="mailto:contact@maruthlabs.com?subject=Custom%20Madhuram%20Deployment&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%27d%20like%20to%20discuss%20a%20custom%20Madhuram%20deployment.%0A%0AName%3A%20%0AOrganization%3A%20%0AUse%20case%3A%20%0AExpected%20volume%3A%20%0A%0AMessage%3A%0A%0A" class="self-start inline-flex items-center gap-2 text-xs font-semibold text-cyan-700 hover:text-cyan-800 transition mb-4">
-                                Talk to us <i class="fas fa-arrow-right text-[10px]"></i>
-                            </a>
-                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center mt-auto">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3Crect fill='%23f5f5f5' width='200' height='120'/%3E%3Cline x1='45' y1='38' x2='155' y2='38' stroke='%23bbb' stroke-width='3'/%3E%3Cline x1='45' y1='60' x2='155' y2='60' stroke='%23bbb' stroke-width='3'/%3E%3Cline x1='45' y1='82' x2='155' y2='82' stroke='%23bbb' stroke-width='3'/%3E%3Ccircle cx='75' cy='38' r='9' fill='%234fc3f7'/%3E%3Ccircle cx='120' cy='60' r='9' fill='%2329b6f6'/%3E%3Ccircle cx='95' cy='82' r='9' fill='%2303a9f4'/%3E%3C/svg%3E" alt="Finetuning" class="max-h-full">
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 4: On-device deployment (engagement) -->
-                    <div class="carousel-slide">
-                        <div class="bg-gray-50 rounded-2xl p-6 h-full flex flex-col">
-                            <div class="w-12 h-12 feature-icon rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-mobile-screen-button text-white text-xl"></i>
-                            </div>
-                            <span class="self-start text-[10px] font-bold uppercase tracking-wide text-cyan-700 mb-2">Custom engagement</span>
-                            <h3 class="text-xl font-bold text-gray-900 mb-2">On-device deployment</h3>
-                            <p class="text-gray-600 text-sm mb-4">Around 100&nbsp;MB quantised, fast enough for interactive use on a mid-range phone, with nothing leaving the device. We work with you on the build, quantisation, and integration for your hardware.</p>
-                            <a href="mailto:contact@maruthlabs.com?subject=Custom%20Madhuram%20Deployment&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%27d%20like%20to%20discuss%20a%20custom%20Madhuram%20deployment.%0A%0AName%3A%20%0AOrganization%3A%20%0AUse%20case%3A%20%0AExpected%20volume%3A%20%0A%0AMessage%3A%0A%0A" class="self-start inline-flex items-center gap-2 text-xs font-semibold text-cyan-700 hover:text-cyan-800 transition mb-4">
-                                Talk to us <i class="fas fa-arrow-right text-[10px]"></i>
-                            </a>
-                            <div class="bg-white rounded-xl p-4 h-48 flex items-center justify-center mt-auto">
-                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 120'%3E%3Crect fill='%23f5f5f5' width='200' height='120'/%3E%3Crect x='70' y='15' width='60' height='90' rx='8' fill='%234fc3f7'/%3E%3Crect x='78' y='27' width='44' height='60' rx='3' fill='white'/%3E%3Ccircle cx='100' cy='96' r='4' fill='white'/%3E%3C/svg%3E" alt="On-device inference" class="max-h-full">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Navigation Arrows -->
-                <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+        <section class="section wrap" id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">What comes next</h2>
+            <div class="section-body">
+                <p class="statement">With Madhuram v2 we want to go further: larger models than 151M parameters, more training data, and a real step up in capability.</p>
+                <p class="intro">We are looking for investors and partners who believe capable models should run on the devices people already own. If that is you, we would like to hear from you.</p>
+                <p class="contact-links">
+                    <a class="link" href="mailto:contact@maruthlabs.com">contact@maruthlabs.com</a>
+                    <a class="link" href="https://x.com/maruthlabs" target="_blank" rel="noopener">@maruthlabs on X</a>
+                </p>
             </div>
+        </section>
+    </main>
+
+    <footer class="site-footer wrap">
+        <div class="footer-id">
+            <span class="wordmark"><img src="/static/logo-mark.png" alt="" width="28" height="28">MaruthLabs</span>
+            <span>Delhi, India</span>
         </div>
-    </section>
-
-    <!-- Blogs Section -->
-    <section id="blogs" class="py-16 px-6 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">
-                Insights & updates
-            </h2>
-            
-            <div class="carousel-container relative">
-                <div class="carousel-track" id="blogsCarouselTrack">
-                    <!-- Blog Card 1 - Madhuram v0.6 -->
-                    <div class="carousel-slide">
-                        <a href="madhuram-v0-6.html" class="group cursor-pointer block h-full">
-                            <div class="blog-card blog-card-v06 rounded-2xl h-48 mb-4 overflow-hidden relative">
-                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
-                                    <line x1="90" y1="150" x2="310" y2="150" stroke="white" stroke-width="2"/>
-                                    <rect x="110" y="112" width="26" height="38" rx="2" fill="white" opacity="0.85"/>
-                                    <rect x="150" y="96" width="26" height="54" rx="2" fill="white" opacity="0.7"/>
-                                    <rect x="190" y="74" width="26" height="76" rx="2" fill="white" opacity="0.85"/>
-                                    <rect x="230" y="58" width="26" height="92" rx="2" fill="white"/>
-                                    <rect x="270" y="86" width="26" height="64" rx="2" fill="white" opacity="0.7"/>
-                                    <text x="200" y="42" text-anchor="middle" fill="white" font-size="18" font-family="monospace">v0.6</text>
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Madhuram v0.6: Technical Overview</h3>
-                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">A 16K context window and full benchmark results against SmolLM2, Gemma 3 and LFM2.5.</p>
-                            <div class="flex gap-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Model Release</span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Benchmarks</span>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <!-- Blog Card 2 - Madhuram v0.5 -->
-                    <div class="carousel-slide">
-                        <a href="madhuram-v0-5.html" class="group cursor-pointer block h-full">
-                            <div class="blog-card blog-card-v05 rounded-2xl h-48 mb-4 overflow-hidden relative">
-                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
-                                    <rect x="150" y="70" width="100" height="60" rx="4" fill="none" stroke="white" stroke-width="2"/>
-                                    <line x1="170" y1="70" x2="170" y2="50" stroke="white" stroke-width="2"/>
-                                    <line x1="200" y1="70" x2="200" y2="50" stroke="white" stroke-width="2"/>
-                                    <line x1="230" y1="70" x2="230" y2="50" stroke="white" stroke-width="2"/>
-                                    <line x1="170" y1="130" x2="170" y2="150" stroke="white" stroke-width="2"/>
-                                    <line x1="200" y1="130" x2="200" y2="150" stroke="white" stroke-width="2"/>
-                                    <line x1="230" y1="130" x2="230" y2="150" stroke="white" stroke-width="2"/>
-                                    <line x1="150" y1="90" x2="130" y2="90" stroke="white" stroke-width="2"/>
-                                    <line x1="150" y1="110" x2="130" y2="110" stroke="white" stroke-width="2"/>
-                                    <line x1="250" y1="90" x2="270" y2="90" stroke="white" stroke-width="2"/>
-                                    <line x1="250" y1="110" x2="270" y2="110" stroke="white" stroke-width="2"/>
-                                    <text x="200" y="105" text-anchor="middle" fill="white" font-size="16" font-family="monospace">v0.5</text>
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Madhuram v0.5: Technical Guide</h3>
-                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Complete technical overview with benchmarks, architecture details, and performance comparisons.</p>
-                            <div class="flex gap-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Model Release</span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Benchmarks</span>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <!-- Blog Card 2 - Translation/Language theme -->
-                    <div class="carousel-slide">
-                        <a href="madhuram-translate.html" class="group cursor-pointer block h-full">
-                            <div class="blog-card blog-card-translate rounded-2xl h-48 mb-4 overflow-hidden relative">
-                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
-                                    <circle cx="200" cy="100" r="80" fill="none" stroke="white" stroke-width="2"/>
-                                    <ellipse cx="200" cy="100" rx="80" ry="30" fill="none" stroke="white" stroke-width="1"/>
-                                    <ellipse cx="200" cy="100" rx="30" ry="80" fill="none" stroke="white" stroke-width="1"/>
-                                    <line x1="120" y1="100" x2="280" y2="100" stroke="white" stroke-width="1"/>
-                                    <text x="60" y="60" fill="white" font-size="24" font-family="serif">अ</text>
-                                    <text x="320" y="60" fill="white" font-size="20" font-family="serif">A</text>
-                                    <text x="60" y="160" fill="white" font-size="20" font-family="serif">அ</text>
-                                    <text x="320" y="160" fill="white" font-size="24" font-family="serif">ক</text>
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Building Madhuram-Translate: From Tokenizer to Translation</h3>
-                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Read about our translation model built using our cost efficient indic tokenizer using minimal data and hardware.</p>
-                            <div class="flex gap-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Research</span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Tokenization</span>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <!-- Blog Card 3 - Neural network/code theme -->
-                    <div class="carousel-slide">
-                        <a href="perseus.html" class="group cursor-pointer block h-full">
-                            <div class="blog-card blog-card-perseus rounded-2xl h-48 mb-4 overflow-hidden relative">
-                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
-                                    <circle cx="80" cy="50" r="8" fill="white"/>
-                                    <circle cx="80" cy="100" r="8" fill="white"/>
-                                    <circle cx="80" cy="150" r="8" fill="white"/>
-                                    <circle cx="200" cy="75" r="10" fill="white"/>
-                                    <circle cx="200" cy="125" r="10" fill="white"/>
-                                    <circle cx="320" cy="100" r="12" fill="white"/>
-                                    <line x1="88" y1="50" x2="190" y2="75" stroke="white" stroke-width="2"/>
-                                    <line x1="88" y1="100" x2="190" y2="75" stroke="white" stroke-width="2"/>
-                                    <line x1="88" y1="100" x2="190" y2="125" stroke="white" stroke-width="2"/>
-                                    <line x1="88" y1="150" x2="190" y2="125" stroke="white" stroke-width="2"/>
-                                    <line x1="210" y1="75" x2="308" y2="100" stroke="white" stroke-width="2"/>
-                                    <line x1="210" y1="125" x2="308" y2="100" stroke="white" stroke-width="2"/>
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Perseus: Efficient Language Modeling</h3>
-                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Read about our approach for creating an efficient language model that reimagines the way we look at positional embeddings.</p>
-                            <div class="flex gap-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Architecture</span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Research</span>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <!-- Blog Card 4 - Mobile/pocket theme -->
-                    <div class="carousel-slide">
-                        <a href="madhuram-in-your-pocket.html" class="group cursor-pointer block h-full">
-                            <div class="blog-card blog-card-pocket rounded-2xl h-48 mb-4 overflow-hidden relative">
-                                <svg class="absolute inset-0 w-full h-full opacity-40" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice">
-                                    <rect x="160" y="40" width="80" height="120" rx="10" fill="none" stroke="white" stroke-width="3"/>
-                                    <line x1="160" y1="70" x2="240" y2="70" stroke="white" stroke-width="2"/>
-                                    <circle cx="200" cy="145" r="8" fill="none" stroke="white" stroke-width="2"/>
-                                    <path d="M80 100 Q100 80 120 100 T160 100" fill="none" stroke="white" stroke-width="2"/>
-                                    <path d="M70 100 Q100 70 130 100 T170 100" fill="none" stroke="white" stroke-width="1" opacity="0.6"/>
-                                    <line x1="280" y1="80" x2="320" y2="80" stroke="white" stroke-width="3"/>
-                                    <line x1="290" y1="100" x2="340" y2="100" stroke="white" stroke-width="3"/>
-                                    <line x1="280" y1="120" x2="320" y2="120" stroke="white" stroke-width="3"/>
-                                </svg>
-                            </div>
-                            <h3 class="font-bold text-gray-900 mb-2 group-hover:text-cyan-600 transition">Madhuram in Your Pocket: Real-World Mobile Performance</h3>
-                            <p class="text-gray-600 text-xs mb-3 leading-relaxed">Check Madhuram's performance on edge-device with detailed benchmarks and comparisons.</p>
-                            <div class="flex gap-2">
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Edge</span>
-                                <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">Mobile</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Navigation Arrows -->
-                <button id="blogsPrevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button id="blogsNextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-700 hover:text-cyan-600 transition z-10">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="gradient-cta py-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-                Join the AI Flexibility<br>Revolution
-            </h2>
-            <a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry%20-%20MaruthLabs&body=Hi%20MaruthLabs%20Team%2C%0A%0AI%20am%20interested%20in%20exploring%20a%20partnership%20with%20you.%0A%0AName%3A%20%0AOrganization%3A%20%0A%0AWe%20are%20interested%20in%3A%0A-%20%5B%20%5D%20Edge%20Deployment%20(Madhuram)%0A-%20%5B%20%5D%20Research%20Collaboration%0A-%20%5B%20%5D%20API%20Access%0A-%20%5B%20%5D%20Other%0A%0AMessage%3A%0A%0A" class="bg-gray-900 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-gray-800 transition flex items-center gap-2 mx-auto inline-flex">
-                Partner with us <i class="fas fa-arrow-up-right-from-square text-xs"></i>
-            </a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-100 py-12 px-6">
-        <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
-                <!-- Brand -->
-                <div class="col-span-2 md:col-span-1">
-                    <div class="flex items-center gap-2 mb-4">
-                        <img src="static/MaruthLabsLogo.png" alt="MaruthLabs" class="w-8 h-8 object-contain">
-                        <span class="font-bold text-xl text-gray-900">MaruthLabs</span>
-                    </div>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-4">
-                        Built in India.<br>
-                        Powering the next generation of distributed intelligence.
-                    </p>
-                    <p class="text-gray-500 text-sm">Delhi, India</p>
-                </div>
-
-                <!-- Models -->
-                <div>
-                    <h4 class="font-semibold text-gray-900 mb-4">Models</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Access</a></li>
-                    </ul>
-                </div>
-
-                <!-- Research -->
-                <div>
-                    <h4 class="font-semibold text-gray-900 mb-4">Research</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="madhuram-v0-6.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.6</a></li>
-                        <li><a href="madhuram-v0-5.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-v0.5</a></li>
-                        <li><a href="perseus.html" class="text-gray-600 hover:text-cyan-600 transition">Perseus Architecture</a></li>
-                        <li><a href="madhuram-translate.html" class="text-gray-600 hover:text-cyan-600 transition">Madhuram-Translate</a></li>
-			<li><a href="madhuram-in-your-pocket.html" class="text-gray-600 hover:text-cyan-600 transition">Edge Deployment</a></li>
-                        <li><a href="api-docs.html" class="text-gray-600 hover:text-cyan-600 transition">API Documentation</a></li>
-                        <li><a href="safety.html" class="text-gray-600 hover:text-cyan-600 transition">Safety Guidelines</a></li>
-                    </ul>
-                </div>
-
-                <!-- Company -->
-                <div>
-                    <h4 class="font-semibold text-gray-900 mb-4">Company</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="about.html" class="text-gray-600 hover:text-cyan-600 transition">About Us</a></li>
-                        <li><a href="mailto:contact@maruthlabs.com?subject=Partnership%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Partner with us</a></li>
-                        <li><a href="mailto:contact@maruthlabs.com?subject=Career%20Inquiry" class="text-gray-600 hover:text-cyan-600 transition">Careers</a></li>
-                        <li><a href="mailto:contact@maruthlabs.com" class="text-gray-600 hover:text-cyan-600 transition">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Bottom bar -->
-            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                <p class="text-gray-500 text-sm">2026 MaruthLabs. Built in India, powering global innovation.<br>MaruthLabs is a brand of Jobsphere Tech Private Limited</p>
-                <div class="flex items-center gap-4">
-                    <a href="https://x.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                        </svg>
-                    </a>
-                    <a href="https://in.linkedin.com/company/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="https://github.com/maruthlabs" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-gray-900 transition text-xl">
-                        <i class="fab fa-github"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+        <nav class="footer-nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms and conditions</a>
+            <a href="/privacy/">Privacy policy</a>
+            <a href="https://x.com/maruthlabs" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/maruthlabs" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+        <p class="legal">&copy; 2026 MaruthLabs. MaruthLabs is a brand of Jobsphere Tech Private Limited.</p>
     </footer>
-
-    <script src="static/script.js"></script>
-
 </body>
-
 </html>

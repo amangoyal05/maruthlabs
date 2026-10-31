@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madhuram-v1 results | MaruthLabs</title>
+    <meta name="description" content="Madhuram-v1: a 151M-parameter model pretrained on one trillion tokens, compared with SmolLM2-135M, Gemma 3 270M and LFM2.5-230M before and after post-training.">
+    <meta property="og:title" content="Madhuram-v1 results">
+    <meta property="og:description" content="151M parameters, one trillion tokens, compared with SmolLM2-135M, Gemma 3 270M and LFM2.5-230M.">
+    <meta name="theme-color" content="#F3F6F7">
+    <link rel="icon" type="image/png" href="/static/logo-mark.png">
+    <link rel="preload" href="/static/fonts/anek-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/static/site.css">
+    <script src="/static/chart.js" defer></script>
+    <script src="/static/notice.js" defer></script>
+</head>
+<body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="site-header wrap">
+        <a class="wordmark" href="/"><img src="/static/logo-mark.png" alt="" width="32" height="32">MaruthLabs</a>
+        <nav aria-label="Primary">
+            <a href="/#research">Research</a>
+            <a href="/about/">About</a>
+            <a href="/#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main id="main">
+        <div class="post-head wrap">
+            <h1>Madhuram-v1</h1>
+            <p class="lede">A small model pretrained from scratch on one trillion tokens, then post-trained, and compared with models trained on two to nineteen times as much data.</p>
+            <dl class="facts">
+                <div><dt>Published</dt><dd>October 2026</dd></div>
+                <div><dt>Parameters</dt><dd>151 million</dd></div>
+                <div><dt>Pretraining</dt><dd>1 trillion tokens</dd></div>
+            </dl>
+        </div>
+
+        <section class="section wrap" aria-labelledby="data-title">
+            <h2 id="data-title">Training data</h2>
+            <div class="section-body">
+                <p class="intro">Madhuram-v1 has 151 million parameters and was pretrained on one trillion tokens. We compare it with SmolLM2-135M, Gemma 3 270M and LFM2.5-230M, which were trained on two to nineteen times as much data.</p>
+
+                <figure class="tokens">
+                    <figcaption>Pretraining tokens, drawn to scale</figcaption>
+                    <div class="bar-row is-ours">
+                        <span class="bar-name">Madhuram-v1 <span class="bar-size">151M</span></span>
+                        <span class="bar" style="--w: 5.263%"><span></span></span>
+                        <span class="bar-val">1T</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">SmolLM2 <span class="bar-size">135M</span></span>
+                        <span class="bar" style="--w: 10.526%"><span></span></span>
+                        <span class="bar-val">2T</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">Gemma 3 <span class="bar-size">270M</span></span>
+                        <span class="bar" style="--w: 31.579%"><span></span></span>
+                        <span class="bar-val">6T</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-name">LFM2.5 <span class="bar-size">230M</span></span>
+                        <span class="bar" style="--w: 100%"><span></span></span>
+                        <span class="bar-val">19T</span>
+                    </div>
+                </figure>
+            </div>
+        </section>
+
+        <section class="section wrap" aria-labelledby="pretrain-title">
+            <h2 id="pretrain-title">Pretraining</h2>
+            <div class="section-body">
+                <p class="intro">As a base model, before any post-training, Madhuram-v1 has the best score on 9 of the 17 benchmarks, including both coding tasks, and the highest commonsense average. LFM2.5, trained on nineteen times as much data, leads on MMLU, CommonSenseQA, GPQA Diamond, TriviaQA, ARC Challenge and MATH-500.</p>
+
+                <figure class="table-fig">
+                <figcaption id="pre-cap">Pretrained base checkpoints. The best score in each row is set in bold.</figcaption>
+                <div class="table-scroll">
+                    <table class="results grouped" aria-labelledby="pre-cap">
+                        <thead>
+                            <tr>
+                                <th scope="col">Benchmark</th>
+                                <th scope="col" class="is-ours">Madhuram-v1</th>
+                                <th scope="col">SmolLM2-135M</th>
+                                <th scope="col">Gemma 3 270M</th>
+                                <th scope="col">LFM2.5-230M</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="group"><th scope="rowgroup" colspan="5"><span>Commonsense reasoning</span></th></tr>
+                            <tr><th scope="row">BoolQ</th><td class="best">64.68</td><td>60.43</td><td>58.47</td><td>61.10</td></tr>
+                            <tr><th scope="row">ARC Easy</th><td class="best">59.89</td><td>58.88</td><td>56.94</td><td>59.64</td></tr>
+                            <tr><th scope="row">ARC Challenge</th><td>33.19</td><td>29.52</td><td>28.16</td><td class="best">35.41</td></tr>
+                            <tr><th scope="row">PIQA</th><td>67.14</td><td>68.44</td><td class="best">68.77</td><td>63.71</td></tr>
+                            <tr><th scope="row">SIQA</th><td class="best">40.12</td><td>39.25</td><td>39.97</td><td>38.02</td></tr>
+                            <tr><th scope="row">WinoGrande</th><td class="best">55.72</td><td>53.35</td><td>53.20</td><td>54.38</td></tr>
+                            <tr><th scope="row">OBQA</th><td>32.00</td><td class="best">32.80</td><td>30.40</td><td>32.60</td></tr>
+                            <tr><th scope="row">HellaSwag</th><td class="best">43.44</td><td>43.13</td><td>41.33</td><td>39.38</td></tr>
+                            <tr class="avg"><th scope="row">Average of the eight</th><td class="best">49.52</td><td>48.23</td><td>47.16</td><td>48.03</td></tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="group"><th scope="rowgroup" colspan="5"><span>Knowledge and reasoning</span></th></tr>
+                            <tr><th scope="row">MMLU</th><td>35.29</td><td>24.49</td><td>26.04</td><td class="best">40.10</td></tr>
+                            <tr><th scope="row">MMLU Pro</th><td class="best">13.45</td><td>7.12</td><td>6.91</td><td>11.88</td></tr>
+                            <tr><th scope="row">GPQA Diamond</th><td>23.23</td><td>20.71</td><td>21.21</td><td class="best">29.29</td></tr>
+                            <tr><th scope="row">CommonSense<wbr>QA</th><td>32.35</td><td>20.39</td><td>20.39</td><td class="best">38.33</td></tr>
+                            <tr><th scope="row">SciQ</th><td class="best">84.40</td><td>78.20</td><td>83.90</td><td>81.20</td></tr>
+                            <tr><th scope="row">TriviaQA</th><td>7.47</td><td>5.02</td><td>9.66</td><td class="best">12.88</td></tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="group"><th scope="rowgroup" colspan="5"><span>Coding</span></th></tr>
+                            <tr><th scope="row">MBPP</th><td class="best">11.80</td><td>3.60</td><td>2.00</td><td>6.60</td></tr>
+                            <tr><th scope="row">HumanEval</th><td class="best">12.20</td><td>4.88</td><td>2.44</td><td>9.76</td></tr>
+                        </tbody>
+                        <tbody>
+                            <tr class="group"><th scope="rowgroup" colspan="5"><span>Mathematics</span></th></tr>
+                            <tr><th scope="row">MATH-500</th><td>6.20</td><td>2.00</td><td>2.60</td><td class="best">10.20</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                </figure>
+                <p class="note">All benchmarks are <span class="nowrap">0-shot</span> except MBPP, which is <span class="nowrap">3-shot</span>, and MATH-500, which is <span class="nowrap">4-shot</span> and scored with math-verify. Every model ran on the same harness.</p>
+            </div>
+        </section>
+
+        <section class="section wrap" aria-labelledby="results-title">
+            <h2 id="results-title">Post-training</h2>
+            <div class="section-body">
+                <p class="intro">We post-trained Madhuram-v1 and evaluated it on the same harness as Gemma 3 270M and LFM2.5-230M. It scores above Gemma 3 on every benchmark except GPQA Diamond, where all three models are at chance. It leads LFM2.5 on BBH, MMLU Pro and GSM8K with chain of thought, and trails it on instruction following, code and GSM8K without chain of thought.</p>
+
+                <div class="table-scroll">
+                    <table class="results">
+                        <caption>Post-trained results. The best score in each row is set in bold.</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Benchmark</th>
+                                <th scope="col" class="is-ours">Madhuram-v1</th>
+                                <th scope="col">Gemma 3 270M</th>
+                                <th scope="col">LFM2.5-230M</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope="row">IFEval</th><td>57.20</td><td>31.00</td><td class="best">70.00</td></tr>
+                            <tr><th scope="row">BBH</th><td class="best">26.95</td><td>22.29</td><td>24.02</td></tr>
+                            <tr><th scope="row">MMLU Pro</th><td class="best">13.20</td><td>5.40</td><td>12.92</td></tr>
+                            <tr><th scope="row">GSM8K</th><td>22.98</td><td>3.07</td><td class="best">29.91</td></tr>
+                            <tr><th scope="row">GSM8K CoT</th><td class="best">32.90</td><td>10.61</td><td>31.24</td></tr>
+                            <tr><th scope="row">HumanEval</th><td>15.85</td><td>13.41</td><td class="best">18.90</td></tr>
+                            <tr><th scope="row">MBPP</th><td>15.40</td><td>10.80</td><td class="best">16.60</td></tr>
+                            <tr><th scope="row">GPQA Diamond</th><td class="best">26.26</td><td class="best">26.26</td><td>25.76</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="note">BBH is 3-shot and GSM8K is 5-shot, averaged over flexible and strict answer parsing; all others are <span class="nowrap">0-shot</span>. Every model ran on the same harness with its default generation settings. GPQA Diamond sits at chance, 25%, for all three.</p>
+            </div>
+        </section>
+
+        <section class="section wrap" aria-labelledby="passk-title">
+            <h2 id="passk-title">Pass@k</h2>
+            <div class="section-body">
+                <p class="intro">Pass@k samples k answers per problem and counts the problem as solved if any of them is correct. It shows how much a model can solve when it gets more than one attempt.</p>
+
+                <ul class="legend" aria-label="Series">
+                    <li><span class="key s-ours"></span>Madhuram-v1 151M</li>
+                    <li><span class="key s-gemma"></span>Gemma 3 270M</li>
+                    <li><span class="key s-lfm"></span>LFM2.5-230M</li>
+                </ul>
+
+                <figure class="passk" data-label="HumanEval: ahead of Gemma 3 at every k, behind LFM2.5. pass@k against samples per problem for the three models; the values are in the table below the chart.">
+                    <figcaption>HumanEval: ahead of Gemma 3 at every k, behind LFM2.5</figcaption>
+                    <div class="plot"><div class="tip" hidden></div></div>
+                    <script type="application/json">{"ks":["2","8","16","32","64"],"ymax":50,"digits":2,"series":[{"key":"gemma","name":"Gemma 3 270M","values":[15.04,19.64,21.56,23.03,24.24]},{"key":"lfm","name":"LFM2.5-230M","values":[21.12,31.58,36.38,40.79,46.34]},{"key":"ours","name":"Madhuram-v1 151M","values":[19.21,27.46,31.89,36.62,41.76]}]}</script>
+                    <details class="numbers">
+                        <summary>Show the numbers</summary>
+                        <div class="table-scroll">
+                        <table class="results">
+                            <thead><tr><th scope="col">Samples</th><th scope="col" class="is-ours">Madhuram-v1</th><th scope="col">Gemma 3</th><th scope="col">LFM2.5</th></tr></thead>
+                            <tbody>
+                            <tr><th scope="row">k = 2</th><td>19.21</td><td>15.04</td><td>21.12</td></tr>
+                            <tr><th scope="row">k = 8</th><td>27.46</td><td>19.64</td><td>31.58</td></tr>
+                            <tr><th scope="row">k = 16</th><td>31.89</td><td>21.56</td><td>36.38</td></tr>
+                            <tr><th scope="row">k = 32</th><td>36.62</td><td>23.03</td><td>40.79</td></tr>
+                            <tr><th scope="row">k = 64</th><td>41.76</td><td>24.24</td><td>46.34</td></tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </details>
+                </figure>
+
+                <figure class="passk" data-label="GSM8K: ahead of both up to k = 8, with Gemma 3 passing it at k = 16. pass@k against samples per problem for the three models; the values are in the table below the chart.">
+                    <figcaption>GSM8K: ahead of both up to k = 8, with Gemma 3 passing it at k = 16</figcaption>
+                    <div class="plot"><div class="tip" hidden></div></div>
+                    <script type="application/json">{"ks":["1","4","8","16"],"ymax":50,"digits":1,"series":[{"key":"gemma","name":"Gemma 3 270M","values":[13.4,28.1,36.2,43.7]},{"key":"lfm","name":"LFM2.5-230M","values":[30.8,36.8,37.9,40.0]},{"key":"ours","name":"Madhuram-v1 151M","values":[35.8,39.5,40.4,40.7]}]}</script>
+                    <details class="numbers">
+                        <summary>Show the numbers</summary>
+                        <div class="table-scroll">
+                        <table class="results">
+                            <thead><tr><th scope="col">Samples</th><th scope="col" class="is-ours">Madhuram-v1</th><th scope="col">Gemma 3</th><th scope="col">LFM2.5</th></tr></thead>
+                            <tbody>
+                            <tr><th scope="row">k = 1</th><td>35.8</td><td>13.4</td><td>30.8</td></tr>
+                            <tr><th scope="row">k = 4</th><td>39.5</td><td>28.1</td><td>36.8</td></tr>
+                            <tr><th scope="row">k = 8</th><td>40.4</td><td>36.2</td><td>37.9</td></tr>
+                            <tr><th scope="row">k = 16</th><td>40.7</td><td>43.7</td><td>40.0</td></tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </details>
+                </figure>
+
+                <p class="note">Same harness and prompts for every model, each with its default generation settings.</p>
+            </div>
+        </section>
+
+        <section class="section wrap" aria-labelledby="next-title">
+            <h2 id="next-title">What comes next</h2>
+            <div class="section-body">
+                <p class="statement">We think a bigger post-training run can push these numbers further.</p>
+                <p class="intro">With Madhuram v2 we want to go further still: larger models than 151M parameters, and more training data. If you would like to back the next model or work with us, we would like to hear from you.</p>
+                <p class="contact-links">
+                    <a class="link" href="mailto:contact@maruthlabs.com">contact@maruthlabs.com</a>
+                    <a class="link" href="https://x.com/maruthlabs" target="_blank" rel="noopener">@maruthlabs on X</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer wrap">
+        <div class="footer-id">
+            <span class="wordmark"><img src="/static/logo-mark.png" alt="" width="28" height="28">MaruthLabs</span>
+            <span>Delhi, India</span>
+        </div>
+        <nav class="footer-nav" aria-label="Footer">
+            <a href="/about/">About</a>
+            <a href="/terms/">Terms and conditions</a>
+            <a href="/privacy/">Privacy policy</a>
+            <a href="https://x.com/maruthlabs" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/company/maruthlabs/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/maruthlabs" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+        <p class="legal">&copy; 2026 MaruthLabs. MaruthLabs is a brand of Jobsphere Tech Private Limited.</p>
+    </footer>
+</body>
+</html>
